@@ -1,12 +1,10 @@
 import pathlib
 import sys
 from typing import List
+sys.path.append(str(pathlib.Path(__file__).parent.parent.parent.parent.absolute()))
 
 from acbmc.blender_operations.blender_fbx_export import BlenderFbxExport
 from acbmc.blender_operations.blender_file_manipulator import BlenderFileManipulator
-
-sys.path.append(str(pathlib.Path(__file__).parent.parent.parent.parent.absolute()))
-
 from acbmc.utils.space.space_models import SpaceModels, SpaceModel
 from acbmc.utils.testing_utils.cube_geometry_factory import CubeGeometryFactory
 from acbmc.utils.testing_utils.armature_key_shapes_animated_test_cube_builder import\
