@@ -1,11 +1,11 @@
-from typing import List, Generator
+from typing import Iterator, List
 
 from acbmc.utils.math.vector3d import Vector3d
 
 
 class CubeGeometryVerticesFactory:
     @classmethod
-    def iterate_default_cube_vertices(cls) -> Generator[Vector3d]:
+    def iterate_default_cube_vertices(cls) -> Iterator[Vector3d]:
         for x in [-1, 1]:
             for y in [-1, 1]:
                 for z in [-1, 1]:

@@ -1,3 +1,4 @@
+import os
 import pathlib
 import sys
 from typing import List
@@ -26,7 +27,8 @@ class ArmatureAnimationWithKeyshapesTestCase:
         self.initial_cube_vertices = CubeGeometryFactory().get_cube_default_vertices()  # type: List[Vector3d]
         self.space_model = SpaceModels.get_blender_space_model()  # type: SpaceModel
 
-        raise NotImplementedError
+        self.blend_output_file_path = os.path.join(str(pathlib.Path(__file__).parent.absolute()), "output", "animated.blend")
+        self.fbx_output_file_path = os.path.join(str(pathlib.Path(__file__).parent.absolute()), "output", "animated.fbx")
 
     def run_test_case(self):
         BlenderSceneManipulator().clear_scene()
@@ -50,7 +52,6 @@ class ArmatureAnimationWithKeyshapesTestCase:
             ).instantiate()
         BlenderFileManipulator().save_blend_file(filepath=self.blend_output_file_path)
         BlenderFbxExport().export_to_fbx_file(filepath=self.fbx_output_file_path)
-
 
 if __name__ == '__main__':
     ArmatureAnimationWithKeyshapesTestCase().run_test_case()

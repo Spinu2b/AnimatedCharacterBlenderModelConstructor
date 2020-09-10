@@ -1,9 +1,14 @@
+acbmc/testing/armature_animation_with_keyshapes/output
+
+
 # Created by .ignore support plugin (hsz.mobi)
 ### Python template
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
 *$py.class
+
+.vscode/
 
 # C extensions
 *.so
