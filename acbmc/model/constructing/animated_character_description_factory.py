@@ -1,3 +1,7 @@
+from acbmc.model.constructing.subobjects_channels_associations.subobjects_channels_associations_factory import SubobjectsChannelsAssociationsFactory
+from acbmc.model.constructing.channel_hierarchies.channel_hierarchies_factory import ChannelHierarchiesFactory
+from acbmc.model.constructing.subobjects_library.subobjects_library_factory import SubobjectsLibraryFactory
+from acbmc.model.constructing.animation_clips.animation_clips_factory import AnimationClipsFactory
 from acbmc.model.model.subobjects_channels_associations import SubobjectsChannelsAssociations
 from acbmc.model.model.channel_hierarchies import ChannelHierarchies
 from acbmc.model.model.subobjects_library import SubobjectsLibrary
@@ -7,17 +11,20 @@ from acbmc.model.constructing.animated_character_description_builder import Anim
 
 
 class AnimatedCharacterDescriptionJsonDictHelper:
+    def get_name(self, animated_character_json_dict) -> str:
+        return animated_character_json_dict["name"]
+
     def get_animation_clips_obj(self, animated_character_json_dict) -> AnimationClips:
-        raise NotImplementedError
+        return AnimationClipsFactory().construct_from_json_dict(animated_character_json_dict["animationClips"])
 
     def get_subobjects_library_obj(self, animated_character_json_dict) -> SubobjectsLibrary:
-        raise NotImplementedError
+        return SubobjectsLibraryFactory().construct_from_json_dict(animated_character_json_dict["subobjectsLibrary"])
 
     def get_channel_hierarchies_obj(self, animated_character_json_dict) -> ChannelHierarchies:
-        raise NotImplementedError
+        return ChannelHierarchiesFactory().construct_from_json_dict(animated_character_json_dict["channelHierarchies"])
 
     def get_subobjects_channels_associations_obj(self, animated_character_json_dict) -> SubobjectsChannelsAssociations:
-        raise NotImplementedError
+        return SubobjectsChannelsAssociationsFactory().construct_from_json_dict(animated_character_json_dict["subobjectsChannelsAssociations"])
 
 
 class AnimatedCharacterDescriptionFactory:
@@ -25,6 +32,7 @@ class AnimatedCharacterDescriptionFactory:
         result_builder = AnimatedCharacterDescriptionBuilder()
         animated_character_description_json_dict_helper = AnimatedCharacterDescriptionJsonDictHelper()
         
+        result_builder.set_name(animated_character_description_json_dict_helper.get_name(animated_character_json_dict))
         result_builder.set_animation_clips(
             animated_character_description_json_dict_helper.get_animation_clips_obj(animated_character_json_dict))
         result_builder.set_subobjects_library(

@@ -6,19 +6,26 @@ from acbmc.model.model.animation_clips import AnimationClips
 
 
 class AnimatedCharacterDescriptionBuilder:
-    def set_animation_clips(animation_clips: AnimationClips) -> 'AnimatedCharacterDescriptionBuilder':
+    def __init__(self):
+        self.result = AnimatedCharacterDescription()
+
+    def set_name(self, name: str) -> 'AnimatedCharacterDescriptionBuilder':
+        self.result.name = name
+        return self
+
+    def set_animation_clips(self, animation_clips: AnimationClips) -> 'AnimatedCharacterDescriptionBuilder':
         raise NotImplementedError
         return self
 
-    def set_subobjects_library(subobjects_library: SubobjectsLibrary) -> 'AnimatedCharacterDescriptionBuilder':
+    def set_subobjects_library(self, subobjects_library: SubobjectsLibrary) -> 'AnimatedCharacterDescriptionBuilder':
         raise NotImplementedError
         return self
 
-    def set_channel_hierarchies(channel_hierarchies: ChannelHierarchies) -> 'AnimatedCharacterDescriptionBuilder':
+    def set_channel_hierarchies(self, channel_hierarchies: ChannelHierarchies) -> 'AnimatedCharacterDescriptionBuilder':
         raise NotImplementedError
         return self
 
-    def set_subobjects_channels_associations(subobjects_channels_associations: SubobjectsChannelsAssociations) -> 'AnimatedCharacterDescriptionBuilder':
+    def set_subobjects_channels_associations(self, subobjects_channels_associations: SubobjectsChannelsAssociations) -> 'AnimatedCharacterDescriptionBuilder':
         raise NotImplementedError
         return self
 
