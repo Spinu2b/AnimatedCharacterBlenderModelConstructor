@@ -1,6 +1,7 @@
-from acbmc.entrypoint import MainAddonLogic
+from acbmc.entrypoint import ImportAnimatedCharacterLogic
 
 
 class BlenderAddonLogicRunner:
     def execute(self):
-        MainAddonLogic().execute()
+        filepath = "D:\\RaymapExports\\[rayman] YLT_RaymanModel _ Rayman.animperso"
+        ImportAnimatedCharacterLogic().execute(filepath_to_import=filepath)
