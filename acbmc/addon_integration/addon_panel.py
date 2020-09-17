@@ -1,5 +1,6 @@
 import bpy
 
+
 class AddonPanel(bpy.types.Panel):
     bl_idname = "spinu2b_py_runner_addon_panel"
     bl_label = "spinu2b_py_runner_addon_panel_label"
