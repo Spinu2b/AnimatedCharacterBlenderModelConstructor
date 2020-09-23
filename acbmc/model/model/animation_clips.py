@@ -1,4 +1,8 @@
 
+from typing import Dict
+from acbmc.model.model.animation_clips_desc.animation_clip import AnimationClip
+
 
 class AnimationClips:
-    pass
+    def __init__(self):
+        self.animation_clips = dict()  # type: Dict[int, AnimationClip]

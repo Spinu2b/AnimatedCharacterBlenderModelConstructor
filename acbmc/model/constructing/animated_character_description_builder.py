@@ -14,20 +14,20 @@ class AnimatedCharacterDescriptionBuilder:
         return self
 
     def set_animation_clips(self, animation_clips: AnimationClips) -> 'AnimatedCharacterDescriptionBuilder':
-        raise NotImplementedError
+        self.result.animation_clips = animation_clips
         return self
 
     def set_subobjects_library(self, subobjects_library: SubobjectsLibrary) -> 'AnimatedCharacterDescriptionBuilder':
-        raise NotImplementedError
+        self.result.subobjects_library = subobjects_library
         return self
 
     def set_channel_hierarchies(self, channel_hierarchies: ChannelHierarchies) -> 'AnimatedCharacterDescriptionBuilder':
-        raise NotImplementedError
+        self.result.channel_hierarchies = channel_hierarchies
         return self
 
     def set_subobjects_channels_associations(self, subobjects_channels_associations: SubobjectsChannelsAssociations) -> 'AnimatedCharacterDescriptionBuilder':
-        raise NotImplementedError
+        self.result.subobjects_channels_associations = subobjects_channels_associations
         return self
 
     def build(self) -> AnimatedCharacterDescription:
-        raise NotImplementedError
+        return self
