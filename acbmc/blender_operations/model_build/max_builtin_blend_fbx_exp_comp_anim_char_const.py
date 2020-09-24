@@ -34,7 +34,7 @@ class MaxBuiltinBlenderFbxExportComplianceAnimatedCharacterConstructor(AnimatedC
         # Probably the way data blocks are being aggregated when each new operation on the model is being done and then FBX export logic is
         #  confused by that
         # We will need to deal with it anyway ourselves, would be cool to have such capability to alter the model freely when it has animations already
-        
+
         AnimatedCharacterWithOneGlobalRootedArmatureConstructor().construct_using(
             armature_bind_pose_model=one_unified_global_rooted_armature_bind_pose_model,
             animated_character_description=animated_character_description,
@@ -42,5 +42,9 @@ class MaxBuiltinBlenderFbxExportComplianceAnimatedCharacterConstructor(AnimatedC
             # but will work with builting FBX Blender export
             allow_actual_zero_linear_interpolation_on_the_timeline=True,
             # setting below flag to False will set objects to have near-zero scale (will work with builtin FBX Blender export)
-            allow_objects_having_actual_zero_scale=True
+            allow_objects_having_actual_zero_scale=True,
+            # setting this to False will use dynamic Child-Of constraint for each bones' pair, even the ones that are not supposed to change during animations
+            # (i.e. parenting each otherwise-root-bone to global root bone of whole armature, you get the idea,
+            #  this must simply work with FBX Blender export in any case!)
+            parent_every_bone_to_root_using_regular_constant_child_parent_constraint=False
         )    
