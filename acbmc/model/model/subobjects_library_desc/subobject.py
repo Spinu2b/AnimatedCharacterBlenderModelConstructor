@@ -1,0 +1,4 @@
+
+
+class Subobject:
+    pass
