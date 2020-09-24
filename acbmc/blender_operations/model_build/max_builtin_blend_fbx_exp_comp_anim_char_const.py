@@ -1,0 +1,7 @@
+from acbmc.model.model.animated_character_description import AnimatedCharacterDescription
+from acbmc.blender_operations.model_build.animated_character_constructor import AnimatedCharacterConstructor
+
+
+class MaxBuiltinBlenderFbxExportComplianceAnimatedCharacterConstructor(AnimatedCharacterConstructor):
+    def construct_animated_character(self, animated_character_description: AnimatedCharacterDescription):
+        raise NotImplementedError
