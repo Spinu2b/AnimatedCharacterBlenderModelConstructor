@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-from acbmc.model.model.animated_character_description import AnimatedCharacterDescription
+from acbmc.model.animated_character.model.animated_character_description import AnimatedCharacterDescription
 
 
 class AnimatedCharacterConstructor(ABC):
