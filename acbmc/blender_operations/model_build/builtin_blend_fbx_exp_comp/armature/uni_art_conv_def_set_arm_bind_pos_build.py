@@ -1,0 +1,4 @@
+
+
+class UnifiedArtistConvenientDeformSetsArmatureBindPoseBuilder:
+    pass

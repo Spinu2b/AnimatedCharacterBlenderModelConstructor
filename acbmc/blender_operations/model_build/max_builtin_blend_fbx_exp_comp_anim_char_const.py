@@ -46,5 +46,9 @@ class MaxBuiltinBlenderFbxExportComplianceAnimatedCharacterConstructor(AnimatedC
             # setting this to False will use dynamic Child-Of constraint for each bones' pair, even the ones that are not supposed to change during animations
             # (i.e. parenting each otherwise-root-bone to global root bone of whole armature, you get the idea,
             #  this must simply work with FBX Blender export in any case!)
+            # Setting this to True on the other hand will parent every bone in the armature to root bone, and this will be combined
+            # with dynamic Child-Of constraint, which might give strange results (not checked experimentally yet)
+
+            # This one might actually cause some unsolvable problems, so this might eventually require writing custom FBX export
             parent_every_bone_to_root_using_regular_constant_child_parent_constraint=False
         )    
