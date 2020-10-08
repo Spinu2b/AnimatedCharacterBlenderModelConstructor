@@ -30,4 +30,4 @@ class AnimatedCharacterDescriptionBuilder:
         return self
 
     def build(self) -> AnimatedCharacterDescription:
-        return self
+        return self.result
