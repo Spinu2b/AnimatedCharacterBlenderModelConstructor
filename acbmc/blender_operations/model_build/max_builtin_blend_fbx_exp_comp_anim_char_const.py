@@ -39,7 +39,7 @@ class MaxBuiltinBlenderFbxExportComplianceAnimatedCharacterConstructor(AnimatedC
             armature_bind_pose_model=one_unified_global_rooted_armature_bind_pose_model,
             animated_character_description=animated_character_description,
             # setting below flag to False WILL introduce glitches in animations with appearing/disappearing objects 
-            # but will work with builting FBX Blender export
+            # but will work with builtin FBX Blender export
             allow_actual_zero_linear_interpolation_on_the_timeline=True,
             # setting below flag to False will set objects to have near-zero scale (will work with builtin FBX Blender export)
             allow_objects_having_actual_zero_scale=True,

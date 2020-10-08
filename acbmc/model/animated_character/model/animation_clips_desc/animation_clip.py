@@ -1,6 +1,6 @@
 
-from acbmc.model.animated_character.model.animation_clips_desc.subobject_used_morph_association_info import SubobjectUsedMorphAssociationInfo
 from typing import Dict, List
+from acbmc.model.animated_character.model.animation_clips_desc.subobject_used_morph_association_info import SubobjectUsedMorphAssociationInfo
 from acbmc.model.animated_character.model.animation_clips_desc.channel_transform import ChannelTransform
 from acbmc.model.animated_character.model.animation_clips_desc.animation_frames_period_info import AnimationFramesPeriodInfo
 
