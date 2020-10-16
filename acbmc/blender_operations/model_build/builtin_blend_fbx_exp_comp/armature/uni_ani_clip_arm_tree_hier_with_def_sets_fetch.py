@@ -1,4 +1,7 @@
 from typing import Dict, Iterator, List, Set
+from acbmc.util.model.anim_clip.animation_clip_data_comparison_helper import AnimationClipDataComparisonHelper
+from acbmc.util.model.anim_clip.anim_clip_model_parts_fetch_helper import AnimationClipModelPartsFetchingHelper
+from acbmc.model.blender.model.armature.armature_tree_hierarchy import ArmatureTreeHierarchy
 from acbmc.model.animated_character.model.subobjects_channels_associations_desc.subobjects_channels_association import SubobjectsChannelsAssociation
 from acbmc.model.animated_character.model.channel_hierarchies_desc.channel_hierarchy import ChannelHierarchy
 from acbmc.model.animated_character.model.animation_clips_desc.animation_frames_period_info import AnimationFramesPeriodInfo
@@ -22,43 +25,43 @@ class ArmatureTreeHierarchiesIteratingHelper:
     ) -> Iterator[ArmatureTreeHierarchy]:
         first_frame_number = 1
         previous_channels_set = \
-            self._get_channels_set_for_frame(
+            AnimationClipModelPartsFetchingHelper.get_channels_set_for_frame(
                 frame_number=first_frame_number,
                 animation_hierarchies=animation_hierarchies,
                 channel_hierarchies=channel_hierarchies)  # type: Set[int]
 
-        previous_channel_transforms = self._get_channel_transforms_for_frame(
+        previous_channel_transforms = AnimationClipModelPartsFetchingHelper.get_channel_transforms_for_frame(
             frame_number=first_frame_number,
             channel_keyframes=channel_keyframes)  # Dict[int, ChannelTransform]
 
         previous_channels_for_subobjects_association = \
-            self._get_channels_for_subobjects_associations_data_for_frame(
+            AnimationClipModelPartsFetchingHelper.get_channels_for_subobjects_association_for_frame(
                 frame_number=first_frame_number,
                 channels_for_subobjects_associations_data=channels_for_subobjects_associations_data,
                 subobjects_channels_associations=subobjects_channels_associations)  # type: SubobjectsChannelsAssociation
 
-        previous_channel_hierarchy = self._get_channel_hierarchy_for_frame(
+        previous_channel_hierarchy = AnimationClipModelPartsFetchingHelper.get_channel_hierarchy_for_frame(
             frame_number=first_frame_number,
             animation_hierarchies=animation_hierarchies,
             channel_hierarchies=channel_hierarchies)  # type: ChannelHierarchy
 
         for frame_number in range(1, frames_count+1):
-            current_channels_set = self._get_channels_set_for_frame(
+            current_channels_set = AnimationClipModelPartsFetchingHelper.get_channels_set_for_frame(
                 frame_number=frame_number,
                 animation_hierarchies=animation_hierarchies,
                 channel_hierarchies=channel_hierarchies)  # type: Set[int]
 
-            current_channel_transforms = self._get_channel_transforms_for_frame(
+            current_channel_transforms = AnimationClipModelPartsFetchingHelper.get_channel_transforms_for_frame(
                 frame_number=frame_number,
                 channel_keyframes=channel_keyframes)  # type: Dict[int, ChannelTransform]    
 
             current_channels_for_subobjects_association = \
-                self._get_channels_for_subobjects_association_for_frame(
+                AnimationClipModelPartsFetchingHelper.get_channels_for_subobjects_association_for_frame(
                     frame_number=frame_number,
                     channels_for_subobjects_associations_data=channels_for_subobjects_associations_data,
                     subobjects_channels_associations=subobjects_channels_associations)  # type: SubobjectsChannelsAssociation
 
-            current_channel_hierarchy = self._get_channel_hierarchy_for_frame(
+            current_channel_hierarchy = AnimationClipModelPartsFetchingHelper.get_channel_hierarchy_for_frame(
                 frame_number=frame_number,
                 animation_hierarchies=animation_hierarchies,
                 channel_hierarchies=channel_hierarchies)  # type: ChannelHierarchy
@@ -96,4 +99,14 @@ class UnifiedAnimationClipArmatureTreeHierarchiesWithDeformSetsFetcher:
         subobjects_dict: Dict[int, Subobject],
         channel_hierarchies: ChannelHierarchies,
         subobjects_channels_associations: SubobjectsChannelsAssociations) -> Iterator[ArmatureTreeHierarchy]:
-        raise NotImplementedError
+        armature_tree_hierarchies_iterating_helper = ArmatureTreeHierarchiesIteratingHelper()
+        yield from armature_tree_hierarchies_iterating_helper \
+            .iterate_armature_hierarchies_for(
+                frames_count=animation_clip.get_frames_count(),
+                subobjects_dict=subobjects_dict,
+                channel_hierarchies=channel_hierarchies.channel_hierarchies,
+                channel_keyframes=animation_clip.channel_keyframes,
+                subobjects_channels_associations=subobjects_channels_associations.subobjects_channels_associations,
+                channels_for_subobjects_associations_data=animation_clip.channels_for_subobjects_associations_data,
+                animation_hierarchies=animation_clip.animation_hierarchies
+            )

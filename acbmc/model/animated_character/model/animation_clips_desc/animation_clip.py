@@ -12,3 +12,6 @@ class AnimationClip:
         self.channels_for_subobjects_associations_data = dict()  # type: Dict[str, List[AnimationFramesPeriodInfo]]
         self.animation_hierarchies = dict()  # type: Dict[str, List[AnimationFramesPeriodInfo]]
         self.morphs = []  # type: List[SubobjectUsedMorphAssociationInfo]
+
+    def get_frames_count(self) -> int:
+        return max(x.frame_end for sublist in self.animation_hierarchies.values() for x in sublist)

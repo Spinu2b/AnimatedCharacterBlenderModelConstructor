@@ -1,6 +1,6 @@
+from acbmc.model.blender.model.armature.armature_bind_pose_model import ArmatureBindPoseModel
 from acbmc.blender_operations.model_build.builtin_blend_fbx_exp_comp.chan_with_subobj_def_sets_conv_art_glob_root_arm_bind_pos_fetch import \
  ChannelsWithSubobjectsDeformSetsConvenientArtistGlobalRootedArmatureBindPoseFetcher
-from acbmc.model.blender.model.armature_bind_pose_model import ArmatureBindPoseModel
 from acbmc.model.animated_character.model.animated_character_description import AnimatedCharacterDescription
 
 

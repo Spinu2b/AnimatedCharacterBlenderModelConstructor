@@ -1,4 +1,4 @@
-from acbmc.model.blender.model.armature_bind_pose_model import ArmatureBindPoseModel
+from acbmc.model.blender.model.armature.armature_bind_pose_model import ArmatureBindPoseModel
 from acbmc.model.animated_character.model.animated_character_description import AnimatedCharacterDescription
 
 
