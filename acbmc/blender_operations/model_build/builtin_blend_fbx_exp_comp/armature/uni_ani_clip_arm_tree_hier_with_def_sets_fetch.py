@@ -1,8 +1,11 @@
 from typing import Dict, Iterator, List, Set
+from acbmc.blender_operations.model_build.builtin_blend_fbx_exp_comp.armature \
+    .uni_arm_tree_hierarch_factory import UnifiedArmatureTreeHierarchyFactory
 from acbmc.util.model.anim_clip.animation_clip_data_comparison_helper import AnimationClipDataComparisonHelper
 from acbmc.util.model.anim_clip.anim_clip_model_parts_fetch_helper import AnimationClipModelPartsFetchingHelper
 from acbmc.model.blender.model.armature.armature_tree_hierarchy import ArmatureTreeHierarchy
-from acbmc.model.animated_character.model.subobjects_channels_associations_desc.subobjects_channels_association import SubobjectsChannelsAssociation
+from acbmc.model.animated_character.model.subobjects_channels_associations_desc \
+    .subobjects_channels_association import SubobjectsChannelsAssociation
 from acbmc.model.animated_character.model.channel_hierarchies_desc.channel_hierarchy import ChannelHierarchy
 from acbmc.model.animated_character.model.animation_clips_desc.animation_frames_period_info import AnimationFramesPeriodInfo
 from acbmc.model.animated_character.model.animation_clips_desc.channel_transform import ChannelTransform
@@ -77,7 +80,7 @@ class ArmatureTreeHierarchiesIteratingHelper:
                 not AnimationClipDataComparisonHelper.are_channels_for_subobjects_associations_equal(
                     previous_channels_for_subobjects_association, current_channels_for_subobjects_association) or \
                         not AnimationClipDataComparisonHelper.are_channel_hierarchies_equal(previous_channel_hierarchy, current_channel_hierarchy):
-                        yield self._derive_armature_tree_hierarchy_for(
+                        yield UnifiedArmatureTreeHierarchyFactory.derive_armature_tree_hierarchy_for(
                             channel_hierarchy=current_channel_hierarchy,
                             channels_set=current_channels_set,
                             channel_tranforms=current_channel_transforms,
