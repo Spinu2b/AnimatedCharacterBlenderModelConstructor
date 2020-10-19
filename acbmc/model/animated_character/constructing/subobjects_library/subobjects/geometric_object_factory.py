@@ -38,8 +38,8 @@ class GeometricObjectFactory:
 
     def _get_bind_bone_poses(self, bind_bone_poses_json_dict) -> Dict[int, BoneBindPose]:
         bone_bind_pose_factory = BoneBindPoseFactory()
-        return {k:bone_bind_pose_factory.construct_from_json_dict(v) for (k,v) in bind_bone_poses_json_dict.items()}
+        return {int(k):bone_bind_pose_factory.construct_from_json_dict(v) for (k,v) in bind_bone_poses_json_dict.items()}
 
     def _get_bone_weights(self, bone_weights_json_dict) -> Dict[int, Dict[int, float]]:
-        return {outer_key:{inner_key:inner_value for (inner_key,inner_value) in outer_value.items()} for (outer_key,outer_value)
+        return {int(outer_key):{int(inner_key):inner_value for (inner_key,inner_value) in outer_value.items()} for (outer_key,outer_value)
          in bone_weights_json_dict.items()}

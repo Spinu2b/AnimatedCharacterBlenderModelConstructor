@@ -35,6 +35,26 @@ class UnifiedArmatureHierarchyChannelsToDeformSetsDataFetchingHelper:
         return result
 
     @classmethod
+    def _get_bind_bone_pose_for_mock_bone_simulating_pure_channel_associated_object_parenting(
+        cls,
+        channel_id: int,
+        subobject_number: int
+    ) -> Dict[str, BoneAbsoluteTransformNode]:
+        result = dict()
+
+        mock_bone_name = \
+            UnifiedArmatureWithDeformSetsBonesNamingHelper.get_mock_bone_name_for_object_parenting(
+                channel_id=channel_id,
+                subobject_number=subobject_number
+            )
+
+        mock_bone_absolute_transform_node = BoneAbsoluteTransformNode()  # use home transform, 0.0-kind position for given subobject
+        mock_bone_absolute_transform_node.bone_name = mock_bone_name
+
+        result[mock_bone_name] = mock_bone_absolute_transform_node
+        return result
+
+    @classmethod
     def get_channels_for_appropriate_subobjects_deform_sets_associations(
         cls,
         channels_set: Set[int],
@@ -54,7 +74,17 @@ class UnifiedArmatureHierarchyChannelsToDeformSetsDataFetchingHelper:
                             channel_id=channel_id,
                             subobject_number=subobject_number,
                             bind_bone_poses=subobjects_dict[subobject_number].geometric_object.bind_bone_poses))
-        raise NotImplementedError
+
+            if channel_id in channels_for_subobjects_parenting:
+                for subobject_number in channels_for_subobjects_parenting[channel_id]:
+                    DictUtils.extend_dict_with_duplicated_keys_errors(
+                        base_dict=result[channel_id],
+                        extending_dict=
+                        cls._get_bind_bone_pose_for_mock_bone_simulating_pure_channel_associated_object_parenting(
+                            channel_id=channel_id,
+                            subobject_number=subobject_number
+                        )
+                    )
 
         return result
 
@@ -76,9 +106,9 @@ class UnifiedArmatureTreeHierarchyFactory:
                 channels_set=channels_set,
                 subobjects_dict=subobjects_dict,
                 channels_for_subobjects_parenting=channels_for_subobjects_association \
-                 .subobjects_channels_association_description.channels_for_subobjects_parenting,
+                 .subobjects_channels_associations_description.channels_for_subobjects_parenting,
                 channels_for_subobjects_bones_parenting=channels_for_subobjects_association \
-                 .subobjects_channels_association_description.channels_for_subobjects_bones_parenting
+                 .subobjects_channels_associations_description.channels_for_subobjects_bones_parenting
             )  # type: Dict[int, Dict[str, BoneAbsoluteTransformNode]]   # These bone transforms should be indeed governing bones' home positions relative to their proper subobject
             # They will be later translated accordingly to channels governing them in that particular armature tree hierarchy
 

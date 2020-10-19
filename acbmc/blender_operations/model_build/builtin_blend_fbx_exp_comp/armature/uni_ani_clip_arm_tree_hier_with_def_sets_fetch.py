@@ -49,6 +49,13 @@ class ArmatureTreeHierarchiesIteratingHelper:
             animation_hierarchies=animation_hierarchies,
             channel_hierarchies=channel_hierarchies)  # type: ChannelHierarchy
 
+        yield UnifiedArmatureTreeHierarchyFactory.derive_armature_tree_hierarchy_for(
+            channel_hierarchy=previous_channel_hierarchy,
+            channels_set=previous_channels_set,
+            channel_transforms=previous_channel_transforms,
+            channels_for_subobjects_association=previous_channels_for_subobjects_association,
+            subobjects_dict=subobjects_dict)
+
         for frame_number in range(0, frames_count):
             current_channels_set = AnimationClipModelPartsFetchingHelper.get_channels_set_for_frame(
                 frame_number=frame_number,
@@ -85,7 +92,7 @@ class ArmatureTreeHierarchiesIteratingHelper:
                         yield UnifiedArmatureTreeHierarchyFactory.derive_armature_tree_hierarchy_for(
                             channel_hierarchy=current_channel_hierarchy,
                             channels_set=current_channels_set,
-                            channel_tranforms=current_channel_transforms,
+                            channel_transforms=current_channel_transforms,
                             channels_for_subobjects_association=current_channels_for_subobjects_association,
                             subobjects_dict=subobjects_dict)
 

@@ -59,9 +59,9 @@ class SubobjectsChannelsAssociationDescription:
 class SubobjectsChannelsAssociation:
     def __init__(self):
         self.subobjects_channels_association_identifier = None  # type: str
-        self.subobjects_channels_association_description = SubobjectsChannelsAssociationDescription()
+        self.subobjects_channels_associations_description = SubobjectsChannelsAssociationDescription()
 
     def equals(self, other: 'SubobjectsChannelsAssociation') -> bool:
         return self.subobjects_channels_association_identifier \
             == other.subobjects_channels_association_identifier and \
-                self.subobjects_channels_association_description.equals(other.subobjects_channels_association_description)
+                self.subobjects_channels_associations_description.equals(other.subobjects_channels_associations_description)
