@@ -16,9 +16,11 @@ class ChannelKeyframesFactory:
     def construct_from_json_dict(self, channel_keyframes_json_dict) -> Dict[int, Dict[int, ChannelTransform]]:
         result = dict()  # type: Dict[int, Dict[int, ChannelTransform]]
         channel_transform_factory = ChannelTransformFactory()
-        for channel_id in channel_keyframes_json_dict:
+        for channel_id_iter in channel_keyframes_json_dict:
+            channel_id = int(channel_id_iter)
             result[channel_id] = dict()
-            for frame_number in channel_keyframes_json_dict[channel_id]:
+            for frame_number_iter in channel_keyframes_json_dict[channel_id_iter]:
+                frame_number = int(frame_number_iter)
                 result[channel_id][frame_number] = \
-                    channel_transform_factory.construct_from_json_dict(channel_keyframes_json_dict[channel_id][frame_number])
+                    channel_transform_factory.construct_from_json_dict(channel_keyframes_json_dict[channel_id_iter][frame_number_iter])
         return result

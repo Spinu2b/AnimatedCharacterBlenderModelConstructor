@@ -1,4 +1,6 @@
 from typing import Dict, List, Set
+from acbmc.model.blender.constructing.bone_absolute_transform_node_factory import BoneAbsoluteTransformNodeFactory
+from acbmc.model.blender.model.armature.bone_absolute_transform_node import BoneAbsoluteTransformNode
 from acbmc.blender_operations.model_build.builtin_blend_fbx_exp_comp \
     .armature.uni_arm_with_deform_sets_bones_nam_help import UnifiedArmatureWithDeformSetsBonesNamingHelper
 from acbmc.util.DictUtils import DictUtils
@@ -9,18 +11,6 @@ from acbmc.model.animated_character.model.subobjects_channels_associations_desc 
 from acbmc.model.animated_character.model.animation_clips_desc.channel_transform import ChannelTransform
 from acbmc.model.animated_character.model.channel_hierarchies_desc.channel_hierarchy import ChannelHierarchy
 from acbmc.model.blender.model.armature.armature_tree_hierarchy import ArmatureTreeHierarchy
-
-
-class BoneAbsoluteTransformNode:
-    def __init__(self):
-        self.bone_name = None  # type: str
-        self.bone_transform = BoneTransform()
-
-
-class BoneAbsoluteTransformNodeFactory:
-    @staticmethod
-    def get_from_bind_bone_pose(bone_name: str, bind_bone_pose: BoneBindPose) -> BoneAbsoluteTransformNode:
-        raise NotImplementedError
 
 
 class UnifiedArmatureHierarchyChannelsToDeformSetsDataFetchingHelper:
@@ -67,7 +57,6 @@ class UnifiedArmatureHierarchyChannelsToDeformSetsDataFetchingHelper:
         raise NotImplementedError
 
         return result
-
 
 
 class UnifiedArmatureTreeHierarchyFactory:

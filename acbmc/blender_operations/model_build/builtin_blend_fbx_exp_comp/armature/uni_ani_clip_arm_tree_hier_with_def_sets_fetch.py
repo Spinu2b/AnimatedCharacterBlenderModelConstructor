@@ -26,7 +26,7 @@ class ArmatureTreeHierarchiesIteratingHelper:
         channels_for_subobjects_associations_data: Dict[str, List[AnimationFramesPeriodInfo]],
         animation_hierarchies: Dict[str, List[AnimationFramesPeriodInfo]]
     ) -> Iterator[ArmatureTreeHierarchy]:
-        first_frame_number = 1
+        first_frame_number = 0
         previous_channels_set = \
             AnimationClipModelPartsFetchingHelper.get_channels_set_for_frame(
                 frame_number=first_frame_number,
@@ -35,6 +35,7 @@ class ArmatureTreeHierarchiesIteratingHelper:
 
         previous_channel_transforms = AnimationClipModelPartsFetchingHelper.get_channel_transforms_for_frame(
             frame_number=first_frame_number,
+            frames_count=frames_count,
             channel_keyframes=channel_keyframes)  # Dict[int, ChannelTransform]
 
         previous_channels_for_subobjects_association = \
@@ -48,7 +49,7 @@ class ArmatureTreeHierarchiesIteratingHelper:
             animation_hierarchies=animation_hierarchies,
             channel_hierarchies=channel_hierarchies)  # type: ChannelHierarchy
 
-        for frame_number in range(1, frames_count+1):
+        for frame_number in range(0, frames_count):
             current_channels_set = AnimationClipModelPartsFetchingHelper.get_channels_set_for_frame(
                 frame_number=frame_number,
                 animation_hierarchies=animation_hierarchies,
@@ -56,6 +57,7 @@ class ArmatureTreeHierarchiesIteratingHelper:
 
             current_channel_transforms = AnimationClipModelPartsFetchingHelper.get_channel_transforms_for_frame(
                 frame_number=frame_number,
+                frames_count=frames_count,
                 channel_keyframes=channel_keyframes)  # type: Dict[int, ChannelTransform]    
 
             current_channels_for_subobjects_association = \
@@ -90,9 +92,7 @@ class ArmatureTreeHierarchiesIteratingHelper:
             previous_channel_hierarchy = current_channel_hierarchy
             previous_channel_transforms = current_channel_transforms
             previous_channels_for_subobjects_association = current_channels_for_subobjects_association
-            previous_channels_set = current_channels_set
-
-        raise NotImplementedError            
+            previous_channels_set = current_channels_set            
 
 
 class UnifiedAnimationClipArmatureTreeHierarchiesWithDeformSetsFetcher:
