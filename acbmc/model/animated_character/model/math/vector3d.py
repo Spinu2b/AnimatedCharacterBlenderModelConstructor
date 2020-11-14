@@ -6,6 +6,9 @@ class Vector3d:
         self.y = y  # type: float
         self.z = z  # type: float
 
+    def copy(self) -> 'Vector3d':
+        return Vector3d(x=self.x, y=self.y, z=self.z)
+
     def lerp(vector3d_a: 'Vector3d', vector3d_b: 'Vector3d', interpolation: float) -> 'Vector3d':
         mathutils_vector_a = mathutils.Vector((vector3d_a.x, vector3d_a.y, vector3d_a.z))  
         mathutils_vector_b = mathutils.Vector((vector3d_b.x, vector3d_b.y, vector3d_b.z))

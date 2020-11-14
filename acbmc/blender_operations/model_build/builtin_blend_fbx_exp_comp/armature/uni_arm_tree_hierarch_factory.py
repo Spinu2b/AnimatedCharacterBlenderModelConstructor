@@ -112,6 +112,8 @@ class UnifiedArmatureTreeHierarchyFactory:
             )  # type: Dict[int, Dict[str, BoneAbsoluteTransformNode]]   # These bone transforms should be indeed governing bones' home positions relative to their proper subobject
             # They will be later translated accordingly to channels governing them in that particular armature tree hierarchy
 
+        raise NotImplementedError
+        """
         result_armature_tree_hierarchy = \
             UnifiedChannelsArmatureTreeHierarchyFactory \
                 .construct_pure_channels_armature_tree_hierarchy(
@@ -133,3 +135,4 @@ class UnifiedArmatureTreeHierarchyFactory:
         )
 
         return result_armature_tree_hierarchy
+        """

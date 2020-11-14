@@ -1,4 +1,5 @@
+from acbmc.util.model.transform_node import TransformNode
 
 
-class BoneBindPose:
+class BoneBindPose(TransformNode):
     pass

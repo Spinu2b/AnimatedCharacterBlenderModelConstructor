@@ -79,17 +79,17 @@ class AnimationClipModelPartsFetchingHelper:
     @staticmethod
     def get_channels_set_for_frame(
         frame_number: int,
-        animation_hierarchies: Dict[str, List[AnimationFramesPeriodInfo]],
-        channel_hierarchies: Dict[str, ChannelHierarchy]) -> Set[int]:
+        channel_keyframes: Dict[int, Dict[int, ChannelTransform]]) -> Set[int]:
 
-        return AnimationFramesPeriodedAnimClipDataHelper.find_matching_store_data(
-            frame_number=frame_number,
-            animation_clip_frames_periods_data=animation_hierarchies,
-            string_identifiable_data_store=channel_hierarchies,
-            match_return_lambda=lambda x: x.channel_hierarchy.channels,
-            not_found_error_lambda=lambda: ValueError(
-                "Did not find any matching animation hierarchy that would fit for that frame number! {}".format(frame_number))
-        )
+        return set(channel_keyframes.keys())
+        # return AnimationFramesPeriodedAnimClipDataHelper.find_matching_store_data(
+        #    frame_number=frame_number,
+        #     animation_clip_frames_periods_data=animation_hierarchies,
+        #    string_identifiable_data_store=channel_hierarchies,
+        #    match_return_lambda=lambda x: x.channel_hierarchy.channels,
+        #    not_found_error_lambda=lambda: ValueError(
+        #        "Did not find any matching animation hierarchy that would fit for that frame number! {}".format(frame_number))
+        #)
 
     @staticmethod
     def get_channel_transforms_for_frame(

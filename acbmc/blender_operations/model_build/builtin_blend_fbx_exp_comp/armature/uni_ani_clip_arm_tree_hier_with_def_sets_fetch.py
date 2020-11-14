@@ -30,8 +30,9 @@ class ArmatureTreeHierarchiesIteratingHelper:
         previous_channels_set = \
             AnimationClipModelPartsFetchingHelper.get_channels_set_for_frame(
                 frame_number=first_frame_number,
-                animation_hierarchies=animation_hierarchies,
-                channel_hierarchies=channel_hierarchies)  # type: Set[int]
+                channel_keyframes=channel_keyframes)  # type: Set[int]
+                #animation_hierarchies=animation_hierarchies,
+                #channel_hierarchies=channel_hierarchies)  # type: Set[int]
 
         previous_channel_transforms = AnimationClipModelPartsFetchingHelper.get_channel_transforms_for_frame(
             frame_number=first_frame_number,
@@ -59,8 +60,9 @@ class ArmatureTreeHierarchiesIteratingHelper:
         for frame_number in range(0, frames_count):
             current_channels_set = AnimationClipModelPartsFetchingHelper.get_channels_set_for_frame(
                 frame_number=frame_number,
-                animation_hierarchies=animation_hierarchies,
-                channel_hierarchies=channel_hierarchies)  # type: Set[int]
+                channel_keyframes=channel_keyframes)  # type: Set[int]
+                # animation_hierarchies=animation_hierarchies,
+                # channel_hierarchies=channel_hierarchies)  # type: Set[int]
 
             current_channel_transforms = AnimationClipModelPartsFetchingHelper.get_channel_transforms_for_frame(
                 frame_number=frame_number,

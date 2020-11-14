@@ -10,10 +10,10 @@ class ChannelHierarchyDescriptionFactory:
         return result
 
     def _get_channels(self, channels_json_dict) -> Set[int]:
-        return {x for x in channels_json_dict}
+        return {int(x) for x in channels_json_dict}
 
     def _get_parenting(self, parenting_json_dict) -> Dict[int, int]:
-        return {k:v for (k,v) in parenting_json_dict.items()}
+        return {int(k):int(v) for (k,v) in parenting_json_dict.items()}
         
 
 

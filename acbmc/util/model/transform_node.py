@@ -15,3 +15,10 @@ class TransformNode:
         result.rotation = Quaternion.lerp(transform_a.rotation, transform_b.rotation, interpolation)
         result.scale = Vector3d.lerp(transform_a.scale, transform_b.scale, interpolation)
         return result
+
+    def copy_as_pure_transform_node(self) -> 'TransformNode':
+        result = TransformNode()
+        result.position = self.position.copy()
+        result.rotation = self.rotation.copy()
+        result.scale = self.scale.copy()
+        return result
