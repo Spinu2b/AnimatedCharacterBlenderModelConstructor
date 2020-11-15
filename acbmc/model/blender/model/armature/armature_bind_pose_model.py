@@ -1,4 +1,5 @@
+from acbmc.util.model.tree_hierarchy import TreeHierarchy
 
 
-class ArmatureBindPoseModel:
+class ArmatureBindPoseModel(TreeHierarchy):
     pass

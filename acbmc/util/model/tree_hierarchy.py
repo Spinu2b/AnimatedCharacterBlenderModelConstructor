@@ -11,17 +11,17 @@ class TreeNodeContainer:
 
 
 class TreeNodeIter:
-    def __init__(self, parent: Any, node: Any, parent_key: Any, key: Any, children: List[TreeNodeContainer]):
-        self.parent = parent  # type: Any
+    def __init__(self, parent: Optional[Any], node: Any, parent_key: Optional[Any], key: Any, children: List[TreeNodeContainer]):
+        self.parent = parent  # type: Optional[Any]
         self.node = node  # type: Any
-        self.parent_key = parent_key  # type: Any
+        self.parent_key = parent_key  # type: Optional[Any]
         self.key = key  # type: Any
         self.children = children  # type: List[TreeNodeContainer]
 
 
 class TreeNodeInfo:
-    def __init__(self, parent_key: Any, node):
-        self.parent_key = parent_key  # Any
+    def __init__(self, parent_key: Optional[Any], node: Any):
+        self.parent_key = parent_key  # Optional[Any]
         self.node = node  # type: Any
 
 
@@ -30,7 +30,7 @@ class TreeHierarchy(ABC):
         self.roots = []  # type: List[TreeNodeContainer]
 
     def _traverse_children_recursively_and_put(
-            self, parent_key, node_to_put: TreeNodeContainer):
+            self, parent_key: Any, node_to_put: TreeNodeContainer):
         for node_iter in self.iterate_nodes():
             if node_iter.key == parent_key:
                 node_iter.children.append(node_to_put)
@@ -49,7 +49,7 @@ class TreeHierarchy(ABC):
         for child_node in current_node.children:
             yield from self._traverse_nodes_hierarchy(parent=current_node, current_node=child_node)
 
-    def add_node(self, parent_key: Any, node_key: Any, node: Any):
+    def add_node(self, parent_key: Optional[Any], node_key: Any, node: Any):
         node = copy.deepcopy(node)
         node_container = TreeNodeContainer(node=node, key=node_key)
         if parent_key is None:
@@ -100,3 +100,12 @@ class TreeHierarchy(ABC):
                 )
             else:
                 new_nodes_infos.add(new_node_info)
+
+    def parent_current_roots_to_new_root(self, node_key: Any, node: Any):
+        roots_list = self.roots  # type: List[TreeNodeContainer]
+        self.roots = []
+
+        new_root_node_container = TreeNodeContainer(key=node_key, node=node)
+        new_root_node_container.children = roots_list
+
+        self.roots.append(new_root_node_container)

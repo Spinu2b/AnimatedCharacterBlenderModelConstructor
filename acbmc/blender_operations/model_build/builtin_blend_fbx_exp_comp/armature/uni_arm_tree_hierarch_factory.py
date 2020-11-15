@@ -1,4 +1,9 @@
+from acbmc.blender_operations.model_build.builtin_blend_fbx_exp_comp.armature.uni_arm_tree_hierarch_help import UnifiedArmatureTreeHierarchyHelper
 from typing import Dict, List, Set
+from acbmc.blender_operations.model_build.builtin_blend_fbx_exp_comp.armature \
+    .channels.uni_chan_arm_tree_hierarch_with_def_sets_help import UnifiedChannelsArmatureTreeHierarchyWithDeformSetsHelper
+from acbmc.blender_operations.model_build.builtin_blend_fbx_exp_comp.armature \
+    .channels.uni_chan_arm_tree_hierarch_fact import UnifiedChannelsArmatureTreeHierarchyFactory
 from acbmc.model.blender.constructing.bone_absolute_transform_node_factory import BoneAbsoluteTransformNodeFactory
 from acbmc.model.blender.model.armature.bone_absolute_transform_node import BoneAbsoluteTransformNode
 from acbmc.blender_operations.model_build.builtin_blend_fbx_exp_comp \
@@ -111,9 +116,7 @@ class UnifiedArmatureTreeHierarchyFactory:
                  .subobjects_channels_associations_description.channels_for_subobjects_bones_parenting
             )  # type: Dict[int, Dict[str, BoneAbsoluteTransformNode]]   # These bone transforms should be indeed governing bones' home positions relative to their proper subobject
             # They will be later translated accordingly to channels governing them in that particular armature tree hierarchy
-
-        raise NotImplementedError
-        """
+        
         result_armature_tree_hierarchy = \
             UnifiedChannelsArmatureTreeHierarchyFactory \
                 .construct_pure_channels_armature_tree_hierarchy(
@@ -135,4 +138,3 @@ class UnifiedArmatureTreeHierarchyFactory:
         )
 
         return result_armature_tree_hierarchy
-        """
