@@ -4,6 +4,7 @@ from acbmc.model.animated_character.model.animated_character_description import 
 
 class AnimatedCharacterWithOneGlobalRootedArmatureConstructor:
     def construct_using(
+        self,
         armature_bind_pose_model: ArmatureBindPoseModel,
         animated_character_description: AnimatedCharacterDescription, 
         allow_actual_zero_linear_interpolation_on_the_timeline: bool,

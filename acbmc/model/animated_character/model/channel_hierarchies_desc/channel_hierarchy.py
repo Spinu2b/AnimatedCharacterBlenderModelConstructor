@@ -1,6 +1,6 @@
 from typing import Dict, Set
-from acbmc.util.DictUtils import DictUtils
-from acbmc.util.CollectionsUtils import CollectionsUtils
+from acbmc.util.dict_utils import DictUtils
+from acbmc.util.collections_utils import CollectionsUtils
 
 
 class ChannelHierarchyDescription:

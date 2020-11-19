@@ -1,5 +1,5 @@
 from typing import Any, Callable, Dict
-from acbmc.util.CollectionsUtils import CollectionsUtils
+from acbmc.util.collections_utils import CollectionsUtils
 
 
 class DictUtils:
@@ -21,7 +21,7 @@ class DictUtils:
         base_dict.update(extending_dict)
     
     @classmethod
-    def are_dicts_equal(
+    def are_dicts_equal(cls,
         dict_a: Dict[Any, Any], dict_b: Dict[Any, Any],
          value_comparison_lambda: Callable[[Any, Any], bool]) -> bool:
         

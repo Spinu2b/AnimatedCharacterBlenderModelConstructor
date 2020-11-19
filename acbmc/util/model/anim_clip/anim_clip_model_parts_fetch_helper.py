@@ -1,8 +1,8 @@
 from typing import Any, Callable, Dict, List, Set, Tuple
+from acbmc.util.model.transform_node import TransformNode
 from acbmc.model.animated_character.model.math.quaternion import Quaternion
 from acbmc.model.animated_character.model.math.vector3d import Vector3d
 from acbmc.model.animated_character.model.subobjects_channels_associations_desc.subobjects_channels_association import SubobjectsChannelsAssociation
-from acbmc.model.animated_character.model.animation_clips_desc.channel_transform import ChannelTransform
 from acbmc.model.animated_character.model.animation_clips_desc.animation_frames_period_info import AnimationFramesPeriodInfo
 from acbmc.model.animated_character.model.channel_hierarchies_desc.channel_hierarchy import ChannelHierarchy
 
@@ -10,21 +10,21 @@ from acbmc.model.animated_character.model.channel_hierarchies_desc.channel_hiera
 class ChannelTransformInterpolationHelper:
     @classmethod
     def _get_preeceding_keyframe_key_appropriate_for_frame_number(
-        cls, frame_number: int, frames_count: int, channel_timeline_keyframes: Dict[int, ChannelTransform]
+        cls, frame_number: int, frames_count: int, channel_timeline_keyframes: Dict[int, TransformNode]
     ) -> int:
         return [keyframe_key for keyframe_key in sorted(channel_timeline_keyframes) if keyframe_key <= frame_number][-1]
 
 
     @classmethod
-    def _is_end_keyframe(cls, keyframe_key: int, channel_timeline_keyframes: Dict[int, ChannelTransform]) -> bool:
+    def _is_end_keyframe(cls, keyframe_key: int, channel_timeline_keyframes: Dict[int, TransformNode]) -> bool:
         return keyframe_key >= max(channel_timeline_keyframes)
 
     @classmethod
-    def _get_first_keyframe_key(cls, channel_timeline_keyframes: Dict[int, ChannelTransform]) -> int:
+    def _get_first_keyframe_key(cls, channel_timeline_keyframes: Dict[int, TransformNode]) -> int:
         return min(channel_timeline_keyframes)
 
     @classmethod
-    def _get_next_keyframe_key_after(cls, keyframe_key: int, channel_timeline_keyframes: Dict[int, ChannelTransform]) -> int:
+    def _get_next_keyframe_key_after(cls, keyframe_key: int, channel_timeline_keyframes: Dict[int, TransformNode]) -> int:
         if cls._is_end_keyframe(keyframe_key=keyframe_key, channel_timeline_keyframes=channel_timeline_keyframes):
             return cls._get_first_keyframe_key(channel_timeline_keyframes=channel_timeline_keyframes)
         else:
@@ -32,7 +32,7 @@ class ChannelTransformInterpolationHelper:
 
     @classmethod
     def interpolate_linear_for_frame(cls, frame_number: int, frames_count: int,
-        channel_timeline_keyframes: Dict[int, ChannelTransform]) -> ChannelTransform:
+        channel_timeline_keyframes: Dict[int, TransformNode]) -> TransformNode:
         preceeding_keyframe_key_appropriate_for_frame_number = \
             cls._get_preeceding_keyframe_key_appropriate_for_frame_number(
                 frame_number=frame_number,
@@ -56,10 +56,10 @@ class ChannelTransformInterpolationHelper:
             frames_difference = next_keyframe_key - preceeding_keyframe_key_appropriate_for_frame_number  # type: int
             interpolation = frames_since_keyframe / float(frames_difference)  # type: float
 
-        keyframe_channel_transform_a = channel_timeline_keyframes[preceeding_keyframe_key_appropriate_for_frame_number]  # type: ChannelTransform
-        keyframe_channel_transform_b = channel_timeline_keyframes[next_keyframe_key]  # type: ChannelTransform
+        keyframe_channel_transform_a = channel_timeline_keyframes[preceeding_keyframe_key_appropriate_for_frame_number]  # type: TransformNode
+        keyframe_channel_transform_b = channel_timeline_keyframes[next_keyframe_key]  # type: TransformNode
 
-        return ChannelTransform.lerp(keyframe_channel_transform_a, keyframe_channel_transform_b, interpolation)
+        return TransformNode.lerp(keyframe_channel_transform_a, keyframe_channel_transform_b, interpolation)
 
 
 class AnimationFramesPeriodedAnimClipDataHelper:
@@ -79,7 +79,7 @@ class AnimationClipModelPartsFetchingHelper:
     @staticmethod
     def get_channels_set_for_frame(
         frame_number: int,
-        channel_keyframes: Dict[int, Dict[int, ChannelTransform]]) -> Set[int]:
+        channel_keyframes: Dict[int, Dict[int, TransformNode]]) -> Set[int]:
 
         return set(channel_keyframes.keys())
         # return AnimationFramesPeriodedAnimClipDataHelper.find_matching_store_data(
@@ -95,9 +95,9 @@ class AnimationClipModelPartsFetchingHelper:
     def get_channel_transforms_for_frame(
         frame_number: int,
         frames_count: int,
-        channel_keyframes: Dict[int, Dict[int, ChannelTransform]]) -> Dict[int, ChannelTransform]:
+        channel_keyframes: Dict[int, Dict[int, TransformNode]]) -> Dict[int, TransformNode]:
         
-        result = dict()  # type: Dict[int, ChannelTransform]
+        result = dict()  # type: Dict[int, TransformNode]
         for channel_identifier in channel_keyframes:
             result[channel_identifier] = \
                 ChannelTransformInterpolationHelper.interpolate_linear_for_frame(

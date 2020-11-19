@@ -1,8 +1,8 @@
 from typing import Dict, List
+from acbmc.util.model.transform_node import TransformNode
 from acbmc.model.animated_character.constructing.subobjects_library.subobjects.geometric_object.bone_bind_pose_factory import BoneBindPoseFactory
 from acbmc.model.animated_character.constructing.math.vector2d_factory import Vector2DFactory
 from acbmc.model.animated_character.constructing.math.vector3d_factory import Vector3dFactory
-from acbmc.model.animated_character.model.subobjects_library_desc.subobject_desc.geo_obj_desc.bone_bind_pose import BoneBindPose
 from acbmc.model.animated_character.model.math.vector2d import Vector2d
 from acbmc.model.animated_character.model.math.vector3d import Vector3d
 from acbmc.model.animated_character.model.subobjects_library_desc.subobject_desc.geometric_object import GeometricObject
@@ -36,7 +36,7 @@ class GeometricObjectFactory:
         vector2d_factory = Vector2DFactory()
         return [[vector2d_factory.construct_from_json_dict(y) for y in x] for x in uv_maps_json_dict]
 
-    def _get_bind_bone_poses(self, bind_bone_poses_json_dict) -> Dict[int, BoneBindPose]:
+    def _get_bind_bone_poses(self, bind_bone_poses_json_dict) -> Dict[int, TransformNode]:
         bone_bind_pose_factory = BoneBindPoseFactory()
         return {int(k):bone_bind_pose_factory.construct_from_json_dict(v) for (k,v) in bind_bone_poses_json_dict.items()}
 

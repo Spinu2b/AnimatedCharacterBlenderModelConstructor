@@ -1,5 +1,6 @@
-from acbmc.blender_operations.model_build.builtin_blend_fbx_exp_comp.armature.uni_arm_tree_hierarch_help import UnifiedArmatureTreeHierarchyHelper
 from typing import Dict, List, Set
+from acbmc.util.model.transform_node import TransformNode
+from acbmc.blender_operations.model_build.builtin_blend_fbx_exp_comp.armature.uni_arm_tree_hierarch_help import UnifiedArmatureTreeHierarchyHelper
 from acbmc.blender_operations.model_build.builtin_blend_fbx_exp_comp.armature \
     .channels.uni_chan_arm_tree_hierarch_with_def_sets_help import UnifiedChannelsArmatureTreeHierarchyWithDeformSetsHelper
 from acbmc.blender_operations.model_build.builtin_blend_fbx_exp_comp.armature \
@@ -8,12 +9,10 @@ from acbmc.model.blender.constructing.bone_absolute_transform_node_factory impor
 from acbmc.model.blender.model.armature.bone_absolute_transform_node import BoneAbsoluteTransformNode
 from acbmc.blender_operations.model_build.builtin_blend_fbx_exp_comp \
     .armature.uni_arm_with_deform_sets_bones_nam_help import UnifiedArmatureWithDeformSetsBonesNamingHelper
-from acbmc.util.DictUtils import DictUtils
-from acbmc.model.animated_character.model.subobjects_library_desc.subobject_desc.geo_obj_desc.bone_bind_pose import BoneBindPose
+from acbmc.util.dict_utils import DictUtils
 from acbmc.model.animated_character.model.subobjects_library_desc.subobject import Subobject
 from acbmc.model.animated_character.model.subobjects_channels_associations_desc \
     .subobjects_channels_association import SubobjectsChannelsAssociation
-from acbmc.model.animated_character.model.animation_clips_desc.channel_transform import ChannelTransform
 from acbmc.model.animated_character.model.channel_hierarchies_desc.channel_hierarchy import ChannelHierarchy
 from acbmc.model.blender.model.armature.armature_tree_hierarchy import ArmatureTreeHierarchy
 
@@ -24,7 +23,7 @@ class UnifiedArmatureHierarchyChannelsToDeformSetsDataFetchingHelper:
         cls,
         channel_id: int,
         subobject_number: int,
-        bind_bone_poses: Dict[int, BoneBindPose]
+        bind_bone_poses: Dict[int, TransformNode]
     ) -> Dict[str, BoneAbsoluteTransformNode]:
         
         result = dict()  # type: Dict[str, BoneAbsoluteTransformNode]
@@ -100,7 +99,7 @@ class UnifiedArmatureTreeHierarchyFactory:
         cls,
         channel_hierarchy: ChannelHierarchy,
         channels_set: Set[int],
-        channel_transforms: Dict[int, ChannelTransform],
+        channel_transforms: Dict[int, TransformNode],
         channels_for_subobjects_association: SubobjectsChannelsAssociation,
         subobjects_dict: Dict[int, Subobject]
     ) -> ArmatureTreeHierarchy:

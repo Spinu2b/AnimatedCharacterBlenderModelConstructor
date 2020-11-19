@@ -1,20 +1,20 @@
+from typing import Dict
+from acbmc.util.model.transform_node import TransformNode
 from acbmc.model.animated_character.constructing.math.quaternion_factory import QuaternionFactory
 from acbmc.model.animated_character.constructing.math.vector3d_factory import Vector3dFactory
-from typing import Dict
-from acbmc.model.animated_character.model.animation_clips_desc.channel_transform import ChannelTransform
 
 
 class ChannelTransformFactory:
-    def construct_from_json_dict(self, channel_transform_json_dict) -> ChannelTransform:
-        result = ChannelTransform()
+    def construct_from_json_dict(self, channel_transform_json_dict) -> TransformNode:
+        result = TransformNode()
         result.position = Vector3dFactory().construct_from_json_dict(channel_transform_json_dict["position"])
         result.rotation = QuaternionFactory().construct_from_json_dict(channel_transform_json_dict["rotation"])
         result.scale = Vector3dFactory().construct_from_json_dict(channel_transform_json_dict["scale"])
         return result
 
 class ChannelKeyframesFactory:
-    def construct_from_json_dict(self, channel_keyframes_json_dict) -> Dict[int, Dict[int, ChannelTransform]]:
-        result = dict()  # type: Dict[int, Dict[int, ChannelTransform]]
+    def construct_from_json_dict(self, channel_keyframes_json_dict) -> Dict[int, Dict[int, TransformNode]]:
+        result = dict()  # type: Dict[int, Dict[int, TransformNode]]
         channel_transform_factory = ChannelTransformFactory()
         for channel_id_iter in channel_keyframes_json_dict:
             channel_id = int(channel_id_iter)

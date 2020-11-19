@@ -17,3 +17,11 @@ class UnifiedArmatureWithDeformSetsBonesNamingHelper:
     @staticmethod
     def get_bone_name_for_root_channel() -> str:
         return "BONE_Channel_ROOT"
+
+    @staticmethod
+    def is_channel_bone_name(bone_name: str) -> bool:
+        return bone_name.startswith('BONE_Channel_')
+
+    @staticmethod
+    def is_deform_set_bone(bone_name: str) -> bool:
+        return bone_name.startswith('BONE_Subobject_')

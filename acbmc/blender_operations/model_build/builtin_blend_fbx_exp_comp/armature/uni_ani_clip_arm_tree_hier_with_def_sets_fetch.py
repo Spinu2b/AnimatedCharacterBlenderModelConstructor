@@ -1,4 +1,5 @@
 from typing import Dict, Iterator, List, Set
+from acbmc.util.model.transform_node import TransformNode
 from acbmc.blender_operations.model_build.builtin_blend_fbx_exp_comp.armature \
     .uni_arm_tree_hierarch_factory import UnifiedArmatureTreeHierarchyFactory
 from acbmc.util.model.anim_clip.animation_clip_data_comparison_helper import AnimationClipDataComparisonHelper
@@ -8,7 +9,6 @@ from acbmc.model.animated_character.model.subobjects_channels_associations_desc 
     .subobjects_channels_association import SubobjectsChannelsAssociation
 from acbmc.model.animated_character.model.channel_hierarchies_desc.channel_hierarchy import ChannelHierarchy
 from acbmc.model.animated_character.model.animation_clips_desc.animation_frames_period_info import AnimationFramesPeriodInfo
-from acbmc.model.animated_character.model.animation_clips_desc.channel_transform import ChannelTransform
 from acbmc.model.animated_character.model.subobjects_channels_associations import SubobjectsChannelsAssociations
 from acbmc.model.animated_character.model.channel_hierarchies import ChannelHierarchies
 from acbmc.model.animated_character.model.subobjects_library_desc.subobject import Subobject
@@ -21,7 +21,7 @@ class ArmatureTreeHierarchiesIteratingHelper:
         frames_count: int,
         subobjects_dict: Dict[int, Subobject],
         channel_hierarchies: Dict[str, ChannelHierarchy],
-        channel_keyframes: Dict[int, Dict[int, ChannelTransform]],
+        channel_keyframes: Dict[int, Dict[int, TransformNode]],
         subobjects_channels_associations: Dict[str, SubobjectsChannelsAssociation],
         channels_for_subobjects_associations_data: Dict[str, List[AnimationFramesPeriodInfo]],
         animation_hierarchies: Dict[str, List[AnimationFramesPeriodInfo]]
@@ -37,7 +37,7 @@ class ArmatureTreeHierarchiesIteratingHelper:
         previous_channel_transforms = AnimationClipModelPartsFetchingHelper.get_channel_transforms_for_frame(
             frame_number=first_frame_number,
             frames_count=frames_count,
-            channel_keyframes=channel_keyframes)  # Dict[int, ChannelTransform]
+            channel_keyframes=channel_keyframes)  # Dict[int, TransformNode]
 
         previous_channels_for_subobjects_association = \
             AnimationClipModelPartsFetchingHelper.get_channels_for_subobjects_association_for_frame(
@@ -67,7 +67,7 @@ class ArmatureTreeHierarchiesIteratingHelper:
             current_channel_transforms = AnimationClipModelPartsFetchingHelper.get_channel_transforms_for_frame(
                 frame_number=frame_number,
                 frames_count=frames_count,
-                channel_keyframes=channel_keyframes)  # type: Dict[int, ChannelTransform]    
+                channel_keyframes=channel_keyframes)  # type: Dict[int, TransformNode]    
 
             current_channels_for_subobjects_association = \
                 AnimationClipModelPartsFetchingHelper.get_channels_for_subobjects_association_for_frame(
