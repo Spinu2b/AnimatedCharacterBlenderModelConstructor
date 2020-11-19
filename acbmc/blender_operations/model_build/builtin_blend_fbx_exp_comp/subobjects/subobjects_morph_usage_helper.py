@@ -1,0 +1,3 @@
+
+class SubobjectsMorphUsageHelper:
+    pass
