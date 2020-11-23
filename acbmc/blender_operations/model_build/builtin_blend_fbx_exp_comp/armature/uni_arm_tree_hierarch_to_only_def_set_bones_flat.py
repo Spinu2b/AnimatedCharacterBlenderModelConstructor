@@ -91,6 +91,12 @@ class UnifiedArmatureTreeHierarchyToOnlyDeformSetBonesFlattener:
             scale[1][1] = animation_frame_armature_bone_model.scale.y
             scale[2][2] = animation_frame_armature_bone_model.scale.z
             local_transformation_matrix = loc @ rot @ scale
+
+    ------------------------------------------------------------------------------------------
+
+    Once you have world matrices for deform set bones, calculate pose local matrices for them
+    considering only two-noded parenting chain - global root bone for the armature and a appropriate deform set bone below it
+    - without involvement of intermediate channel bones - simply without them, regardless whether it would be one-rooted or multi-rooted eventually
     """
 
     @classmethod
