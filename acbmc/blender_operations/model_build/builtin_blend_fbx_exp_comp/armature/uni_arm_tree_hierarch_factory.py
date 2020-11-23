@@ -1,4 +1,6 @@
 from typing import Dict, List, Set
+from acbmc.blender_operations.model_build.builtin_blend_fbx_exp_comp.armature.uni_arm_tree_hierarch_to_only_def_set_bones_flat \
+    import UnifiedArmatureTreeHierarchyToOnlyDeformSetBonesFlattener
 from acbmc.util.model.tree_hierarchy import TreeHierarchy
 from acbmc.util.model.transform_node import TransformNode
 from acbmc.blender_operations.model_build.builtin_blend_fbx_exp_comp.armature.uni_arm_tree_hierarch_help import UnifiedArmatureTreeHierarchyHelper

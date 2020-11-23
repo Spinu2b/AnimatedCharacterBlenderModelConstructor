@@ -5,6 +5,7 @@ class BoneTransformNode:
     def __init__(self):
         self.bone_name = None  # type: str
         self.bone_transform = TransformNode()
+        self.is_keyframe = False
 
     def copy(self) -> 'BoneTransformNode':
         result = BoneTransformNode()
