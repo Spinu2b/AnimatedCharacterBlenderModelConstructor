@@ -1,19 +1,18 @@
 from typing import Iterator, List, Optional, Tuple
+from acbmc.util.model.tree_hierarchy import TreeHierarchy
 from acbmc.util.tree_iteration_helper import TreeIterationHelper
 from acbmc.util.model.transform_node import TransformNode
 from acbmc.blender_operations.model_build \
     .builtin_blend_fbx_exp_comp.armature.uni_arm_with_deform_sets_bones_nam_help import UnifiedArmatureWithDeformSetsBonesNamingHelper
 from acbmc.model.blender.model.armature.bone_absolute_transform_node import BoneAbsoluteTransformNode
-from acbmc.model.blender.model.armature.armature_bind_pose_model import ArmatureBindPoseModel
-from acbmc.model.blender.model.armature.armature_tree_hierarchy import ArmatureTreeHierarchy
 
 
 class ArmatureBindPoseConsolidationHelper:
     @classmethod
     def iterate_non_present_tree_nodes_prepared_for_bind_pose_model_building(
         cls,
-        armature_tree_hierarchy_to_consolidate_with: ArmatureTreeHierarchy,
-        result_armature_bind_pose_model: ArmatureBindPoseModel
+        armature_tree_hierarchy_to_consolidate_with: TreeHierarchy,
+        result_armature_bind_pose_model: TreeHierarchy
     ) -> Iterator[Tuple[str, BoneAbsoluteTransformNode]]:
         non_present_nodes_names_set = \
             set(x.key for x in armature_tree_hierarchy_to_consolidate_with.iterate_nodes()) \
@@ -102,10 +101,10 @@ class ArmatureBindPoseConsolidationHelper:
         
 class UnifiedArtistConvenientDeformSetsArmatureBindPoseBuilder:
     def __init__(self):
-        self._result = ArmatureBindPoseModel()
+        self._result = TreeHierarchy()
 
     def consider_armature_hierarchy_with_deform_sets(
-        self, armature_tree_hierarchy: ArmatureTreeHierarchy) -> 'UnifiedArtistConvenientDeformSetsArmatureBindPoseBuilder':
+        self, armature_tree_hierarchy: TreeHierarchy) -> 'UnifiedArtistConvenientDeformSetsArmatureBindPoseBuilder':
 
         for new_prepared_armature_tree_node in ArmatureBindPoseConsolidationHelper \
             .iterate_non_present_tree_nodes_prepared_for_bind_pose_model_building(
@@ -117,5 +116,5 @@ class UnifiedArtistConvenientDeformSetsArmatureBindPoseBuilder:
 
         return self
 
-    def build(self) -> ArmatureBindPoseModel:
+    def build(self) -> TreeHierarchy:
         return self._result

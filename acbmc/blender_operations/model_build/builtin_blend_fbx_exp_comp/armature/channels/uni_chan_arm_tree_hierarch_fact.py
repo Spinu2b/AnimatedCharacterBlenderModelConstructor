@@ -1,11 +1,11 @@
-from acbmc.util.tree_iteration_helper import TreeIterationHelper
 from typing import Dict, Iterator, List, Optional, Set, Tuple
+from acbmc.util.model.tree_hierarchy import TreeHierarchy
+from acbmc.util.tree_iteration_helper import TreeIterationHelper
 from acbmc.model.blender.model.armature.bone_absolute_transform_node import BoneAbsoluteTransformNode
 from acbmc.util.model.transform_node import TransformNode
 from acbmc.blender_operations.model_build.builtin_blend_fbx_exp_comp \
     .armature.uni_arm_with_deform_sets_bones_nam_help import UnifiedArmatureWithDeformSetsBonesNamingHelper
 from acbmc.util.model.tree_hierarchy_builder import TreeHierarchyBuilder
-from acbmc.model.blender.model.armature.armature_tree_hierarchy import ArmatureTreeHierarchy
 
 
 class ChannelsSetsParentingHelper:
@@ -27,9 +27,8 @@ class UnifiedChannelsArmatureTreeHierarchyFactory:
         channels_set: Set[int],
         channels_parenting: Dict[int, int],
         channel_transforms: Dict[int, TransformNode]
-    ) -> ArmatureTreeHierarchy:
+    ) -> TreeHierarchy:
         tree_hierarchy_builder = TreeHierarchyBuilder()
-        tree_hierarchy_builder.set_tree_hierarchy_class(ArmatureTreeHierarchy)
 
         for channel_id, parent_channel_id in ChannelsSetsParentingHelper \
             .iterate_channels_in_order_of_constructing_the_tree(channels_set, channels_parenting):

@@ -1,9 +1,9 @@
 from typing import Dict
 from bpy.types import Object
+from acbmc.util.model.tree_hierarchy import TreeHierarchy
 from acbmc.model.animated_character.model.subobjects_library_desc.visual_data import VisualData
 from acbmc.blender_operations.model_build.builtin_blend_fbx_exp_comp.subobjects.subobjects_morph_usage_helper import SubobjectsMorphUsageHelper
 from acbmc.model.animated_character.model.subobjects_library_desc.subobject import Subobject
-from acbmc.model.blender.model.armature.armature_bind_pose_model import ArmatureBindPoseModel
 from acbmc.model.animated_character.model.animated_character_description import AnimatedCharacterDescription
 
 
@@ -12,7 +12,7 @@ class AnimatedCharacterWithOneGlobalRootedArmatureConstructor:
 
     def construct_using(
         self,
-        armature_bind_pose_model: ArmatureBindPoseModel,
+        armature_bind_pose_model: TreeHierarchy,
         animated_character_description: AnimatedCharacterDescription, 
         allow_actual_zero_linear_interpolation_on_the_timeline: bool,
         allow_objects_having_actual_zero_scale: bool,

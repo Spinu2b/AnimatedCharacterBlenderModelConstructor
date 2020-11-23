@@ -1,5 +1,5 @@
 from typing import Dict
-from acbmc.model.blender.model.armature.armature_bind_pose_model import ArmatureBindPoseModel
+from acbmc.util.model.tree_hierarchy import TreeHierarchy
 from acbmc.model.animated_character.model.animation_clips import AnimationClips
 from acbmc.blender_operations.model_build.builtin_blend_fbx_exp_comp.armature.uni_ani_clip_arm_tree_hier_with_def_sets_fetch import \
  UnifiedAnimationClipArmatureTreeHierarchiesWithDeformSetsFetcher
@@ -17,7 +17,7 @@ class ChannelsWithSubobjectsDeformSetsConvenientArtistGlobalRootedArmatureBindPo
         animation_clips: AnimationClips,
         subobjects_dict: Dict[int, Subobject],
         channel_hierarchies: ChannelHierarchies,
-        subobjects_channels_associations: SubobjectsChannelsAssociations) -> ArmatureBindPoseModel:
+        subobjects_channels_associations: SubobjectsChannelsAssociations) -> TreeHierarchy:
         
         result_builder = UnifiedArtistConvenientDeformSetsArmatureBindPoseBuilder()
         armature_tree_hierarchies_fetcher = UnifiedAnimationClipArmatureTreeHierarchiesWithDeformSetsFetcher()

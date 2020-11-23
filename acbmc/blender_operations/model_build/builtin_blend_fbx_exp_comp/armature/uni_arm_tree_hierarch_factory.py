@@ -1,4 +1,5 @@
 from typing import Dict, List, Set
+from acbmc.util.model.tree_hierarchy import TreeHierarchy
 from acbmc.util.model.transform_node import TransformNode
 from acbmc.blender_operations.model_build.builtin_blend_fbx_exp_comp.armature.uni_arm_tree_hierarch_help import UnifiedArmatureTreeHierarchyHelper
 from acbmc.blender_operations.model_build.builtin_blend_fbx_exp_comp.armature \
@@ -14,7 +15,6 @@ from acbmc.model.animated_character.model.subobjects_library_desc.subobject impo
 from acbmc.model.animated_character.model.subobjects_channels_associations_desc \
     .subobjects_channels_association import SubobjectsChannelsAssociation
 from acbmc.model.animated_character.model.channel_hierarchies_desc.channel_hierarchy import ChannelHierarchy
-from acbmc.model.blender.model.armature.armature_tree_hierarchy import ArmatureTreeHierarchy
 
 
 class UnifiedArmatureHierarchyChannelsToDeformSetsDataFetchingHelper:
@@ -102,7 +102,7 @@ class UnifiedArmatureTreeHierarchyFactory:
         channel_transforms: Dict[int, TransformNode],
         channels_for_subobjects_association: SubobjectsChannelsAssociation,
         subobjects_dict: Dict[int, Subobject]
-    ) -> ArmatureTreeHierarchy:
+    ) -> TreeHierarchy:
     
         channels_parenting = channel_hierarchy.channel_hierarchy.parenting  # type: Dict[int, int]
         channels_with_appropriate_subobjects_deform_sets_associations = \
@@ -122,7 +122,7 @@ class UnifiedArmatureTreeHierarchyFactory:
                     channels_set=channels_set,
                     channels_parenting=channels_parenting,
                     channel_transforms=channel_transforms
-                )  # type: ArmatureTreeHierarchy
+                )  # type: TreeHierarchy
 
         UnifiedChannelsArmatureTreeHierarchyWithDeformSetsHelper \
             .associate_channels_armature_tree_hierarchy_with_deform_sets(

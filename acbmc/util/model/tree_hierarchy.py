@@ -1,5 +1,4 @@
 import copy
-from abc import ABC
 from typing import Any, Optional, List, Iterator
 
 
@@ -25,7 +24,7 @@ class TreeNodeInfo:
         self.node = node  # type: Any
 
 
-class TreeHierarchy(ABC):
+class TreeHierarchy:
     def __init__(self):
         self.roots = []  # type: List[TreeNodeContainer]
 

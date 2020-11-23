@@ -1,6 +1,6 @@
+from typing import Set
 from acbmc.model.animated_character.model.channel_hierarchies_desc.channel_hierarchy import ChannelHierarchy
 from acbmc.model.animated_character.model.subobjects_channels_associations_desc.subobjects_channels_association import SubobjectsChannelsAssociation
-from typing import Set
 
 
 class AnimationClipDataComparisonHelper:

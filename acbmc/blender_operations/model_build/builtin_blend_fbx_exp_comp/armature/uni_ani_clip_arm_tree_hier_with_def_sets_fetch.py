@@ -1,10 +1,10 @@
 from typing import Dict, Iterator, List, Set
+from acbmc.util.model.tree_hierarchy import TreeHierarchy
 from acbmc.util.model.transform_node import TransformNode
 from acbmc.blender_operations.model_build.builtin_blend_fbx_exp_comp.armature \
     .uni_arm_tree_hierarch_factory import UnifiedArmatureTreeHierarchyFactory
 from acbmc.util.model.anim_clip.animation_clip_data_comparison_helper import AnimationClipDataComparisonHelper
 from acbmc.util.model.anim_clip.anim_clip_model_parts_fetch_helper import AnimationClipModelPartsFetchingHelper
-from acbmc.model.blender.model.armature.armature_tree_hierarchy import ArmatureTreeHierarchy
 from acbmc.model.animated_character.model.subobjects_channels_associations_desc \
     .subobjects_channels_association import SubobjectsChannelsAssociation
 from acbmc.model.animated_character.model.channel_hierarchies_desc.channel_hierarchy import ChannelHierarchy
@@ -25,7 +25,7 @@ class ArmatureTreeHierarchiesIteratingHelper:
         subobjects_channels_associations: Dict[str, SubobjectsChannelsAssociation],
         channels_for_subobjects_associations_data: Dict[str, List[AnimationFramesPeriodInfo]],
         animation_hierarchies: Dict[str, List[AnimationFramesPeriodInfo]]
-    ) -> Iterator[ArmatureTreeHierarchy]:
+    ) -> Iterator[TreeHierarchy]:
         first_frame_number = 0
         previous_channels_set = \
             AnimationClipModelPartsFetchingHelper.get_channels_set_for_frame(
@@ -110,7 +110,7 @@ class UnifiedAnimationClipArmatureTreeHierarchiesWithDeformSetsFetcher:
         animation_clip: AnimationClip,
         subobjects_dict: Dict[int, Subobject],
         channel_hierarchies: ChannelHierarchies,
-        subobjects_channels_associations: SubobjectsChannelsAssociations) -> Iterator[ArmatureTreeHierarchy]:
+        subobjects_channels_associations: SubobjectsChannelsAssociations) -> Iterator[TreeHierarchy]:
         armature_tree_hierarchies_iterating_helper = ArmatureTreeHierarchiesIteratingHelper()
         yield from armature_tree_hierarchies_iterating_helper \
             .iterate_armature_hierarchies_for(
