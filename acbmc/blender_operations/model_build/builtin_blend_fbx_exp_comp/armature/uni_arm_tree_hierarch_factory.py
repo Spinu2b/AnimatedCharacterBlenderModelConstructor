@@ -6,8 +6,8 @@ from acbmc.blender_operations.model_build.builtin_blend_fbx_exp_comp.armature \
     .channels.uni_chan_arm_tree_hierarch_with_def_sets_help import UnifiedChannelsArmatureTreeHierarchyWithDeformSetsHelper
 from acbmc.blender_operations.model_build.builtin_blend_fbx_exp_comp.armature \
     .channels.uni_chan_arm_tree_hierarch_fact import UnifiedChannelsArmatureTreeHierarchyFactory
-from acbmc.model.blender.constructing.bone_absolute_transform_node_factory import BoneAbsoluteTransformNodeFactory
-from acbmc.model.blender.model.armature.bone_absolute_transform_node import BoneAbsoluteTransformNode
+from acbmc.model.blender.constructing.bone_transform_node_factory import BoneTransformNodeFactory
+from acbmc.model.blender.model.armature.bone_transform_node import BoneTransformNode
 from acbmc.blender_operations.model_build.builtin_blend_fbx_exp_comp \
     .armature.uni_arm_with_deform_sets_bones_nam_help import UnifiedArmatureWithDeformSetsBonesNamingHelper
 from acbmc.util.dict_utils import DictUtils
@@ -24,16 +24,16 @@ class UnifiedArmatureHierarchyChannelsToDeformSetsDataFetchingHelper:
         channel_id: int,
         subobject_number: int,
         bind_bone_poses: Dict[int, TransformNode]
-    ) -> Dict[str, BoneAbsoluteTransformNode]:
+    ) -> Dict[str, BoneTransformNode]:
         
-        result = dict()  # type: Dict[str, BoneAbsoluteTransformNode]
+        result = dict()  # type: Dict[str, BoneTransformNode]
         for bone_in_subobject_index in bind_bone_poses:
             bone_name = UnifiedArmatureWithDeformSetsBonesNamingHelper.get_bone_name_for(
                 bone_in_subobject_index=bone_in_subobject_index,
                 channel_id=channel_id,
                 subobject_number=subobject_number)  # type: str
 
-            result[bone_name] = BoneAbsoluteTransformNodeFactory.get_from_bind_bone_pose(
+            result[bone_name] = BoneTransformNodeFactory.get_from_bind_bone_pose(
                 bone_name=bone_name,
                 bind_bone_pose=bind_bone_poses[bone_in_subobject_index])
         return result
@@ -43,7 +43,7 @@ class UnifiedArmatureHierarchyChannelsToDeformSetsDataFetchingHelper:
         cls,
         channel_id: int,
         subobject_number: int
-    ) -> Dict[str, BoneAbsoluteTransformNode]:
+    ) -> Dict[str, BoneTransformNode]:
         result = dict()
 
         mock_bone_name = \
@@ -52,7 +52,7 @@ class UnifiedArmatureHierarchyChannelsToDeformSetsDataFetchingHelper:
                 subobject_number=subobject_number
             )
 
-        mock_bone_absolute_transform_node = BoneAbsoluteTransformNode()  # use home transform, 0.0-kind position for given subobject
+        mock_bone_absolute_transform_node = BoneTransformNode()  # use home transform, 0.0-kind position for given subobject
         mock_bone_absolute_transform_node.bone_name = mock_bone_name
 
         result[mock_bone_name] = mock_bone_absolute_transform_node
@@ -65,8 +65,8 @@ class UnifiedArmatureHierarchyChannelsToDeformSetsDataFetchingHelper:
         subobjects_dict: Dict[int, Subobject],
         channels_for_subobjects_parenting: Dict[int, List[int]],
         channels_for_subobjects_bones_parenting: Dict[int, Dict[int, List[int]]]
-    ) -> Dict[int, Dict[str, BoneAbsoluteTransformNode]]:
-        result = {channel_id: dict() for channel_id in channels_set}  # type: Dict[int, Dict[str, BoneAbsoluteTransformNode]]
+    ) -> Dict[int, Dict[str, BoneTransformNode]]:
+        result = {channel_id: dict() for channel_id in channels_set}  # type: Dict[int, Dict[str, BoneTransformNode]]
 
         for channel_id in channels_set:
             if channel_id in channels_for_subobjects_bones_parenting:
@@ -113,7 +113,7 @@ class UnifiedArmatureTreeHierarchyFactory:
                  .subobjects_channels_associations_description.channels_for_subobjects_parenting,
                 channels_for_subobjects_bones_parenting=channels_for_subobjects_association \
                  .subobjects_channels_associations_description.channels_for_subobjects_bones_parenting
-            )  # type: Dict[int, Dict[str, BoneAbsoluteTransformNode]]   # These bone transforms should be indeed governing bones' home positions relative to their proper subobject
+            )  # type: Dict[int, Dict[str, BoneTransformNode]]   # These bone transforms should be indeed governing bones' home positions relative to their proper subobject
             # They will be later translated accordingly to channels governing them in that particular armature tree hierarchy
         
         result_armature_tree_hierarchy = \

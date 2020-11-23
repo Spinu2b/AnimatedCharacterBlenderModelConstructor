@@ -1,7 +1,7 @@
 from typing import Dict, Iterator, List, Optional, Set, Tuple
 from acbmc.util.model.tree_hierarchy import TreeHierarchy
 from acbmc.util.tree_iteration_helper import TreeIterationHelper
-from acbmc.model.blender.model.armature.bone_absolute_transform_node import BoneAbsoluteTransformNode
+from acbmc.model.blender.model.armature.bone_transform_node import BoneTransformNode
 from acbmc.util.model.transform_node import TransformNode
 from acbmc.blender_operations.model_build.builtin_blend_fbx_exp_comp \
     .armature.uni_arm_with_deform_sets_bones_nam_help import UnifiedArmatureWithDeformSetsBonesNamingHelper
@@ -37,7 +37,7 @@ class UnifiedChannelsArmatureTreeHierarchyFactory:
                     parent_key= \
                         UnifiedArmatureWithDeformSetsBonesNamingHelper.get_bone_name_for_channel_id(parent_channel_id)
                         if parent_channel_id is not None else None,
-                    node=BoneAbsoluteTransformNode.from_transform_node(
+                    node=BoneTransformNode.from_transform_node(
                         bone_name=
                             UnifiedArmatureWithDeformSetsBonesNamingHelper \
                                 .get_bone_name_for_channel_id(channel_id=channel_id),

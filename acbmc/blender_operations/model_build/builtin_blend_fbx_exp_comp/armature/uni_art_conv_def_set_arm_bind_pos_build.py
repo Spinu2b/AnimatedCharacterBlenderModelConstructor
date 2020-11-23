@@ -4,7 +4,7 @@ from acbmc.util.tree_iteration_helper import TreeIterationHelper
 from acbmc.util.model.transform_node import TransformNode
 from acbmc.blender_operations.model_build \
     .builtin_blend_fbx_exp_comp.armature.uni_arm_with_deform_sets_bones_nam_help import UnifiedArmatureWithDeformSetsBonesNamingHelper
-from acbmc.model.blender.model.armature.bone_absolute_transform_node import BoneAbsoluteTransformNode
+from acbmc.model.blender.model.armature.bone_transform_node import BoneTransformNode
 
 
 class ArmatureBindPoseConsolidationHelper:
@@ -13,7 +13,7 @@ class ArmatureBindPoseConsolidationHelper:
         cls,
         armature_tree_hierarchy_to_consolidate_with: TreeHierarchy,
         result_armature_bind_pose_model: TreeHierarchy
-    ) -> Iterator[Tuple[str, BoneAbsoluteTransformNode]]:
+    ) -> Iterator[Tuple[str, BoneTransformNode]]:
         non_present_nodes_names_set = \
             set(x.key for x in armature_tree_hierarchy_to_consolidate_with.iterate_nodes()) \
             .difference(
@@ -25,15 +25,15 @@ class ArmatureBindPoseConsolidationHelper:
             node_info = armature_tree_hierarchy_to_consolidate_with.get_node(key=node_key)
             parent_node_keys_node_tuples.append((node_info.parent_key, node_key, node_info.node))
 
-        result = []  # type: List[Tuple[Optional[str], str, BoneAbsoluteTransformNode]]
+        result = []  # type: List[Tuple[Optional[str], str, BoneTransformNode]]
         for node_data in parent_node_keys_node_tuples:
             bone_name = node_data[1]  # type: str
             parent_bone_name = node_data[0] # type: Optional[str]
-            node = node_data[2]  # type: BoneAbsoluteTransformNode
+            node = node_data[2]  # type: BoneTransformNode
             if UnifiedArmatureWithDeformSetsBonesNamingHelper.is_channel_bone_name(bone_name):
                 # center all channel bones in zero position, they only will be positioned and assigned properly in hierarchy
                 # in particular animation clips later dynamically since that indeed may change
-                result.append((parent_bone_name, bone_name, BoneAbsoluteTransformNode.get_zero_transform_with_bone_name(bone_name)))
+                result.append((parent_bone_name, bone_name, BoneTransformNode.get_zero_transform_with_bone_name(bone_name)))
             elif UnifiedArmatureWithDeformSetsBonesNamingHelper.is_deform_set_bone(bone_name):
                 # for the sake of convenient artist work with our 3D model we can position subobjects in positions
                 # as they were seen in first animation clip they actually first appeared, for each separate subobject respectively
@@ -81,7 +81,7 @@ class ArmatureBindPoseConsolidationHelper:
                         armature_tree_hierarchy_to_consolidate_with.get_node(key=parent_bone_name) \
                         .node.bone_transform.copy() # type: TransformNode
                     result.append((parent_bone_name, bone_name,
-                        BoneAbsoluteTransformNode.from_transform_node(
+                        BoneTransformNode.from_transform_node(
                             bone_name, deform_set_bone_parent_channel_bone_transform)))
                 else:
                     raise ValueError(
