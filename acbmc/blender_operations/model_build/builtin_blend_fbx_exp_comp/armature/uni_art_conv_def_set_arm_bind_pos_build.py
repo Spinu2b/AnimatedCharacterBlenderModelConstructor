@@ -76,6 +76,18 @@ class ArmatureBindPoseConsolidationHelper:
                 # screw all the 'model after animations modifying stuff' - this won't work already with builtin Blender fbx export
                 # here anyway - we will use Autodesk FBX SDK to implement dedicated FBX export for Blender
 
+                # ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+                # Assume that deform set bone has proper transform already associated
+                # since we refactored the code to flatten the armature earlier in the process
+                # to make use only of deform set bones eventually, without involvement of channel bones
+                deform_set_bone_transform = armature_tree_hierarchy_to_consolidate_with \
+                    .get_node(key=bone_name).node.bone_transform.copy()  # type: TransformNode
+                result.append((parent_bone_name, bone_name,
+                        BoneTransformNode.from_transform_node(
+                            bone_name, deform_set_bone_transform)))
+
+                """
                 if parent_bone_name is not None:
                     deform_set_bone_parent_channel_bone_transform = \
                         armature_tree_hierarchy_to_consolidate_with.get_node(key=parent_bone_name) \
@@ -87,7 +99,8 @@ class ArmatureBindPoseConsolidationHelper:
                     raise ValueError(
                         "Malformed armature hierarchy? Deform set bone seems to have" + \
                         " no parent channel bone associated in this particular hierarchy")
-                    # result.append((parent_bone_name, bone_name, node.copy_as_bone_absolute_transform_node()))
+                    # result.append((parent_bone_name, bone_name, node.copy_as_bone_transform_node()))
+                 """   
             else:
                 raise ValueError("Unrecognized bone name {} to associate armature node kind with it!".format(bone_name))
 

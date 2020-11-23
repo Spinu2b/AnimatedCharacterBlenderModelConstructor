@@ -19,7 +19,7 @@ from acbmc.model.animated_character.model.channel_hierarchies_desc.channel_hiera
 
 class UnifiedArmatureHierarchyChannelsToDeformSetsDataFetchingHelper:
     @classmethod
-    def _get_bind_bone_poses_as_final_armature_absolute_bones_transforms_associated_to_channel(
+    def _get_bind_bone_poses_as_final_armature_bones_transforms_associated_to_channel(
         cls,
         channel_id: int,
         subobject_number: int,
@@ -52,10 +52,10 @@ class UnifiedArmatureHierarchyChannelsToDeformSetsDataFetchingHelper:
                 subobject_number=subobject_number
             )
 
-        mock_bone_absolute_transform_node = BoneTransformNode()  # use home transform, 0.0-kind position for given subobject
-        mock_bone_absolute_transform_node.bone_name = mock_bone_name
+        mock_bone_transform_node = BoneTransformNode()  # use home transform, 0.0-kind position for given subobject
+        mock_bone_transform_node.bone_name = mock_bone_name
 
-        result[mock_bone_name] = mock_bone_absolute_transform_node
+        result[mock_bone_name] = mock_bone_transform_node
         return result
 
     @classmethod
@@ -74,7 +74,7 @@ class UnifiedArmatureHierarchyChannelsToDeformSetsDataFetchingHelper:
                     DictUtils.extend_dict_with_duplicated_keys_errors(
                         base_dict=result[channel_id],
                         extending_dict=
-                        cls._get_bind_bone_poses_as_final_armature_absolute_bones_transforms_associated_to_channel(
+                        cls._get_bind_bone_poses_as_final_armature_bones_transforms_associated_to_channel(
                             channel_id=channel_id,
                             subobject_number=subobject_number,
                             bind_bone_poses=subobjects_dict[subobject_number].geometric_object.bind_bone_poses))
@@ -130,7 +130,10 @@ class UnifiedArmatureTreeHierarchyFactory:
                 channels_armature_tree_hierarchy=result_armature_tree_hierarchy,
                 channels_with_appropriate_subobjects_deform_sets_associations=
                     channels_with_appropriate_subobjects_deform_sets_associations
-                ) 
+                )
+
+        UnifiedArmatureTreeHierarchyToOnlyDeformSetBonesFlattener \
+            .flatten_armature_to_using_only_deform_set_bones_using_channel_bones_transforms_parenting_chains(result_armature_tree_hierarchy) 
 
         UnifiedArmatureTreeHierarchyHelper.make_armature_tree_hierarchy_having_one_root(
             result_armature_tree_hierarchy
