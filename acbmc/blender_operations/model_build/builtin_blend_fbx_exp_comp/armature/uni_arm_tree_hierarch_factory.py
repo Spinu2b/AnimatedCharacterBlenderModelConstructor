@@ -134,7 +134,7 @@ class UnifiedArmatureTreeHierarchyFactory:
                     channels_with_appropriate_subobjects_deform_sets_associations
                 )
 
-        UnifiedArmatureTreeHierarchyToOnlyDeformSetBonesFlattener \
+        result_armature_tree_hierarchy = UnifiedArmatureTreeHierarchyToOnlyDeformSetBonesFlattener \
             .flatten_armature_to_using_only_deform_set_bones_using_channel_bones_transforms_parenting_chains(result_armature_tree_hierarchy) 
 
         UnifiedArmatureTreeHierarchyHelper.make_armature_tree_hierarchy_having_one_root(

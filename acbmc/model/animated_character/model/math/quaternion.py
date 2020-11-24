@@ -11,6 +11,10 @@ class Quaternion:
     def copy(self) -> 'Quaternion':
         return Quaternion(w=self.w, x=self.x, y=self.y, z=self.z)
 
+    @staticmethod
+    def from_blender_quaternion(quaternion: mathutils.Quaternion) -> 'Quaternion':
+        return Quaternion(quaternion.w, quaternion.x, quaternion.y, quaternion.z)
+
     def lerp(quaternion_a: 'Quaternion', quaternion_b: 'Quaternion', interpolation: float) -> 'Quaternion':
         mathutils_quaternion_a = mathutils.Quaternion((quaternion_a.w, quaternion_a.x, quaternion_a.y, quaternion_a.z))
         mathutils_quaternion_b = mathutils.Quaternion((quaternion_b.w, quaternion_b.x, quaternion_b.y, quaternion_b.z))

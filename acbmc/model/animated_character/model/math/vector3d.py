@@ -6,6 +6,10 @@ class Vector3d:
         self.y = y  # type: float
         self.z = z  # type: float
 
+    @staticmethod
+    def from_blender_vector(vector: mathutils.Vector) -> 'Vector3d':
+        return Vector3d(vector.x, vector.y, vector.z)
+
     def copy(self) -> 'Vector3d':
         return Vector3d(x=self.x, y=self.y, z=self.z)
 

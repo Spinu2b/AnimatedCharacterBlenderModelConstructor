@@ -1,4 +1,37 @@
-from acbmc.util.model.tree_hierarchy import TreeHierarchy
+from typing import List, Optional
+from acbmc.blender_operations.model_build.builtin_blend_fbx_exp_comp.armature \
+    .uni_arm_with_deform_sets_bones_nam_help import UnifiedArmatureWithDeformSetsBonesNamingHelper
+from acbmc.util.model.matrix4x4 import Matrix4x4
+from acbmc.model.blender.model.armature.bone_transform_node import BoneTransformNode
+from acbmc.model.blender.model.armature.bone_transform_matrix_node import BoneTransformMatrixNode
+from acbmc.util.model.tree_hierarchy import TreeHierarchy, TreeNodeInfo
+
+
+class BoneMatrixHelper:
+    @classmethod
+    def get_world_matrix_for_bone(cls, bone_name: str, armature_tree_hierarchy: TreeHierarchy) -> Matrix4x4:
+        given_bone_node_info = armature_tree_hierarchy.get_node(key=bone_name)  # type: TreeNodeInfo
+        parent_key = given_bone_node_info.parent_key  # type: Optional[str]
+        local_bone_matrix = given_bone_node_info.node.bone_transform.get_matrix()  # type: Matrix4x4
+
+        if parent_key is None:
+            return local_bone_matrix
+        else:
+            parent_local_matrix = armature_tree_hierarchy.get_node(key=parent_key).node.bone_transform.get_matrix()  # type: Matrix4x4
+            return cls.get_world_matrix_for_bone(parent_key, armature_tree_hierarchy) * (parent_local_matrix.inverted() * local_bone_matrix)
+
+
+class DeformSetBonesWorldMatricesFromUnifiedArmatureFetcher:
+    @classmethod
+    def get_world_matrices_for_deform_set_bones(
+        cls, armature_tree_hierarchy_with_deform_set_bones: TreeHierarchy) -> List[BoneTransformMatrixNode]:
+        result = []  # type: List[BoneTransformMatrixNode]
+        for bone_transform_node_iter in armature_tree_hierarchy_with_deform_set_bones.iterate_nodes():
+            if UnifiedArmatureWithDeformSetsBonesNamingHelper.is_deform_set_bone(bone_transform_node_iter.key):
+                bone_world_matrix = BoneMatrixHelper.get_world_matrix_for_bone(
+                    bone_transform_node_iter.key, armature_tree_hierarchy_with_deform_set_bones)  # type: Matrix4x4
+                result.append(BoneTransformMatrixNode.from_matrix4x4(bone_transform_node_iter.key, bone_world_matrix))
+        return result
 
 
 class UnifiedArmatureTreeHierarchyToOnlyDeformSetBonesFlattener:
@@ -102,5 +135,17 @@ class UnifiedArmatureTreeHierarchyToOnlyDeformSetBonesFlattener:
     @classmethod
     def flatten_armature_to_using_only_deform_set_bones_using_channel_bones_transforms_parenting_chains(
         cls, armature_tree_hierarchy: TreeHierarchy
-    ):
-        raise NotImplementedError
+    ) -> TreeHierarchy:
+        deform_set_bones_world_matrices = \
+            DeformSetBonesWorldMatricesFromUnifiedArmatureFetcher \
+                .get_world_matrices_for_deform_set_bones(armature_tree_hierarchy)  # type: List[BoneTransformMatrixNode]
+
+        result = TreeHierarchy()
+        for bone_world_matrix_node in deform_set_bones_world_matrices:
+            result.add_node(
+                parent_key=None,
+                node_key=bone_world_matrix_node.bone_name,
+                node=BoneTransformNode \
+                    .from_matrix4x4(bone_world_matrix_node.bone_name, bone_world_matrix_node.bone_matrix))
+
+        return result

@@ -13,7 +13,7 @@ class ArmatureBindPoseConsolidationHelper:
         cls,
         armature_tree_hierarchy_to_consolidate_with: TreeHierarchy,
         result_armature_bind_pose_model: TreeHierarchy
-    ) -> Iterator[Tuple[str, BoneTransformNode]]:
+    ) -> Iterator[Tuple[Optional[str], str, BoneTransformNode]]:
         non_present_nodes_names_set = \
             set(x.key for x in armature_tree_hierarchy_to_consolidate_with.iterate_nodes()) \
             .difference(
@@ -110,7 +110,8 @@ class ArmatureBindPoseConsolidationHelper:
                 parent_key_getter=lambda element: element[0],
                 node_key_getter=lambda element: element[1]))
 
-        yield from [(x[1], x[2]) for x in result]
+        yield from result
+        # yield from [(x[1], x[2]) for x in result]
         
 class UnifiedArtistConvenientDeformSetsArmatureBindPoseBuilder:
     def __init__(self):
@@ -124,8 +125,8 @@ class UnifiedArtistConvenientDeformSetsArmatureBindPoseBuilder:
                 armature_tree_hierarchy, self._result
             ):
             self._result.add_node(
-                parent_key=None, node_key=new_prepared_armature_tree_node[0],
-                node=new_prepared_armature_tree_node[1])
+                parent_key=new_prepared_armature_tree_node[0], node_key=new_prepared_armature_tree_node[1],
+                node=new_prepared_armature_tree_node[2])
 
         return self
 
