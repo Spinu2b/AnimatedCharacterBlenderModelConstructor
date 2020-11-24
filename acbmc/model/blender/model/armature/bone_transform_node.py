@@ -25,14 +25,8 @@ class BoneTransformNode:
     def from_matrix4x4(bone_name: str, matrix: Matrix4x4) -> 'BoneTransformNode':
         result = BoneTransformNode()
         result.bone_name = bone_name
-        result.bone_transform = TransformNode()
-
-        position, rotation, scale = matrix.decompose()
-        result.bone_transform.position = position
-        result.bone_transform.rotation = rotation
-        result.bone_transform.scale = scale
+        result.bone_transform = TransformNode.from_matrix4x4(matrix)
         return result
-
 
     @classmethod
     def get_zero_transform_with_bone_name(cls, bone_name: str) -> 'BoneTransformNode':

@@ -39,6 +39,15 @@ class TransformNode:
         return Matrix4x4.from_blender_matrix(result)
 
     @staticmethod
+    def from_matrix4x4(matrix: Matrix4x4) -> 'TransformNode':
+        result = TransformNode()
+        position, rotation, scale = matrix.decompose()
+        result.position = position
+        result.rotation = rotation
+        result.scale = scale
+        return result
+
+    @staticmethod
     def lerp(transform_a: 'TransformNode', transform_b: 'TransformNode', interpolation: float) -> 'TransformNode':
         result = TransformNode()
         result.position = Vector3d.lerp(transform_a.position, transform_b.position, interpolation)
