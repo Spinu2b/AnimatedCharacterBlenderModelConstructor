@@ -25,3 +25,7 @@ class UnifiedArmatureWithDeformSetsBonesNamingHelper:
     @staticmethod
     def is_deform_set_bone(bone_name: str) -> bool:
         return bone_name.startswith('BONE_Subobject_')
+
+    @staticmethod
+    def get_subobject_name(subobject_number: int) -> str:
+        return "SUBOBJECT_{}".format(subobject_number)

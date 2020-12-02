@@ -44,7 +44,6 @@ class Matrix4x4:
         b_matrix = other.to_blender_matrix()
         return Matrix4x4.from_blender_matrix(a_matrix * b_matrix)
 
-
     def inverted(self) -> 'Matrix4x4':
         blender_matrix = self.to_blender_matrix()  # type: mathutils.Matrix
         return Matrix4x4.from_blender_matrix(blender_matrix.inverted())

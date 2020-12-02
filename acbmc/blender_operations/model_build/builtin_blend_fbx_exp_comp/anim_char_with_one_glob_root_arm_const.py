@@ -1,5 +1,7 @@
 from typing import Dict
 from bpy.types import Object
+from acbmc.blender_operations \
+    .model_build.builtin_blend_fbx_exp_comp.subobjects.blender_object_with_mesh_geo_fact import BlenderObjectWithMeshGeometryFactory
 from acbmc.util.model.tree_hierarchy import TreeHierarchy
 from acbmc.model.animated_character.model.subobjects_library_desc.visual_data import VisualData
 from acbmc.blender_operations.model_build.builtin_blend_fbx_exp_comp.subobjects.subobjects_morph_usage_helper import SubobjectsMorphUsageHelper
