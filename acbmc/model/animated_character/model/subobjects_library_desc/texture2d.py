@@ -1,4 +1,6 @@
 
 
 class Texture2D:
-    pass
+    def __init__(self):
+        self.texture_description_identifier = None  # type: str
+        self.image_identifier = None  # type: str

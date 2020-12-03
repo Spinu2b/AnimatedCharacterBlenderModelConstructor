@@ -1,0 +1,4 @@
+
+
+class VisualDataHolder:
+    pass
