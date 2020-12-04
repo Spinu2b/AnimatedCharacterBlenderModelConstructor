@@ -1,3 +1,5 @@
+from acbmc.model.animated_character.model.animation_clips import AnimationClips
+from acbmc.blender_operations.model_build.builtin_blend_fbx_exp_comp.constructing.blender_skin_obj_with_arm_fact import BlenderSkinnedObjectsWithArmatureFactory
 from typing import Dict
 from bpy.types import Object
 from acbmc.blender_operations \
@@ -11,6 +13,13 @@ from acbmc.model.animated_character.model.animated_character_description import 
 
 class AnimatedCharacterWithOneGlobalRootedArmatureConstructor:
     ARMATURE_NAME = "CHARACTER_ARMATURE"
+
+    def _animate_armature_with_animation_clips_creating_actions_in_action_editor(
+        self,
+        animation_clips: AnimationClips, 
+        armature_bind_pose_model: TreeHierarchy, 
+        blender_armature_obj: Object):
+        raise NotImplementedError
 
     def construct_using(
         self,

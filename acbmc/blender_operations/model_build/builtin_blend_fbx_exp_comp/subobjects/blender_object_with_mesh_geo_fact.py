@@ -1,6 +1,8 @@
 from typing import List
 import bpy
 from bpy.types import Mesh, Object
+from acbmc.blender_operations.model_build.builtin_blend_fbx_exp_comp \
+    .subobjects.subobjects_related_data_naming_helper import SubobjectsRelatedDataNamingHelper
 from acbmc.blender_operations.model_build.builtin_blend_fbx_exp_comp.subobjects.visual_data_holder import VisualDataHolder
 from acbmc.blender_operations.model_build.builtin_blend_fbx_exp_comp.subobjects.blender_mesh_material_applier import BlenderMeshMaterialApplier
 from acbmc.model.animated_character.model.math.vector3d import Vector3d
@@ -50,7 +52,7 @@ class BlenderObjectWithMeshGeometryFactory:
         subobject: Subobject) -> Object:
         blender_objects_manipulator = BlenderObjectsManipulator()
 
-        subobject_core_name = UnifiedArmatureWithDeformSetsBonesNamingHelper.get_subobject_name(subobject_number)  # type: str
+        subobject_core_name = SubobjectsRelatedDataNamingHelper.get_subobject_name(subobject_number)  # type: str
 
         mesh_data_block = bpy.data.meshes.new(name=subobject_core_name)  # type: Mesh
         mesh_object = blender_objects_manipulator.create_new_object_with_linked_datablock(

@@ -9,3 +9,6 @@ class VisualData:
         self.materials = dict()  # type: Dict[str, Material]
         self.textures = dict()  # type: Dict[str, Texture2D]
         self.images = dict()  # type: Dict[str, Image]
+
+    def get_one_expected_texture_identifier_or_throw_exception_in_any_other_case(self) -> str:
+        raise NotImplementedError
