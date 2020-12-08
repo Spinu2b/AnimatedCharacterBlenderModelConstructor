@@ -5,18 +5,31 @@ from acbmc.model.animated_character.model \
 
 class BlenderMeshGeometryFactory:
     @classmethod
+    def _get_blender_edges_list(cls, triangles: List[int]) -> List[Tuple[int, int]]:
+        result = []  # type: List[Tuple[int, int]]
+        for triangles_list_elem_index, _ in enumerate(triangles): 
+            if triangles_list_elem_index < len(triangles) - 1:
+                result.append((triangles[triangles_list_elem_index], triangles[triangles_list_elem_index + 1]))
+        return result
+
+    @classmethod
+    def _get_blender_triangles_list(cls, triangles: List[int]) -> List[Tuple[int, int, int]]:
+        result = []  # type: List[Tuple[int, int, int]]
+        triangles_list_elem_index = 0
+        while triangles_list_elem_index < len(triangles):
+            if triangles_list_elem_index < len(triangles) - 2:
+                result.append(
+                    (triangles[triangles_list_elem_index],
+                     triangles[triangles_list_elem_index + 1],
+                     triangles[triangles_list_elem_index + 2]))
+            triangles_list_elem_index += 2
+
+        return result
+
+    @classmethod
     def get_from_geometric_object(cls, geometric_object: GeometricObject) \
          -> Tuple[Iterable[Tuple[float, float, float]], Iterable[Tuple[int, int]], Iterable[Tuple[int, int, int]]]:
-        def flatten(object):
-            for item in object:
-                if isinstance(item, (list)):
-                    yield from flatten(item)
-                else:
-                    yield item
-
         vertices_list = [(v.x, v.y, v.z) for v in geometric_object.vertices]  # type: List[Tuple[float, float, float]]
-        edges_list = [list(x) for x in list(set(flatten([[frozenset([f[0], f[1]]), frozenset([f[1], f[2]]),
-                                                          frozenset([f[2], f[0]])] for f in
-                                                         geometric_object.triangles])))]  # type: List[Tuple[int, int]]
-        triangles_list = [(f[0], f[1], f[2]) for f in geometric_object.triangles]  # type: List[Tuple[int, int, int]]
+        edges_list = cls._get_blender_edges_list(geometric_object.triangles)
+        triangles_list = cls._get_blender_triangles_list(geometric_object.triangles)
         return vertices_list, edges_list, triangles_list
