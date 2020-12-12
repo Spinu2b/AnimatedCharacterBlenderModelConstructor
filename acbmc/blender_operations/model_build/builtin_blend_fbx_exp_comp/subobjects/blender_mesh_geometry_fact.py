@@ -22,7 +22,7 @@ class BlenderMeshGeometryFactory:
                     (triangles[triangles_list_elem_index],
                      triangles[triangles_list_elem_index + 1],
                      triangles[triangles_list_elem_index + 2]))
-            triangles_list_elem_index += 2
+            triangles_list_elem_index += 3
 
         return result
 

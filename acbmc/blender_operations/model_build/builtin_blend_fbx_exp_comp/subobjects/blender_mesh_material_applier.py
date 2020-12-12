@@ -86,8 +86,16 @@ class BlenderMeshMaterialApplier:
             image_name=image_instance_name
         )
 
+        uv_layer_name = SubobjectsRelatedDataNamingHelper.get_uv_layer_name(
+            subobject_number=subobject.object_number,
+            material_identifier=material_identifier,
+            texture_identifier=texture2d_model.texture_description_identifier,
+            image_identifier=image_model.image_description_identifier
+        )
+
         uv_loops_layer = self._apply_uv_map(
-            uv_map=uv_map, mesh_blender_object=mesh_blender_object, subobject=subobject)  # type: MeshUVLoopLayer
+            uv_map=uv_map, uv_layer_name=uv_layer_name,
+            mesh_blender_object=mesh_blender_object, subobject=subobject)  # type: MeshUVLoopLayer
 
         uv_map_node = blender_material_data_block.node_tree.nodes.new(type="ShaderNodeUVMap")
         uv_map_node.uv_map = uv_loops_layer.name
