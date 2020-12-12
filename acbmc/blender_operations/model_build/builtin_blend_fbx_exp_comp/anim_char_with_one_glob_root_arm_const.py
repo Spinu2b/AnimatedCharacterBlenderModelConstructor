@@ -54,7 +54,7 @@ class AnimatedCharacterWithOneGlobalRootedArmatureConstructor:
                 armature_bind_pose_model=armature_bind_pose_model,
                 subobjects=core_subobjects,
                 subobjects_mesh_objects=blender_mesh_objects,
-                name=self.ARMATURE_NAME
+                armature_name=self.ARMATURE_NAME
             )
 
         self._animate_armature_with_animation_clips_creating_actions_in_action_editor(
