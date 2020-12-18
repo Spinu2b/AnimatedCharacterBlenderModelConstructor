@@ -1,5 +1,5 @@
 import copy
-from typing import Any, Optional, List, Iterator
+from typing import Any, Optional, List, Iterator, Tuple
 
 
 class TreeNodeContainer:
@@ -69,7 +69,7 @@ class TreeHierarchy:
         for root in self.roots:                       
             yield from self._traverse_nodes_hierarchy(parent=None, current_node=root)
 
-    def iterate_parent_child_key_pairs(self):
+    def iterate_parent_child_key_pairs(self) -> Iterator[Tuple[Optional[Any], Any]]:
         for node_iter in self.iterate_nodes():
             yield (node_iter.parent_key, node_iter.key)
 

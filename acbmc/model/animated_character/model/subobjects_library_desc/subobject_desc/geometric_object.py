@@ -14,3 +14,6 @@ class GeometricObject:
 
         self.bind_bone_poses = dict()  # type: Dict[int, TransformNode]
         self.bone_weights = dict()  # Dict[int, Dict[int, float]]
+
+    def contains_actual_bones(self) -> bool:
+        return len(self.bind_bone_poses) != 0

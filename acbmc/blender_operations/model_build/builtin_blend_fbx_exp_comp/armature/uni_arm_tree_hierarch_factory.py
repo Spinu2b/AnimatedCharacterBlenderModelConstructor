@@ -32,7 +32,6 @@ class UnifiedArmatureHierarchyChannelsToDeformSetsDataFetchingHelper:
         for bone_in_subobject_index in bind_bone_poses:
             bone_name = UnifiedArmatureWithDeformSetsBonesNamingHelper.get_bone_name_for(
                 bone_in_subobject_index=bone_in_subobject_index,
-                channel_id=channel_id,
                 subobject_number=subobject_number)  # type: str
 
             result[bone_name] = BoneTransformNodeFactory.get_from_bind_bone_pose(
@@ -50,7 +49,6 @@ class UnifiedArmatureHierarchyChannelsToDeformSetsDataFetchingHelper:
 
         mock_bone_name = \
             UnifiedArmatureWithDeformSetsBonesNamingHelper.get_mock_bone_name_for_object_parenting(
-                channel_id=channel_id,
                 subobject_number=subobject_number
             )
 
