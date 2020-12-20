@@ -1,9 +1,9 @@
 from typing import Dict, Tuple
 from bpy.types import Armature, Object
 from acbmc.blender_operations.model_build.builtin_blend_fbx_exp_comp \
-    .constructing.blender_rigging_helper import BlenderRiggingHelper
+    .constructing.armature.blender_armature_constructor import BlenderArmatureConstructor
 from acbmc.blender_operations.model_build.builtin_blend_fbx_exp_comp \
-    .constructing.blender_armature_constructor import BlenderArmatureConstructor
+    .constructing.blender_rigging_helper import BlenderRiggingHelper
 from acbmc.blender_operations.model_build.builtin_blend_fbx_exp_comp \
     .armature.building.blender_edit_mode_arm_model_fact import BlenderEditModeArmatureModelFactory
 from acbmc.model.animated_character.model.subobjects_library_desc.subobject import Subobject

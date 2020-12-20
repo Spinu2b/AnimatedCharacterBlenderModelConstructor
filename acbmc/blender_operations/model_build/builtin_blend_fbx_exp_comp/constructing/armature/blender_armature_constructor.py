@@ -1,7 +1,7 @@
 from typing import Optional, Tuple
 from bpy.types import Armature, Object
-from acbmc.blender_operations.model_build.builtin_blend_fbx_exp_comp \
-    .constructing.blender_armature_generator import BlenderArmatureGenerator
+from acbmc.blender_operations.model_build \
+    .builtin_blend_fbx_exp_comp.constructing.armature.blender_armature_generator import BlenderArmatureGenerator
 from acbmc.util.model.tree_hierarchy import TreeHierarchy
 
 

@@ -11,7 +11,7 @@ from acbmc.util.model.tree_hierarchy import TreeHierarchy
 
 class EditModeBoneNodeDataFactory:
     @classmethod
-    def get_head_and_tail_position_from(transform_node: TransformNode) -> Tuple[Vector3d, Vector3d]:
+    def get_head_and_tail_position_from(cls, transform_node: TransformNode) -> Tuple[Vector3d, Vector3d]:
         raise NotImplementedError
 
 
