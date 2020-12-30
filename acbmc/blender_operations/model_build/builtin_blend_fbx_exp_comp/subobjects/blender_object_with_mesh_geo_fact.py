@@ -62,7 +62,7 @@ class BlenderObjectWithMeshGeometryFactory:
 
         blender_objects_manipulator.deselect_all_objects()
         blender_objects_manipulator.set_active_object_to(mesh_object)
-        blender_objects_manipulator.select_active_object()
+        blender_objects_manipulator.select_active_object(mesh_object)
 
         mesh_geometry = subobject.geometric_object  # type: GeometricObject
         vertices, edges, faces = BlenderMeshGeometryFactory.get_from_geometric_object(mesh_geometry)

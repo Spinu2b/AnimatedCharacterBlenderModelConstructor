@@ -19,3 +19,10 @@ class Vector3d:
 
         interpolated_mathutils_vector = mathutils_vector_a.lerp(mathutils_vector_b, interpolation)  # type: mathutils.Vector
         return Vector3d(interpolated_mathutils_vector.x, interpolated_mathutils_vector.y, interpolated_mathutils_vector.z)
+
+    def __add__(self, other: 'Vector3d') -> 'Vector3d':
+        result = Vector3d()
+        result.x = self.x + other.x
+        result.y = self.y + other.y
+        result.z = self.z + other.z
+        return result

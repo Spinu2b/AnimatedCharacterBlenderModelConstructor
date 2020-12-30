@@ -15,7 +15,8 @@ class BlenderObjectsManipulator:
     def set_active_object_to(self, object: Object):
         bpy.context.view_layer.objects.active = object
 
-    def select_active_object(self):
-        pass
-        # bpy.context.scene.objects.active = 
-        # bpy.context.active_object.select_set(state=True)
+    def select_active_object(self, object: Object):
+        bpy.context.active_object.select_set(state=True)
+
+    def parent_object_to(self, child: Object, parent: Object):
+        child.parent = parent

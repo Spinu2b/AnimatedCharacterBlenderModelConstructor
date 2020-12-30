@@ -20,7 +20,7 @@ class BlenderArmatureGenerator:
         edit_mode_bone_node: EditModeBoneNode):
         blender_armature_bone_creation_manipulator = BlenderArmatureBoneCreationManipulator()
         blender_editor_manipulator = BlenderEditorManipulator()
-        blender_editor_manipulator.enter_edit_mode()
+        # blender_editor_manipulator.enter_edit_mode()
         blender_armature_bone_creation_manipulator.add_bone(
             head_position=edit_mode_bone_node.head_position,
             tail_position=edit_mode_bone_node.tail_position,

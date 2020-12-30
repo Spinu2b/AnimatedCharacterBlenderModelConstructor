@@ -12,7 +12,12 @@ from acbmc.util.model.tree_hierarchy import TreeHierarchy
 class EditModeBoneNodeDataFactory:
     @classmethod
     def get_head_and_tail_position_from(cls, transform_node: TransformNode) -> Tuple[Vector3d, Vector3d]:
-        raise NotImplementedError
+        # screw the bone's orientation, who cares at the moment? :P just put something in here, we will worry later
+
+        head_position = transform_node.position + Vector3d(x=0.1, y=0.0, z=0.0)  # type: Vector3d
+        tail_position = transform_node.position + Vector3d(x=-0.1, y=0.0, z=0.0)  # type: Vector3d
+
+        return head_position, tail_position
 
 
 class BlenderEditModeArmatureModelFactory:
@@ -36,7 +41,7 @@ class BlenderEditModeArmatureModelFactory:
 
                 result_armature_edit_mode_model.add_node(
                     parent_key=UnifiedArmatureWithDeformSetsBonesNamingHelper.get_bone_name_for_root_channel(),
-                    key=bone_name,
+                    node_key=bone_name,
                     node=bone_node
                 )
         else:
@@ -50,7 +55,7 @@ class BlenderEditModeArmatureModelFactory:
 
             result_armature_edit_mode_model.add_node(
                 parent_key=UnifiedArmatureWithDeformSetsBonesNamingHelper.get_bone_name_for_root_channel(),
-                key=bone_name,
+                node_key=bone_name,
                 node=bone_node
             )
 

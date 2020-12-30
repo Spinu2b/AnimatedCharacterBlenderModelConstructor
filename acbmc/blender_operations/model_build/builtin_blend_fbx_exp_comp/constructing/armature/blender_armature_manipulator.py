@@ -14,5 +14,5 @@ class BlenderArmatureManipulator:
         blender_objects_manipulator.link_object_to_the_scene(armature_obj)
         blender_objects_manipulator.deselect_all_objects()
         blender_objects_manipulator.set_active_object_to(armature_obj)
-        blender_objects_manipulator.select_active_object()
+        blender_objects_manipulator.select_active_object(armature_obj)
         return armature, armature_obj
