@@ -1,3 +1,4 @@
+from typing import Callable
 import mathutils
 from acbmc.util.model.matrix4x4 import Matrix4x4
 from acbmc.model.animated_character.model.math.quaternion import Quaternion
@@ -9,6 +10,15 @@ class TransformNode:
         self.position = Vector3d()
         self.rotation = Quaternion()
         self.scale = Vector3d(1.0, 1.0, 1.0)
+
+    def reform_space_model(
+        self,
+        position3d_transformation: Callable[[Vector3d], None],
+        rotation_transformation: Callable[[Quaternion], None]
+    ):
+        position3d_transformation(self.position)
+        rotation_transformation(self.rotation)
+        position3d_transformation(self.scale)
 
     """
     loc = Matrix.Translation(Vector((
