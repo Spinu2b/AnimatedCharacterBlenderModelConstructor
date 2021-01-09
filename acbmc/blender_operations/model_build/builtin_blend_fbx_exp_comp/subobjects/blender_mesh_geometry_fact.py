@@ -7,9 +7,13 @@ class BlenderMeshGeometryFactory:
     @classmethod
     def _get_blender_edges_list(cls, triangles: List[int]) -> List[Tuple[int, int]]:
         result = []  # type: List[Tuple[int, int]]
-        for triangles_list_elem_index, _ in enumerate(triangles): 
-            if triangles_list_elem_index < len(triangles) - 1:
-                result.append((triangles[triangles_list_elem_index], triangles[triangles_list_elem_index + 1]))
+        triangles_list_elem_index = 0
+        while triangles_list_elem_index < len(triangles) - 2:
+            result.append((triangles[triangles_list_elem_index], triangles[triangles_list_elem_index + 1]))
+            result.append((triangles[triangles_list_elem_index + 1], triangles[triangles_list_elem_index + 2]))
+            result.append((triangles[triangles_list_elem_index + 2], triangles[triangles_list_elem_index]))
+            triangles_list_elem_index += 3
+        
         return result
 
     @classmethod
