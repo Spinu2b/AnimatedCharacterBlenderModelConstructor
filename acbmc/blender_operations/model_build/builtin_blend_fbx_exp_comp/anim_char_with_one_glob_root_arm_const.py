@@ -1,5 +1,7 @@
 from typing import Dict
 from bpy.types import Object
+from acbmc.blender_operations.blender_editor_manipulator import BlenderEditorManipulator
+from acbmc.blender_operations.model_build.builtin_blend_fbx_exp_comp.subobjects.mesh_normalizer import MeshNormalizer
 from acbmc.blender_operations.model_build.builtin_blend_fbx_exp_comp.subobjects.visual_data_holder import VisualDataHolder
 from acbmc.model.animated_character.model.animation_clips import AnimationClips
 from acbmc.blender_operations.model_build.builtin_blend_fbx_exp_comp \
@@ -56,6 +58,9 @@ class AnimatedCharacterWithOneGlobalRootedArmatureConstructor:
                 subobjects_mesh_objects=blender_mesh_objects,
                 armature_name=self.ARMATURE_NAME
             )
+
+        for blender_mesh_obj in blender_mesh_objects.values():
+            MeshNormalizer.normalize_mesh(blender_mesh_obj)
 
         self._animate_armature_with_animation_clips_creating_actions_in_action_editor(
             animation_clips=animated_character_description.animation_clips,
