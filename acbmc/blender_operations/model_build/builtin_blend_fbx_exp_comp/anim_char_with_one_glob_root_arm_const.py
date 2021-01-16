@@ -43,9 +43,20 @@ class AnimatedCharacterWithOneGlobalRootedArmatureConstructor:
                 .get_animation_clip_name_for(animation_clip_id)  # type: str
             action = blender_editor_manipulator.enter_animation_clip(name=animation_clip_name)  # type: Action
             blender_editor_manipulator.set_armature_active_action(blender_armature_obj, action)
+            animation_clip_obj = animation_clips_dict[animation_clip_id]
 
             # Here - to implement iterating though animation clip's whole frames and setting bones' actual keyframes
             # here and there
+
+            for pose_armature_hierarchy, animation_frame_number_for_keyframe \
+                in AnimationFramesIteratingHelper \
+                    .iterate_appropriate_pose_armature_hierarchies_for_keyframes_setting(
+                        animation_clip=animation_clip_obj,
+                        armature_bind_pose_hierarchy=armature_bind_pose_model 
+                    ):
+
+                    blender_editor_manipulator.enter_frame_number(frame_number=animation_frame_number_for_keyframe)
+                    self._set_pose_in_current_animation_frame(pose_armature_hierarchy)
             
             raise NotImplementedError
             #animation_frames = animation_clips_dict[animation_clip_id].get_frames_count()  # type: int
