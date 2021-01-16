@@ -1,5 +1,8 @@
 from typing import Dict
-from bpy.types import Object
+from bpy.types import Action, Object
+from acbmc.blender_operations.model_build.builtin_blend_fbx_exp_comp \
+    .armature.uni_arm_with_deform_sets_bones_nam_help import UnifiedArmatureWithDeformSetsBonesNamingHelper
+from acbmc.model.animated_character.model.animation_clips_desc.animation_clip import AnimationClip
 from acbmc.blender_operations.blender_editor_manipulator import BlenderEditorManipulator
 from acbmc.blender_operations.model_build.builtin_blend_fbx_exp_comp.subobjects.mesh_normalizer import MeshNormalizer
 from acbmc.blender_operations.model_build.builtin_blend_fbx_exp_comp.subobjects.visual_data_holder import VisualDataHolder
@@ -23,6 +26,33 @@ class AnimatedCharacterWithOneGlobalRootedArmatureConstructor:
         animation_clips: AnimationClips, 
         armature_bind_pose_model: TreeHierarchy, 
         blender_armature_obj: Object):
+
+        # first let's just animate armature's bones skipping morphs
+        # this will be incremental approach for implementation
+
+        animation_clips_dict = animation_clips.animation_clips  # type: Dict[int, AnimationClip]
+
+        blender_editor_manipulator = BlenderEditorManipulator()
+        blender_editor_manipulator.enter_pose_mode()
+
+        blender_editor_manipulator.set_context_area_ui_type_to_dopesheet()
+        blender_editor_manipulator.set_context_space_data_ui_mode_to_action()
+
+        for animation_clip_id in animation_clips_dict:
+            animation_clip_name = UnifiedArmatureWithDeformSetsBonesNamingHelper \
+                .get_animation_clip_name_for(animation_clip_id)  # type: str
+            action = blender_editor_manipulator.enter_animation_clip(name=animation_clip_name)  # type: Action
+            blender_editor_manipulator.set_armature_active_action(blender_armature_obj, action)
+
+            # Here - to implement iterating though animation clip's whole frames and setting bones' actual keyframes
+            # here and there
+            
+            raise NotImplementedError
+            #animation_frames = animation_clips_dict[animation_clip_id].get_frames_count()  # type: int
+
+            #for animation_frame_number in animation_frames:
+
+ 
         raise NotImplementedError
 
     def construct_using(
