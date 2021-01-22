@@ -26,7 +26,8 @@ class ChannelsWithSubobjectsDeformSetsConvenientArtistGlobalRootedArmatureBindPo
             for armature_tree_hierarchy_with_deform_sets_in_animation_clip in \
                 armature_tree_hierarchies_fetcher.iterate_armature_hierarchies_with_deform_sets_for_animation_clip(
                     animation_clip=animation_clip_obj, subobjects_dict=subobjects_dict,
-                    channel_hierarchies=channel_hierarchies, subobjects_channels_associations=subobjects_channels_associations):
+                    channel_hierarchies=channel_hierarchies, subobjects_channels_associations=subobjects_channels_associations,
+                    new_tree_hierarchy_for_each_keyframes_set_change=False):
                 result_builder.consider_armature_hierarchy_with_deform_sets(armature_tree_hierarchy_with_deform_sets_in_animation_clip)
 
         return result_builder.build()

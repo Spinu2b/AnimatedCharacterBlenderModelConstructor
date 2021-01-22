@@ -24,7 +24,8 @@ class ArmatureTreeHierarchiesIteratingHelper:
         channel_keyframes: Dict[int, Dict[int, TransformNode]],
         subobjects_channels_associations: Dict[str, SubobjectsChannelsAssociation],
         channels_for_subobjects_associations_data: Dict[str, List[AnimationFramesPeriodInfo]],
-        animation_hierarchies: Dict[str, List[AnimationFramesPeriodInfo]]
+        animation_hierarchies: Dict[str, List[AnimationFramesPeriodInfo]],
+        new_tree_hierarchy_for_each_keyframes_set_change: bool,
     ) -> Iterator[TreeHierarchy]:
         first_frame_number = 0
         previous_channels_set = \
@@ -110,7 +111,8 @@ class UnifiedAnimationClipArmatureTreeHierarchiesWithDeformSetsFetcher:
         animation_clip: AnimationClip,
         subobjects_dict: Dict[int, Subobject],
         channel_hierarchies: ChannelHierarchies,
-        subobjects_channels_associations: SubobjectsChannelsAssociations) -> Iterator[TreeHierarchy]:
+        subobjects_channels_associations: SubobjectsChannelsAssociations,
+        new_tree_hierarchy_for_each_keyframes_set_change: bool) -> Iterator[TreeHierarchy]:
         armature_tree_hierarchies_iterating_helper = ArmatureTreeHierarchiesIteratingHelper()
         yield from armature_tree_hierarchies_iterating_helper \
             .iterate_armature_hierarchies_for(
@@ -120,5 +122,6 @@ class UnifiedAnimationClipArmatureTreeHierarchiesWithDeformSetsFetcher:
                 channel_keyframes=animation_clip.channel_keyframes,
                 subobjects_channels_associations=subobjects_channels_associations.subobjects_channels_associations,
                 channels_for_subobjects_associations_data=animation_clip.channels_for_subobjects_associations_data,
-                animation_hierarchies=animation_clip.animation_hierarchies
+                animation_hierarchies=animation_clip.animation_hierarchies,
+                new_tree_hierarchy_for_each_keyframes_set_change=new_tree_hierarchy_for_each_keyframes_set_change
             )
