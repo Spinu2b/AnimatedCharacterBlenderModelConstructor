@@ -25,3 +25,7 @@ class UnifiedArmatureWithDeformSetsBonesNamingHelper:
     @staticmethod
     def is_deform_set_bone(bone_name: str) -> bool:
         return bone_name.startswith('BONE_Subobject_')
+
+    @staticmethod
+    def get_animation_clip_name_for(animation_clip_id: int) -> str:
+        return "ANIMATION_CLIP_{}".format(animation_clip_id)

@@ -1,6 +1,8 @@
 from typing import Dict
 from bpy.types import Action, Object
 from acbmc.blender_operations.model_build.builtin_blend_fbx_exp_comp \
+    .animations.animation_frames_iterating_helper import AnimationFramesIteratingHelper
+from acbmc.blender_operations.model_build.builtin_blend_fbx_exp_comp \
     .armature.uni_arm_with_deform_sets_bones_nam_help import UnifiedArmatureWithDeformSetsBonesNamingHelper
 from acbmc.model.animated_character.model.animation_clips_desc.animation_clip import AnimationClip
 from acbmc.blender_operations.blender_editor_manipulator import BlenderEditorManipulator
@@ -33,7 +35,7 @@ class AnimatedCharacterWithOneGlobalRootedArmatureConstructor:
         animation_clips_dict = animation_clips.animation_clips  # type: Dict[int, AnimationClip]
 
         blender_editor_manipulator = BlenderEditorManipulator()
-        blender_editor_manipulator.enter_pose_mode()
+        blender_editor_manipulator.enter_pose_mode_for_object_as_active_from_object_mode(blender_armature_obj)
 
         blender_editor_manipulator.set_context_area_ui_type_to_dopesheet()
         blender_editor_manipulator.set_context_space_data_ui_mode_to_action()
