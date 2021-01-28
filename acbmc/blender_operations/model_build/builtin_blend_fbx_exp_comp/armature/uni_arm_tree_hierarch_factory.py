@@ -97,10 +97,12 @@ class UnifiedArmatureTreeHierarchyFactory:
     @classmethod
     def derive_armature_tree_hierarchy_for(
         cls,
+        frame_number: int,
         channel_hierarchy: ChannelHierarchy,
         channels_set: Set[int],
-        channel_transforms: Dict[int, TransformNode],
+        particular_frame_channel_transforms: Dict[int, TransformNode],
         channels_for_subobjects_association: SubobjectsChannelsAssociation,
+        channel_keyframes: Dict[int, Dict[int, TransformNode]],
         subobjects_dict: Dict[int, Subobject],
         result_tree_hierarchy_transformation: Optional[Callable[[None], TreeHierarchy]]
     ) -> TreeHierarchy:
@@ -122,7 +124,7 @@ class UnifiedArmatureTreeHierarchyFactory:
                 .construct_pure_channels_armature_tree_hierarchy(
                     channels_set=channels_set,
                     channels_parenting=channels_parenting,
-                    channel_transforms=channel_transforms
+                    channel_transforms=particular_frame_channel_transforms
                 )  # type: TreeHierarchy
 
         UnifiedChannelsArmatureTreeHierarchyWithDeformSetsHelper \
@@ -141,6 +143,10 @@ class UnifiedArmatureTreeHierarchyFactory:
         )
 
         if result_tree_hierarchy_transformation is not None:
-            result_armature_tree_hierarchy = result_tree_hierarchy_transformation(result_armature_tree_hierarchy)
+            result_armature_tree_hierarchy = \
+                result_tree_hierarchy_transformation(
+                    tree_hierarchy=result_armature_tree_hierarchy,
+                    channel_keyframes=channel_keyframes,
+                    frame_number=frame_number)
 
         return result_armature_tree_hierarchy

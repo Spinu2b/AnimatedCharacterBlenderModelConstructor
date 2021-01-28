@@ -1,4 +1,5 @@
 from typing import Dict, Iterator, List, Tuple
+from acbmc.util.model.transform_node import TransformNode
 from acbmc.model.animated_character.model.subobjects_channels_associations import SubobjectsChannelsAssociations
 from acbmc.model.animated_character.model.channel_hierarchies import ChannelHierarchies
 from acbmc.model.animated_character.model.subobjects_library_desc.subobject import Subobject
@@ -10,7 +11,11 @@ from acbmc.model.animated_character.model.animation_clips_desc.animation_clip im
 
 class KeyframeDataFillingPoseHierarchyTransformation:
     @classmethod
-    def transformation(cls) -> TreeHierarchy:
+    def to_keyframed_pose_hierarchy_transformation(
+        cls,
+        tree_hierarchy: TreeHierarchy,
+        channel_keyframes: Dict[int, Dict[int, TransformNode]],
+        frame_number: int) -> TreeHierarchy:
         raise NotImplementedError
 
 
@@ -33,7 +38,7 @@ class AnimationFramesIteratingHelper:
                     channel_hierarchies=channel_hierarchies, subobjects_channels_associations=subobjects_channels_associations,
                     new_tree_hierarchy_for_each_keyframes_set_change=True,
                     result_tree_hierarchy_transformation= \
-                        KeyframeDataFillingPoseHierarchyTransformation.transformation):
+                        KeyframeDataFillingPoseHierarchyTransformation.to_keyframed_pose_hierarchy_transformation):
             
             raise NotImplementedError
         

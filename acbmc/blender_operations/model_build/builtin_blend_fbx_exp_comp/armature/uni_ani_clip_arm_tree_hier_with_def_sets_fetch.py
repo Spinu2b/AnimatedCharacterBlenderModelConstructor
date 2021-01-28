@@ -63,10 +63,12 @@ class ArmatureTreeHierarchiesIteratingHelper:
             channel_hierarchies=channel_hierarchies)  # type: ChannelHierarchy
 
         yield first_frame_number, UnifiedArmatureTreeHierarchyFactory.derive_armature_tree_hierarchy_for(
+            frame_number=first_frame_number,
             channel_hierarchy=previous_channel_hierarchy,
             channels_set=previous_channels_set,
-            channel_transforms=previous_channel_transforms,
+            particular_frame_channel_transforms=previous_channel_transforms,
             channels_for_subobjects_association=previous_channels_for_subobjects_association,
+            channel_keyframes=channel_keyframes,
             subobjects_dict=subobjects_dict,
             result_tree_hierarchy_transformation=result_tree_hierarchy_transformation)
 
@@ -108,10 +110,12 @@ class ArmatureTreeHierarchiesIteratingHelper:
                             new_tree_hierarchy_for_each_keyframes_set_change and \
                             ChannelKeyframesHelper.has_actual_keyframes_in_frame(frame_number, channel_keyframes)):
                         yield frame_number, UnifiedArmatureTreeHierarchyFactory.derive_armature_tree_hierarchy_for(
+                            frame_number=frame_number,
                             channel_hierarchy=current_channel_hierarchy,
                             channels_set=current_channels_set,
-                            channel_transforms=current_channel_transforms,
+                            particular_frame_channel_transforms=current_channel_transforms,
                             channels_for_subobjects_association=current_channels_for_subobjects_association,
+                            channel_keyframes=channel_keyframes,
                             subobjects_dict=subobjects_dict,
                             result_tree_hierarchy_transformation=result_tree_hierarchy_transformation)
 
