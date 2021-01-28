@@ -1,5 +1,7 @@
 from typing import Dict
 from bpy.types import Action, Object
+from acbmc.model.animated_character.model.subobjects_channels_associations import SubobjectsChannelsAssociations
+from acbmc.model.animated_character.model.channel_hierarchies import ChannelHierarchies
 from acbmc.blender_operations.model_build.builtin_blend_fbx_exp_comp \
     .animations.animation_frames_iterating_helper import AnimationFramesIteratingHelper
 from acbmc.blender_operations.model_build.builtin_blend_fbx_exp_comp \
@@ -27,7 +29,10 @@ class AnimatedCharacterWithOneGlobalRootedArmatureConstructor:
         self,
         animation_clips: AnimationClips, 
         armature_bind_pose_model: TreeHierarchy, 
-        blender_armature_obj: Object):
+        blender_armature_obj: Object,
+        subobjects_dict: Dict[int, Subobject],
+        channel_hierarchies: ChannelHierarchies,
+        subobjects_channels_associations: SubobjectsChannelsAssociations):
 
         # first let's just animate armature's bones skipping morphs
         # this will be incremental approach for implementation
@@ -50,11 +55,14 @@ class AnimatedCharacterWithOneGlobalRootedArmatureConstructor:
             # Here - to implement iterating though animation clip's whole frames and setting bones' actual keyframes
             # here and there
 
-            for pose_armature_hierarchy, animation_frame_number_for_keyframe \
+            for animation_frame_number_for_keyframe, pose_armature_hierarchy \
                 in AnimationFramesIteratingHelper \
                     .iterate_appropriate_pose_armature_hierarchies_for_keyframes_setting(
                         animation_clip=animation_clip_obj,
-                        armature_bind_pose_hierarchy=armature_bind_pose_model 
+                        armature_bind_pose_hierarchy=armature_bind_pose_model,
+                        subobjects_dict=subobjects_dict,
+                        channel_hierarchies=channel_hierarchies,
+                        subobjects_channels_associations=subobjects_channels_associations 
                     ):
 
                     blender_editor_manipulator.enter_frame_number(frame_number=animation_frame_number_for_keyframe)
@@ -108,7 +116,10 @@ class AnimatedCharacterWithOneGlobalRootedArmatureConstructor:
         self._animate_armature_with_animation_clips_creating_actions_in_action_editor(
             animation_clips=animated_character_description.animation_clips,
             armature_bind_pose_model=armature_bind_pose_model,
-            blender_armature_obj=blender_armature_obj
+            blender_armature_obj=blender_armature_obj,
+            subobjects_dict=animated_character_description.subobjects_library.subobjects,
+            channel_hierarchies=animated_character_description.channel_hierarchies,
+            subobjects_channels_associations=animated_character_description.subobjects_channels_associations
         )
 
         raise NotImplementedError

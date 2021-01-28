@@ -1,4 +1,4 @@
-from typing import Dict, List, Set
+from typing import Callable, Dict, List, Optional, Set
 from acbmc.blender_operations.model_build.builtin_blend_fbx_exp_comp.armature.uni_arm_tree_hierarch_to_only_def_set_bones_flat \
     import UnifiedArmatureTreeHierarchyToOnlyDeformSetBonesFlattener
 from acbmc.util.model.tree_hierarchy import TreeHierarchy
@@ -101,7 +101,8 @@ class UnifiedArmatureTreeHierarchyFactory:
         channels_set: Set[int],
         channel_transforms: Dict[int, TransformNode],
         channels_for_subobjects_association: SubobjectsChannelsAssociation,
-        subobjects_dict: Dict[int, Subobject]
+        subobjects_dict: Dict[int, Subobject],
+        result_tree_hierarchy_transformation: Optional[Callable[[None], TreeHierarchy]]
     ) -> TreeHierarchy:
     
         channels_parenting = channel_hierarchy.channel_hierarchy.parenting  # type: Dict[int, int]
@@ -138,5 +139,8 @@ class UnifiedArmatureTreeHierarchyFactory:
         UnifiedArmatureTreeHierarchyHelper.make_armature_tree_hierarchy_having_one_root(
             result_armature_tree_hierarchy
         )
+
+        if result_tree_hierarchy_transformation is not None:
+            result_armature_tree_hierarchy = result_tree_hierarchy_transformation(result_armature_tree_hierarchy)
 
         return result_armature_tree_hierarchy
