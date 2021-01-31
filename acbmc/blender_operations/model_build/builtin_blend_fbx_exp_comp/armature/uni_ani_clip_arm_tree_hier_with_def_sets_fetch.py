@@ -24,6 +24,17 @@ class ChannelKeyframesHelper:
         
         raise NotImplementedError
 
+    @classmethod
+    def iterate_keyframe_channel_ids_for_frame(
+        cls,
+        frame_number: int,
+        channel_keyframes: Dict[int, Dict[int, TransformNode]]
+    ) -> Iterator[int]:
+
+        for channel_id in channel_keyframes:
+            if frame_number in channel_keyframes[channel_id]:
+                yield channel_id
+
 
 class ArmatureTreeHierarchiesIteratingHelper:
     def iterate_armature_hierarchies_for(

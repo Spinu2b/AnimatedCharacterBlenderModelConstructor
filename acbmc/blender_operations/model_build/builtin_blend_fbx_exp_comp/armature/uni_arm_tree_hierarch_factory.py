@@ -147,6 +147,8 @@ class UnifiedArmatureTreeHierarchyFactory:
                 result_tree_hierarchy_transformation(
                     tree_hierarchy=result_armature_tree_hierarchy,
                     channel_keyframes=channel_keyframes,
-                    frame_number=frame_number)
+                    frame_number=frame_number,
+                    channel_hierarchy=channel_hierarchy,
+                    channels_for_subobjects_association=channels_for_subobjects_association)
 
         return result_armature_tree_hierarchy
