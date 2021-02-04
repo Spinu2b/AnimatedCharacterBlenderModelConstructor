@@ -14,8 +14,10 @@ class ChannelsHierarchyFlatteningKeyframeDeterminer:
         parent_key = given_bone_node_info.parent_key  # type: Optional[str]
         
         result = False  
-        if parent_key is None:
-            result = given_bone_node_info.node.is_keyframe
+        if given_bone_node_info.node.is_keyframe:
+            result = True
+        elif parent_key is None:
+            result = False
         else:
             result = cls.has_keyframed_node_in_parenting_chain(parent_key, armature_tree_hierarchy)
         return result
