@@ -7,6 +7,20 @@ from acbmc.model.blender.model.armature.bone_transform_matrix_node import BoneTr
 from acbmc.util.model.tree_hierarchy import TreeHierarchy, TreeNodeInfo
 
 
+class ChannelsHierarchyFlatteningKeyframeDeterminer:
+    @classmethod
+    def has_keyframed_node_in_parenting_chain(cls, bone_name: str, armature_tree_hierarchy: TreeHierarchy) -> bool:
+        given_bone_node_info = armature_tree_hierarchy.get_node(key=bone_name)  # type: TreeNodeInfo
+        parent_key = given_bone_node_info.parent_key  # type: Optional[str]
+        
+        result = False  
+        if parent_key is None:
+            result = given_bone_node_info.node.is_keyframe
+        else:
+            result = cls.has_keyframed_node_in_parenting_chain(parent_key, armature_tree_hierarchy)
+        return result
+
+
 class BoneMatrixHelper:
     @classmethod
     def get_world_matrix_for_bone(cls, bone_name: str, armature_tree_hierarchy: TreeHierarchy) -> Matrix4x4:
@@ -30,7 +44,12 @@ class DeformSetBonesWorldMatricesFromUnifiedArmatureFetcher:
             if UnifiedArmatureWithDeformSetsBonesNamingHelper.is_deform_set_bone(bone_transform_node_iter.key):
                 bone_world_matrix = BoneMatrixHelper.get_world_matrix_for_bone(
                     bone_transform_node_iter.key, armature_tree_hierarchy_with_deform_set_bones)  # type: Matrix4x4
-                result.append(BoneTransformMatrixNode.from_matrix4x4(bone_transform_node_iter.key, bone_world_matrix))
+                is_result_node_keyframed = \
+                    ChannelsHierarchyFlatteningKeyframeDeterminer.has_keyframed_node_in_parenting_chain(
+                        bone_transform_node_iter.key, armature_tree_hierarchy_with_deform_set_bones
+                    )    
+                result.append(BoneTransformMatrixNode.from_matrix4x4(
+                    bone_transform_node_iter.key, bone_world_matrix, is_result_node_keyframed))
         return result
 
 
@@ -133,7 +152,7 @@ class UnifiedArmatureTreeHierarchyToOnlyDeformSetBonesFlattener:
     """
 
     @classmethod
-    def flatten_armature_to_using_only_deform_set_bones_using_channel_bones_transforms_parenting_chains(
+    def flatten_armature_to_using_only_deform_set_bones_using_channel_bones_local_transforms_parenting_chains_evaluating_final_keyframes_flags(
         cls, armature_tree_hierarchy: TreeHierarchy
     ) -> TreeHierarchy:
         deform_set_bones_world_matrices = \
@@ -146,6 +165,9 @@ class UnifiedArmatureTreeHierarchyToOnlyDeformSetBonesFlattener:
                 parent_key=None,
                 node_key=bone_world_matrix_node.bone_name,
                 node=BoneTransformNode \
-                    .from_matrix4x4(bone_world_matrix_node.bone_name, bone_world_matrix_node.bone_matrix))
+                    .from_matrix4x4(
+                        bone_world_matrix_node.bone_name,
+                        bone_world_matrix_node.bone_matrix,
+                        bone_world_matrix_node.is_keyframe))
 
         return result

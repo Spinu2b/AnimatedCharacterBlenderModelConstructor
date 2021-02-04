@@ -1,4 +1,6 @@
-from typing import Callable, Dict, Iterator, List, Optional, Set, Tuple
+from typing import Dict, Iterator, List, Set, Tuple
+from acbmc.blender_operations.model_build.builtin_blend_fbx_exp_comp \
+    .armature.channels.uni_chan_arm_tree_hierarch_keyfr_fill import ChannelKeyframesHelper
 from acbmc.util.model.tree_hierarchy import TreeHierarchy
 from acbmc.util.model.transform_node import TransformNode
 from acbmc.blender_operations.model_build.builtin_blend_fbx_exp_comp.armature \
@@ -15,27 +17,6 @@ from acbmc.model.animated_character.model.subobjects_library_desc.subobject impo
 from acbmc.model.animated_character.model.animation_clips_desc.animation_clip import AnimationClip
 
 
-class ChannelKeyframesHelper:
-    @classmethod
-    def has_actual_keyframes_in_frame(
-        cls,
-        frame_number: int,
-        channel_keyframes: Dict[int, Dict[int, TransformNode]]) -> bool:
-        
-        raise NotImplementedError
-
-    @classmethod
-    def iterate_keyframe_channel_ids_for_frame(
-        cls,
-        frame_number: int,
-        channel_keyframes: Dict[int, Dict[int, TransformNode]]
-    ) -> Iterator[int]:
-
-        for channel_id in channel_keyframes:
-            if frame_number in channel_keyframes[channel_id]:
-                yield channel_id
-
-
 class ArmatureTreeHierarchiesIteratingHelper:
     def iterate_armature_hierarchies_for(
         self,
@@ -46,8 +27,7 @@ class ArmatureTreeHierarchiesIteratingHelper:
         subobjects_channels_associations: Dict[str, SubobjectsChannelsAssociation],
         channels_for_subobjects_associations_data: Dict[str, List[AnimationFramesPeriodInfo]],
         animation_hierarchies: Dict[str, List[AnimationFramesPeriodInfo]],
-        new_tree_hierarchy_for_each_keyframes_set_change: bool,
-        result_tree_hierarchy_transformation: Optional[Callable[[None], TreeHierarchy]]
+        new_tree_hierarchy_for_each_keyframes_set_change: bool
     ) -> Iterator[Tuple[int, TreeHierarchy]]:
         first_frame_number = 0
         previous_channels_set = \
@@ -80,8 +60,7 @@ class ArmatureTreeHierarchiesIteratingHelper:
             particular_frame_channel_transforms=previous_channel_transforms,
             channels_for_subobjects_association=previous_channels_for_subobjects_association,
             channel_keyframes=channel_keyframes,
-            subobjects_dict=subobjects_dict,
-            result_tree_hierarchy_transformation=result_tree_hierarchy_transformation)
+            subobjects_dict=subobjects_dict)
 
         for frame_number in range(0, frames_count):
             current_channels_set = AnimationClipModelPartsFetchingHelper.get_channels_set_for_frame(
@@ -127,8 +106,7 @@ class ArmatureTreeHierarchiesIteratingHelper:
                             particular_frame_channel_transforms=current_channel_transforms,
                             channels_for_subobjects_association=current_channels_for_subobjects_association,
                             channel_keyframes=channel_keyframes,
-                            subobjects_dict=subobjects_dict,
-                            result_tree_hierarchy_transformation=result_tree_hierarchy_transformation)
+                            subobjects_dict=subobjects_dict)
 
             previous_channel_hierarchy = current_channel_hierarchy
             previous_channel_transforms = current_channel_transforms
@@ -143,8 +121,7 @@ class UnifiedAnimationClipArmatureTreeHierarchiesWithDeformSetsFetcher:
         subobjects_dict: Dict[int, Subobject],
         channel_hierarchies: ChannelHierarchies,
         subobjects_channels_associations: SubobjectsChannelsAssociations,
-        new_tree_hierarchy_for_each_keyframes_set_change: bool,
-        result_tree_hierarchy_transformation: Optional[Callable[[None], TreeHierarchy]] = None) -> Iterator[Tuple[int, TreeHierarchy]]:
+        new_tree_hierarchy_for_each_keyframes_set_change: bool) -> Iterator[Tuple[int, TreeHierarchy]]:
         armature_tree_hierarchies_iterating_helper = ArmatureTreeHierarchiesIteratingHelper()
         yield from armature_tree_hierarchies_iterating_helper \
             .iterate_armature_hierarchies_for(
@@ -155,6 +132,5 @@ class UnifiedAnimationClipArmatureTreeHierarchiesWithDeformSetsFetcher:
                 subobjects_channels_associations=subobjects_channels_associations.subobjects_channels_associations,
                 channels_for_subobjects_associations_data=animation_clip.channels_for_subobjects_associations_data,
                 animation_hierarchies=animation_clip.animation_hierarchies,
-                new_tree_hierarchy_for_each_keyframes_set_change=new_tree_hierarchy_for_each_keyframes_set_change,
-                result_tree_hierarchy_transformation=result_tree_hierarchy_transformation
+                new_tree_hierarchy_for_each_keyframes_set_change=new_tree_hierarchy_for_each_keyframes_set_change
             )

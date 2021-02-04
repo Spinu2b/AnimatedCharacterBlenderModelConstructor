@@ -22,10 +22,11 @@ class BoneTransformNode:
         return result
 
     @staticmethod
-    def from_matrix4x4(bone_name: str, matrix: Matrix4x4) -> 'BoneTransformNode':
+    def from_matrix4x4(bone_name: str, matrix: Matrix4x4, is_keyframe: bool) -> 'BoneTransformNode':
         result = BoneTransformNode()
         result.bone_name = bone_name
         result.bone_transform = TransformNode.from_matrix4x4(matrix)
+        result.is_keyframe = is_keyframe
         return result
 
     @classmethod
