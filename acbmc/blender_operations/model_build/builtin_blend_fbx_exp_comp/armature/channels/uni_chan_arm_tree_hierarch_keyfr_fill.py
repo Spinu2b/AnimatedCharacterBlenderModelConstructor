@@ -11,8 +11,8 @@ class ChannelKeyframesHelper:
         cls,
         frame_number: int,
         channel_keyframes: Dict[int, Dict[int, TransformNode]]) -> bool:
-        
-        raise NotImplementedError
+
+        return len([x for x in cls.iterate_keyframe_channel_ids_for_frame(frame_number, channel_keyframes)]) != 0
 
     @classmethod
     def iterate_keyframe_channel_ids_for_frame(

@@ -1,5 +1,7 @@
 from typing import Dict
 from bpy.types import Action, Object
+from acbmc.blender_operations.model_build.builtin_blend_fbx_exp_comp \
+    .animations.blender_armature_pose_applier import BlenderArmaturePoseApplier
 from acbmc.model.animated_character.model.subobjects_channels_associations import SubobjectsChannelsAssociations
 from acbmc.model.animated_character.model.channel_hierarchies import ChannelHierarchies
 from acbmc.blender_operations.model_build.builtin_blend_fbx_exp_comp \
@@ -24,6 +26,16 @@ from acbmc.model.animated_character.model.animated_character_description import 
 
 class AnimatedCharacterWithOneGlobalRootedArmatureConstructor:
     ARMATURE_NAME = "CHARACTER_ARMATURE"
+
+    def _set_pose_in_current_animation_frame(
+        self,
+        pose_armature_hierarchy: TreeHierarchy,
+        armature_obj: Object
+    ):
+        BlenderArmaturePoseApplier.setup_pose_keyframe_in_animation_clip(
+            pose_armature_hierarchy,
+            armature_obj
+        )
 
     def _animate_armature_with_animation_clips_creating_actions_in_action_editor(
         self,
@@ -66,15 +78,15 @@ class AnimatedCharacterWithOneGlobalRootedArmatureConstructor:
                     ):
 
                     blender_editor_manipulator.enter_frame_number(frame_number=animation_frame_number_for_keyframe)
-                    self._set_pose_in_current_animation_frame(pose_armature_hierarchy)
+                    self._set_pose_in_current_animation_frame(pose_armature_hierarchy, blender_armature_obj)
             
-            raise NotImplementedError
+            # raise NotImplementedError
             #animation_frames = animation_clips_dict[animation_clip_id].get_frames_count()  # type: int
 
             #for animation_frame_number in animation_frames:
 
  
-        raise NotImplementedError
+        # raise NotImplementedError
 
     def construct_using(
         self,
