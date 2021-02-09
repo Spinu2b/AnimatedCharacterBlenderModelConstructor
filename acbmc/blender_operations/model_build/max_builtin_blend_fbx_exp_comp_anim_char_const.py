@@ -1,3 +1,4 @@
+from acbmc.blender_operations.model_build.builtin_blend_fbx_exp_comp.armature.building.blender_bind_pose_arm_model_fact import BlenderBindPoseArmatureModelFactory
 from acbmc.blender_operations.model_build.builtin_blend_fbx_exp_comp.anim_char_with_one_glob_root_arm_const import \
  AnimatedCharacterWithOneGlobalRootedArmatureConstructor
 from acbmc.blender_operations.model_build.builtin_blend_fbx_exp_comp.uni_glob_root_arm_bind_pose_model_fetch import \
@@ -10,9 +11,15 @@ class MaxBuiltinBlenderFbxExportComplianceAnimatedCharacterConstructor(AnimatedC
     def construct_animated_character(self, animated_character_description: AnimatedCharacterDescription):
         # This bad boy here has to serve us the bind pose model that should be relatively
         #  convenient for animators/3d artists to work with
-        one_unified_global_rooted_armature_bind_pose_model = \
-            UnifiedGlobalRootedArmatureBindPoseModelFetcher(). \
-                get_unified_global_rooted_armature_bind_pose_model(animated_character_description)
+        
+        #one_unified_global_rooted_armature_bind_pose_model = \
+        #    UnifiedGlobalRootedArmatureBindPoseModelFetcher(). \
+        #        get_unified_global_rooted_armature_bind_pose_model(animated_character_description)
+
+        blender_bind_pose_armature_model_factory = BlenderBindPoseArmatureModelFactory()
+
+        bind_pose_armature_bone_transformations_model_from_subobjects_governing_bones = \
+            blender_bind_pose_armature_model_factory.get_blender_armature_model(animated_character_description.subobjects_library.subobjects)
 
         # The known and verified way by me to export to FBX using builting FBX export is to have one global armature with 
         # one root bone, it supports dynamic Child-Of bone constraint so thats fine, we can alter bones' parenting during animations
@@ -36,7 +43,8 @@ class MaxBuiltinBlenderFbxExportComplianceAnimatedCharacterConstructor(AnimatedC
         # We will need to deal with it anyway ourselves, would be cool to have such capability to alter the model freely when it has animations already
 
         AnimatedCharacterWithOneGlobalRootedArmatureConstructor().construct_using(
-            armature_bind_pose_model=one_unified_global_rooted_armature_bind_pose_model,
+            #armature_bind_pose_model=one_unified_global_rooted_armature_bind_pose_model,
+            armature_bind_pose_model=bind_pose_armature_bone_transformations_model_from_subobjects_governing_bones,
             animated_character_description=animated_character_description,
             # setting below flag to False WILL introduce glitches in animations with appearing/disappearing objects 
             # but will work with builtin FBX Blender export

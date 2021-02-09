@@ -134,4 +134,4 @@ class AnimatedCharacterWithOneGlobalRootedArmatureConstructor:
             subobjects_channels_associations=animated_character_description.subobjects_channels_associations
         )
 
-        raise NotImplementedError
+        # raise NotImplementedError
