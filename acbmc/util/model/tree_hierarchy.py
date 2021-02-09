@@ -73,13 +73,20 @@ class TreeHierarchy:
         for node_iter in self.iterate_nodes():
             yield (node_iter.parent_key, node_iter.key)
 
+    def contains_node_key(self, key: Any) -> bool:
+        try:
+            self.get_node(key)
+            return True
+        except KeyError:
+            return False
+
     def get_node(self, key: Any) -> TreeNodeInfo:
         for node_iter in self.iterate_nodes():
             if node_iter.key == key:
                 node = copy.deepcopy(node_iter.node)
                 return TreeNodeInfo(parent_key=node_iter.parent_key if node_iter.parent is not None else None,
                                     node=node)
-        raise Exception("Did not find node of that key in tree hierarchy: {}".format(key))
+        raise KeyError("Did not find node of that key in tree hierarchy: {}".format(key))
 
     def get_node_reference(self, key: Any) -> TreeNodeInfo:
         for node_iter in self.iterate_nodes():
@@ -87,7 +94,7 @@ class TreeHierarchy:
                 node = node_iter.node
                 return TreeNodeInfo(parent_key=node_iter.parent_key if node_iter.parent is not None else None,
                                     node=node)
-        raise Exception("Did not find node of that key in tree hierarchy: {}".format(key))
+        raise KeyError("Did not find node of that key in tree hierarchy: {}".format(key))
 
     # def get_root(self) -> TreeNodeContainer:
     #    return self.root

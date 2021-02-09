@@ -1,4 +1,9 @@
-from acbmc.blender_operations.model_build.builtin_blend_fbx_exp_comp.armature.building.blender_bind_pose_arm_model_fact import BlenderBindPoseArmatureModelFactory
+from typing import Dict
+from acbmc.model.animated_character.model.subobjects_library_desc.subobject import Subobject
+from acbmc.blender_operations.model_build.builtin_blend_fbx_exp_comp \
+    .subobjects.subobjects_morph_usage_helper import SubobjectsMorphUsageHelper
+from acbmc.blender_operations.model_build.builtin_blend_fbx_exp_comp \
+    .armature.building.blender_bind_pose_arm_model_fact import BlenderBindPoseArmatureModelFactory
 from acbmc.blender_operations.model_build.builtin_blend_fbx_exp_comp.anim_char_with_one_glob_root_arm_const import \
  AnimatedCharacterWithOneGlobalRootedArmatureConstructor
 from acbmc.blender_operations.model_build.builtin_blend_fbx_exp_comp.uni_glob_root_arm_bind_pose_model_fetch import \
@@ -18,8 +23,13 @@ class MaxBuiltinBlenderFbxExportComplianceAnimatedCharacterConstructor(AnimatedC
 
         blender_bind_pose_armature_model_factory = BlenderBindPoseArmatureModelFactory()
 
+        core_subobjects = SubobjectsMorphUsageHelper \
+            .get_core_actual_subobjects_considering_morph_data(
+                subobjects=animated_character_description.subobjects_library.subobjects,
+                animation_clips=animated_character_description.animation_clips) # type: Dict[int, Subobject] 
+
         bind_pose_armature_bone_transformations_model_from_subobjects_governing_bones = \
-            blender_bind_pose_armature_model_factory.get_blender_armature_model(animated_character_description.subobjects_library.subobjects)
+            blender_bind_pose_armature_model_factory.get_blender_armature_model(core_subobjects)
 
         # The known and verified way by me to export to FBX using builting FBX export is to have one global armature with 
         # one root bone, it supports dynamic Child-Of bone constraint so thats fine, we can alter bones' parenting during animations

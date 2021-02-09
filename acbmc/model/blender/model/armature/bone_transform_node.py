@@ -15,14 +15,15 @@ class BoneTransformNode:
         return result
 
     @staticmethod
-    def from_transform_node(bone_name: str, transform_node: TransformNode) -> 'BoneTransformNode':
+    def from_transform_node(bone_name: str, transform_node: TransformNode, is_keyframe: bool=False) -> 'BoneTransformNode':
         result = BoneTransformNode()
         result.bone_name = bone_name
         result.bone_transform = transform_node.copy()
+        result.is_keyframe = is_keyframe
         return result
 
     @staticmethod
-    def from_matrix4x4(bone_name: str, matrix: Matrix4x4, is_keyframe: bool) -> 'BoneTransformNode':
+    def from_matrix4x4(bone_name: str, matrix: Matrix4x4, is_keyframe: bool=False) -> 'BoneTransformNode':
         result = BoneTransformNode()
         result.bone_name = bone_name
         result.bone_transform = TransformNode.from_matrix4x4(matrix)
