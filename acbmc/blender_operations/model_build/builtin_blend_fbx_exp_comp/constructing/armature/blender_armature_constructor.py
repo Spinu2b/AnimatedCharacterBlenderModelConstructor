@@ -17,12 +17,14 @@ class BlenderArmatureConstructor:
         armature, armature_obj = blender_armature_generator.create_armature(name=name)
         blender_editor_manipulator = BlenderEditorManipulator()
         blender_editor_manipulator.enter_edit_mode()
+        index = 0
         for edit_mode_bone_node_iter in blender_edit_mode_armature_model.iterate_nodes():
             blender_armature_generator.place_bone(
                 edit_mode_bone_node=edit_mode_bone_node_iter.node,
                 armature=armature,
                 armature_obj=armature_obj
             )
+            index += 1
 
         for child_parent_pair in blender_edit_mode_armature_model.iterate_parent_child_key_pairs():
             parent_key = child_parent_pair[0]  # type: Optional[str]

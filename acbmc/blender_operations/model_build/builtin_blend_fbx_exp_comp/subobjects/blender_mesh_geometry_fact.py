@@ -9,6 +9,19 @@ class BlenderMeshGeometryFactory:
         result = []  # type: List[Tuple[int, int]]
         triangles_list_elem_index = 0
         while triangles_list_elem_index < len(triangles) - 2:
+            # Here might be the bug, check if you actually have legitimately valid edges indices pairs, if they do not repeat
+            # regardless of order etc. Blender actually has assertion enabled in mesh validation in debug variant
+
+            # _BLI_assert_print_backtrace D:\BlenderProject\blender_newest\blender\source\blender\blenlib\intern\BLI_assert.c:39
+            # blender::Map<blender::bke::calc_edges::OrderedEdge,blender::bke::calc_edges::OrigEdgeOrIndex,4,blen D:\BlenderProject\blender_newest\blender\source\blender\blenlib\BLI_map.hh:964
+            # blender::Map<blender::bke::calc_edges::OrderedEdge,blender::bke::calc_edges::OrigEdgeOrIndex,4,blen D:\BlenderProject\blender_newest\blender\source\blender\blenlib\BLI_map.hh:252
+            # blender::Map<blender::bke::calc_edges::OrderedEdge,blender::bke::calc_edges::OrigEdgeOrIndex,4,blen D:\BlenderProject\blender_newest\blender\source\blender\blenlib\BLI_map.hh:238
+            # <lambda_0f72d67394915732a5b660516877bfdb>::operator() D:\BlenderProject\blender_newest\blender\source\blender\blenkernel\intern\mesh_validate.cc:107
+
+            # the error is thrown at the moment when trying to add same element again, in this case the OrderedEdge (with int v_low, v_high)
+            # hint -> write validation for your pairs lists if they do not contain duplicated elements to check where you did logical error
+            # or check at all if you have pairs with same indices, regardless of order
+            
             result.append((triangles[triangles_list_elem_index], triangles[triangles_list_elem_index + 1]))
             result.append((triangles[triangles_list_elem_index + 1], triangles[triangles_list_elem_index + 2]))
             result.append((triangles[triangles_list_elem_index + 2], triangles[triangles_list_elem_index]))

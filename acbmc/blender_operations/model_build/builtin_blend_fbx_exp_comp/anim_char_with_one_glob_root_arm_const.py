@@ -125,13 +125,14 @@ class AnimatedCharacterWithOneGlobalRootedArmatureConstructor:
         for blender_mesh_obj in blender_mesh_objects.values():
             MeshNormalizer.normalize_mesh(blender_mesh_obj)
 
-        self._animate_armature_with_animation_clips_creating_actions_in_action_editor(
-            animation_clips=animated_character_description.animation_clips,
-            armature_bind_pose_model=armature_bind_pose_model,
-            blender_armature_obj=blender_armature_obj,
-            subobjects_dict=animated_character_description.subobjects_library.subobjects,
-            channel_hierarchies=animated_character_description.channel_hierarchies,
-            subobjects_channels_associations=animated_character_description.subobjects_channels_associations
-        )
-
+        
+        #self._animate_armature_with_animation_clips_creating_actions_in_action_editor(
+        #    animation_clips=animated_character_description.animation_clips,
+        #    armature_bind_pose_model=armature_bind_pose_model,
+        #    blender_armature_obj=blender_armature_obj,
+        #    subobjects_dict=core_subobjects,
+        #    channel_hierarchies=animated_character_description.channel_hierarchies,
+        #    subobjects_channels_associations=animated_character_description.subobjects_channels_associations
+        #)
+        
         # raise NotImplementedError

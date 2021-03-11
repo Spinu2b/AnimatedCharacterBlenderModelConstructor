@@ -13,6 +13,11 @@ class BlenderArmaturePoseApplier:
         blender_armature_obj: Object
     ):
         blender_objects_manipulator = BlenderObjectsManipulator()
+
+        # we have a problem here that PoseBones' collection size does not match actual
+        # armature bones' collection size - probably we might need to select all bones of armature
+        # explicitly at first when going to Pose Mode - maybe that could help - to investigate
+
         for animation_frame_bone_transform_node_iter in pose_armature_hierarchy.iterate_nodes():
             # setup only keyframed bones actually in particular frame number,
             # don't care 'bout the rest, as it should be

@@ -13,6 +13,7 @@ class BlenderArmatureBonePoseSetterFacade:
     ):
         pose = blender_armature_obj.pose  # type: Pose
         complementary_pose_bone = pose.bones.get(bone_transform_node.bone_name)  # type: PoseBone
+        complementary_pose_bone.rotation_mode = 'QUATERNION'
 
         loc = mathutils.Matrix.Translation(mathutils.Vector((
             bone_transform_node.bone_transform.position.x,

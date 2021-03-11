@@ -1,5 +1,5 @@
-from acbmc.model.animated_character.model.math.vector3d import Vector3d
 from bpy.types import Armature, EditBone, Object
+from acbmc.model.animated_character.model.math.vector3d import Vector3d
 
 
 class BlenderArmatureBoneCreationManipulator:

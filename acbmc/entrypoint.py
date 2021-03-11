@@ -27,7 +27,7 @@ class SpaceTransformations:
 class ImportAnimatedCharacterLogic:
     def execute(self, filepath_to_import: str):
         animated_character_description = AnimatedCharacterDescriptionLoaderForTesting().load(filepath_to_import)  # type: AnimatedCharacterDescription
-        BlenderSceneManipulator().clear_scene()
+        # BlenderSceneManipulator().clear_scene()
         animated_character_description.reform_space_model(
             position3d_transformation=SpaceTransformations.position3d_transformation,
             rotation_transformation=SpaceTransformations.rotation_transformation
