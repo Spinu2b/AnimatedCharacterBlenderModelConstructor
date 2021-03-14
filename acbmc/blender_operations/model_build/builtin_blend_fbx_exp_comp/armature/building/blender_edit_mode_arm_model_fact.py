@@ -35,4 +35,8 @@ class BlenderEditModeArmatureModelFactory(BlenderArmatureModelFactory):
     def _get_appropriate_subobject_parent_bone_node(self, bone_name: str) -> EditModeBoneNode:
         bone_node = EditModeBoneNode()
         bone_node.bone_name = bone_name
+
+        head_position, tail_position = EditModeBoneNodeDataFactory.get_head_and_tail_position_from(TransformNode())
+        bone_node.head_position = head_position
+        bone_node.tail_position = tail_position
         return bone_node

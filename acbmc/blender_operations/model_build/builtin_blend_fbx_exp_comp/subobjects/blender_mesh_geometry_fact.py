@@ -3,6 +3,18 @@ from acbmc.model.animated_character.model \
     .subobjects_library_desc.subobject_desc.geometric_object import GeometricObject
 
 
+class MeshEdgesValidator:
+    @classmethod
+    def contains_duplicated_vertices_indices_pair_regardless_of_vertices_order(cls, edges_list: List[Tuple[int, int]]) -> bool:
+        sorted_pairs_edges_list = [tuple(sorted(x)) for x in edges_list]
+        sorted_pairs_edges_set = set(sorted_pairs_edges_list)
+        return len(sorted_pairs_edges_set) != len(sorted_pairs_edges_list)
+
+    @classmethod
+    def already_contains_vertices_indices_pair_regardless_of_vertices_order(cls, edge: Tuple[int, int], edges_list: List[Tuple[int, int]]) -> bool:
+        return cls.contains_duplicated_vertices_indices_pair_regardless_of_vertices_order(edges_list + [edge])
+
+
 class BlenderMeshGeometryFactory:
     @classmethod
     def _get_blender_edges_list(cls, triangles: List[int]) -> List[Tuple[int, int]]:
@@ -21,10 +33,17 @@ class BlenderMeshGeometryFactory:
             # the error is thrown at the moment when trying to add same element again, in this case the OrderedEdge (with int v_low, v_high)
             # hint -> write validation for your pairs lists if they do not contain duplicated elements to check where you did logical error
             # or check at all if you have pairs with same indices, regardless of order
+
+            edge_first = (triangles[triangles_list_elem_index], triangles[triangles_list_elem_index + 1])
+            edge_second = (triangles[triangles_list_elem_index + 1], triangles[triangles_list_elem_index + 2])
+            edge_third = (triangles[triangles_list_elem_index + 2], triangles[triangles_list_elem_index])
             
-            result.append((triangles[triangles_list_elem_index], triangles[triangles_list_elem_index + 1]))
-            result.append((triangles[triangles_list_elem_index + 1], triangles[triangles_list_elem_index + 2]))
-            result.append((triangles[triangles_list_elem_index + 2], triangles[triangles_list_elem_index]))
+            if not (MeshEdgesValidator.already_contains_vertices_indices_pair_regardless_of_vertices_order(edge_first, result) \
+                or MeshEdgesValidator.already_contains_vertices_indices_pair_regardless_of_vertices_order(edge_second, result) \
+                    or MeshEdgesValidator.already_contains_vertices_indices_pair_regardless_of_vertices_order(edge_third, result)):
+                result.append(edge_first)
+                result.append(edge_second)
+                result.append(edge_third)
             triangles_list_elem_index += 3
         
         return result
