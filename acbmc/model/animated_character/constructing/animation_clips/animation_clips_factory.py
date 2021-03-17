@@ -18,7 +18,7 @@ class AnimationClipsJsonDictHelperForTesting(AnimationClipsJsonDictHelper):
         for animation_clip_id in animation_clips_json_dict["animationClips"]:
             yield animation_clip_factory.construct_from_json_dict(animation_clips_json_dict["animationClips"][animation_clip_id])
             current_animation_clip_id += 1
-            if current_animation_clip_id > 1:
+            if current_animation_clip_id > 0:
                 break
 
 

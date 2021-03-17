@@ -1,4 +1,5 @@
 from typing import List, Tuple
+from acbmc.model.animated_character.model.math.vector3d import Vector3d
 from acbmc.util.model.transform_node import TransformNode
 from acbmc.model.blender.model.armature.bone_transform_node import BoneTransformNode
 from acbmc.blender_operations.model_build.builtin_blend_fbx_exp_comp \
@@ -13,11 +14,14 @@ class PoseHierarchySubobjectsUsageHelper:
     ):
         for armature_bone_name in all_actual_armature_bones_names:
             if not pose_hierarchy.contains_node_key(armature_bone_name):
+                effectively_zeroed_scale_out_transform_node = TransformNode()
+                effectively_zeroed_scale_out_transform_node.scale = Vector3d(0.0, 0.0, 0.0)
+
                 pose_hierarchy.add_node(
                     parent_key=UnifiedArmatureWithDeformSetsBonesNamingHelper.get_bone_name_for_root_channel(),
                     node_key=armature_bone_name,
                     node=BoneTransformNode.from_transform_node(
-                        bone_name=armature_bone_name, transform_node=TransformNode(), is_keyframe=True)
+                        bone_name=armature_bone_name, transform_node=effectively_zeroed_scale_out_transform_node, is_keyframe=True)
                 )
 
 
