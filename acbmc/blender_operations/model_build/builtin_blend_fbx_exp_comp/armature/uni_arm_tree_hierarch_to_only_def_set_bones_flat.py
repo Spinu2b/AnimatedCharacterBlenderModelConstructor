@@ -35,7 +35,7 @@ class BoneMatrixHelper:
         else:
             parent_local_matrix = armature_tree_hierarchy.get_node(key=parent_key).node.bone_transform.get_matrix()  # type: Matrix4x4
             # return cls.get_world_matrix_for_bone(parent_key, armature_tree_hierarchy) * local_bone_matrix
-            return cls.get_world_matrix_for_bone(parent_key, armature_tree_hierarchy) * (parent_local_matrix.inverted() * local_bone_matrix)
+            return cls.get_world_matrix_for_bone(parent_key, armature_tree_hierarchy).inverted() * (parent_local_matrix.inverted() * local_bone_matrix)
 
 
 class DeformSetBonesWorldMatricesFromUnifiedArmatureFetcher:
