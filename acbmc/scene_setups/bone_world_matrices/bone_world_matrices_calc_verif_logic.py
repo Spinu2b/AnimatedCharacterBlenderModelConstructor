@@ -1,4 +1,5 @@
 from typing import List
+from acbmc.blender_operations.blender_scene_manipulator import BlenderSceneManipulator
 from acbmc.scene_setups.bone_world_matrices \
     .transforms.disp_chain_bones_trans_fact import DisplacedChainedBonesTransformsFactory
 from acbmc.scene_setups.bone_world_matrices.transforms.chain_bon_trans_fact import ChainedBonesTransformsFactory
@@ -15,6 +16,8 @@ from acbmc.blender_operations.model_build.builtin_blend_fbx_exp_comp \
 
 class BoneWorldMatricesCalculationVerificationLogic:
     def _synthetic_transformation_verification_example(self):
+        BlenderSceneManipulator().clear_scene()
+
         home_transform = TransformNode()
 
         first_keyframe = 0
