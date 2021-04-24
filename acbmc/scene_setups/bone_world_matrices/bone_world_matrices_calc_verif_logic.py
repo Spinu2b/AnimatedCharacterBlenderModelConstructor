@@ -20,21 +20,16 @@ class BoneWorldMatricesCalculationVerificationLogic:
         first_keyframe = 0
         second_keyframe = 10
 
-        flat_armature_chained_bones_transforms = \
-            ChainedBonesTransformsFactory.get_armature_chained_bones_transforms_for(
-                bones_count=2, armature_position_offset_from_space_origin=Vector3d()
-            )  # type: List[TransformNode]
-
         chained_armature_chained_bones_transforms = \
             ChainedBonesTransformsFactory.get_armature_chained_bones_transforms_for(
-                bones_count=7, armature_position_offset_from_space_origin=Vector3d(2.0, 2.0, 2.0)
+                bones_count=7
             )  # type: List[TransformNode]
 
         blender_flat_armature_obj, blender_flat_armature_tree_hierarchy = \
             BlenderArmatureBuilder() \
             .with_armature_name("SYNTHETIC_EXAMPLE_FLAT_ARMATURE") \
             .with_bone(name="E1_BONE_TOP", transform=home_transform) \
-            .with_bone(name="E1_BONE_BOTTOM", transform=flat_armature_chained_bones_transforms[1]) \
+            .with_bone(name="E1_BONE_BOTTOM", transform=chained_armature_chained_bones_transforms[6]) \
             .parent_bones(child="E1_BONE_BOTTOM", parent="E1_BONE_TOP") \
             .build()
 

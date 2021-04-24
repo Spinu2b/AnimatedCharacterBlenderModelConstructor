@@ -11,6 +11,13 @@ class TransformNode:
         self.rotation = Quaternion()
         self.scale = Vector3d(1.0, 1.0, 1.0)
 
+    def construct_with(position: Vector3d, rotation: Quaternion, scale: Vector3d) -> 'TransformNode':
+        result = TransformNode()
+        result.position = position.copy()
+        result.rotation = rotation.copy()
+        result.scale = scale.copy()
+        return result
+
     def reform_space_model(
         self,
         position3d_transformation: Callable[[Vector3d], None],
