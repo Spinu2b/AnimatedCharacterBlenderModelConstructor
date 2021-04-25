@@ -65,7 +65,7 @@ class BoneWorldMatricesCalculationVerificationLogic:
         )
 
         animated_armature_tree_hierarchies = BlenderArmatureAnimator \
-            .for_armature(blender_parented_armature_obj) \
+            .for_armature(blender_parented_armature_obj, blender_parented_armature_tree_hierarchy) \
             .animate_bone(name="E2_BONE_TOP",
                           local_transform=displaced_chained_bones_transforms_first_keyframe[0],
                           keyframe_number=first_keyframe) \
@@ -112,13 +112,13 @@ class BoneWorldMatricesCalculationVerificationLogic:
                           keyframe_number=second_keyframe) \
             .commit()
 
-        bone_animation_local_matrix_a = BlenderArmatureBoneCurrentAnimationDataHelper \
-            .get_bone_local_matrix(
-                armature=blender_parented_armature_obj, bone_name="E2_BONE_BOTTOM", frame_number=first_keyframe)
+        #bone_animation_local_matrix_a = BlenderArmatureBoneCurrentAnimationDataHelper \
+        #    .get_bone_local_matrix(
+        #        armature=blender_parented_armature_obj, bone_name="E2_BONE_BOTTOM", frame_number=first_keyframe)
 
-        bone_animation_local_matrix_b = BlenderArmatureBoneCurrentAnimationDataHelper \
-            .get_bone_local_matrix(
-                armature=blender_parented_armature_obj, bone_name="E2_BONE_BOTTOM", frame_number=second_keyframe)
+        #bone_animation_local_matrix_b = BlenderArmatureBoneCurrentAnimationDataHelper \
+        #    .get_bone_local_matrix(
+        #        armature=blender_parented_armature_obj, bone_name="E2_BONE_BOTTOM", frame_number=second_keyframe)
 
         calculated_bone_animation_world_matrix_a = BoneMatrixHelper.get_world_matrix_for_bone(
                     "E2_BONE_BOTTOM", animated_armature_tree_hierarchies[0])  # type: Matrix4x4
@@ -126,7 +126,7 @@ class BoneWorldMatricesCalculationVerificationLogic:
                     "E2_BONE_BOTTOM", animated_armature_tree_hierarchies[1])  # type: Matrix4x4
 
         BlenderArmatureAnimator \
-            .for_armature(blender_flat_armature_obj) \
+            .for_armature(blender_flat_armature_obj, blender_flat_armature_tree_hierarchy) \
             .animate_bone(
                  name="E1_BONE_BOTTOM",
                  local_transform=TransformNode.from_matrix4x4(calculated_bone_animation_world_matrix_a),
@@ -137,11 +137,9 @@ class BoneWorldMatricesCalculationVerificationLogic:
                 keyframe_number=second_keyframe) \
             .commit()
 
-        raise NotImplementedError
-
     def _character_skeleton_animation_transformation_verification_example(self):
         raise NotImplementedError
 
     def execute(self):
         self._synthetic_transformation_verification_example()
-        self._character_skeleton_animation_transformation_verification_example()
+        # self._character_skeleton_animation_transformation_verification_example()
