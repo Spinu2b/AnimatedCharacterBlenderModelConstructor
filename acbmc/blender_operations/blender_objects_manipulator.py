@@ -15,6 +15,9 @@ class BlenderObjectsManipulator:
     def deselect_all_pose_objects(self):
         bpy.ops.pose.select_all(action='DESELECT')
 
+    def select_all_pose_objects(self):
+        bpy.ops.pose.select_all(action='SELECT')
+
     def set_active_object_to(self, object: Object):
         bpy.context.view_layer.objects.active = object
 

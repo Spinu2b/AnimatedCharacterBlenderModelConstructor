@@ -1,9 +1,9 @@
 import bpy
-from acbmc.scene_setups \
-    .bone_world_matrices_calculation_verification_runner \
-     import BoneWorldMatricesCalculationVerificationRunner
 
 from acbmc.runner import BlenderAddonLogicRunner
+from acbmc.scene_setups.bone_world_matrices.runners \
+    .simple_case_mat_calc_verif_run import SimpleCaseMatricesCalculationVerificationRunner
+
 
 
 class RunPythonScriptOperator(bpy.types.Operator):
@@ -11,7 +11,7 @@ class RunPythonScriptOperator(bpy.types.Operator):
     bl_label = "Simple operator"
     bl_description = "Run Python script"
 
-    runner_blender_script = BoneWorldMatricesCalculationVerificationRunner
+    runner_blender_script = SimpleCaseMatricesCalculationVerificationRunner
 
     def execute(self, context):
         self.runner_blender_script().execute()

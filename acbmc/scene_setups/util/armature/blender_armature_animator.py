@@ -1,3 +1,4 @@
+from acbmc.blender_operations.blender_objects_manipulator import BlenderObjectsManipulator
 from typing import Dict, List
 from bpy.types import Object
 from acbmc.model.blender.model.armature.bone_transform_node import BoneTransformNode
@@ -56,6 +57,7 @@ class BlenderArmatureAnimator:
     def commit(self) -> List[TreeHierarchy]:
         result_keyframes_local_bone_transforms_tree_hierarchies = []  # type: List[TreeHierarchy]
         blender_editor_manipulator = BlenderEditorManipulator()
+        blender_objects_manipulator = BlenderObjectsManipulator()
         blender_editor_manipulator.enter_pose_mode_for_object_as_active_from_object_mode(self.blender_armature_obj)
         for keyframe_number in self.bones_keyframes:
             current_pose_hierarchy = \
@@ -65,6 +67,7 @@ class BlenderArmatureAnimator:
                 )
 
             blender_editor_manipulator.enter_frame_number(frame_number=keyframe_number)
+
             BlenderArmaturePoseApplier.setup_pose_keyframe_in_animation_clip(
                 current_pose_hierarchy,
                 self.blender_armature_obj
