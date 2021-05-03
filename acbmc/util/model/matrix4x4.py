@@ -39,7 +39,7 @@ class Matrix4x4:
                 result[i][j] = self.elements[i][j]
         return result
 
-    def __mul__(self, other):
+    def __matmul__(self, other):
         a_matrix = self.to_blender_matrix()
         b_matrix = other.to_blender_matrix()
         return Matrix4x4.from_blender_matrix(a_matrix @ b_matrix)

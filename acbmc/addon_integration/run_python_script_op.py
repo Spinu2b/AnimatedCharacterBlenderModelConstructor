@@ -1,4 +1,3 @@
-
 import bpy
 
 from acbmc.runner import BlenderAddonLogicRunner
@@ -15,7 +14,7 @@ class RunPythonScriptOperator(bpy.types.Operator):
     bl_label = "Simple operator"
     bl_description = "Run Python script"
 
-    runner_blender_script = BoneWorldMatricesCalculationVerificationRunner
+    runner_blender_script = BlenderAddonLogicRunner
 
     def execute(self, context):
         self.runner_blender_script().execute()
