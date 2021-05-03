@@ -1,8 +1,9 @@
 from typing import List
-from acbmc.blender_operations.blender_scene_manipulator import BlenderSceneManipulator
 from acbmc.scene_setups.bone_world_matrices \
-    .transforms.disp_chain_bones_trans_fact import DisplacedChainedBonesTransformsFactory
-from acbmc.scene_setups.bone_world_matrices.transforms.chain_bon_trans_fact import ChainedBonesTransformsFactory
+    .transforms_utils.disp_chain_bones_trans_fact import DisplacedChainedBonesTransformsFactory
+from acbmc.scene_setups.bone_world_matrices \
+    .transforms_utils.chain_bon_trans_fact import ChainedBonesTransformsFactory
+from acbmc.blender_operations.blender_scene_manipulator import BlenderSceneManipulator
 from acbmc.model.animated_character.model.math.vector3d import Vector3d
 from acbmc.scene_setups.util.armature \
     .blender_arm_bone_curr_anim_dat_help import BlenderArmatureBoneCurrentAnimationDataHelper

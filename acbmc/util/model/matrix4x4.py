@@ -42,7 +42,7 @@ class Matrix4x4:
     def __mul__(self, other):
         a_matrix = self.to_blender_matrix()
         b_matrix = other.to_blender_matrix()
-        return Matrix4x4.from_blender_matrix(a_matrix * b_matrix)
+        return Matrix4x4.from_blender_matrix(a_matrix @ b_matrix)
 
     def inverted(self) -> 'Matrix4x4':
         blender_matrix = self.to_blender_matrix()  # type: mathutils.Matrix
