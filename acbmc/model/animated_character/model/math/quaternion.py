@@ -1,3 +1,4 @@
+import math
 import mathutils
 
 
@@ -10,6 +11,18 @@ class Quaternion:
 
     def copy(self) -> 'Quaternion':
         return Quaternion(w=self.w, x=self.x, y=self.y, z=self.z)
+
+    def abs(self) -> float:
+        return math.sqrt(self.w*self.w + self.x*self.x + self.y*self.y + self.z*self.z)
+
+    def __sub__(self, other) -> 'Quaternion':
+        result = Quaternion(
+            w=self.w - other.w,
+            x=self.x - other.x,
+            y=self.y - other.y,
+            z=self.z - other.z
+        )
+        return result
 
     @staticmethod
     def from_blender_quaternion(quaternion: mathutils.Quaternion) -> 'Quaternion':

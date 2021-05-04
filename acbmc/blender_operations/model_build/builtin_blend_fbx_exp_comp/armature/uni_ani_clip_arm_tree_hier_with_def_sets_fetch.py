@@ -1,6 +1,8 @@
 from typing import Dict, Iterator, List, Set, Tuple
+from acbmc.blender_operations.model_build \
+    .builtin_blend_fbx_exp_comp.armature.helpers.chan_tran_mono_analyzer import ChannelTransformsMonotonyAnalyzer
 from acbmc.blender_operations.model_build.builtin_blend_fbx_exp_comp \
-    .armature.helpers.anim_fram_tree_mono_analyzer import AnimationFramesTreesMonotonnyAnalyzer
+    .armature.helpers.anim_fram_tree_mono_analyzer import AnimationFramesTreesMonotonyAnalyzer
 from acbmc.blender_operations.model_build.builtin_blend_fbx_exp_comp \
     .armature.channels.uni_chan_arm_tree_hierarch_keyfr_fill import ChannelKeyframesHelper
 from acbmc.util.model.tree_hierarchy import TreeHierarchy
@@ -31,7 +33,8 @@ class ArmatureTreeHierarchiesIteratingHelper:
         animation_hierarchies: Dict[str, List[AnimationFramesPeriodInfo]],
         new_tree_hierarchy_for_each_keyframes_set_change: bool
     ) -> Iterator[Tuple[int, TreeHierarchy]]:
-        animation_frames_trees_monotonny_analyzer = AnimationFramesTreesMonotonnyAnalyzer()
+        animation_frames_trees_monotony_analyzer = AnimationFramesTreesMonotonyAnalyzer()
+        channel_transforms_monotony_analyzer = ChannelTransformsMonotonyAnalyzer()
     
         first_frame_number = 0
         previous_channels_set = \
@@ -68,7 +71,8 @@ class ArmatureTreeHierarchiesIteratingHelper:
 
         yield first_frame_number, given_tree_hierarchy
 
-        animation_frames_trees_monotonny_analyzer.consider_tree(given_tree_hierarchy)
+        animation_frames_trees_monotony_analyzer.consider_tree(given_tree_hierarchy)
+        channel_transforms_monotony_analyzer.consider_channel_transforms(previous_channel_transforms)
 
         for frame_number in range(0, frames_count):
             current_channels_set = AnimationClipModelPartsFetchingHelper.get_channels_set_for_frame(
@@ -80,7 +84,9 @@ class ArmatureTreeHierarchiesIteratingHelper:
             current_channel_transforms = AnimationClipModelPartsFetchingHelper.get_channel_transforms_for_frame(
                 frame_number=frame_number,
                 frames_count=frames_count,
-                channel_keyframes=channel_keyframes)  # type: Dict[int, TransformNode]    
+                channel_keyframes=channel_keyframes)  # type: Dict[int, TransformNode]
+
+            channel_transforms_monotony_analyzer.consider_channel_transforms(current_channel_transforms)    
 
             current_channels_for_subobjects_association = \
                 AnimationClipModelPartsFetchingHelper.get_channels_for_subobjects_association_for_frame(
@@ -118,15 +124,16 @@ class ArmatureTreeHierarchiesIteratingHelper:
                             subobjects_dict=subobjects_dict)
                         yield frame_number, given_tree_hierarchy
 
-                        animation_frames_trees_monotonny_analyzer.consider_tree(given_tree_hierarchy)
+                        animation_frames_trees_monotony_analyzer.consider_tree(given_tree_hierarchy)
 
             previous_channel_hierarchy = current_channel_hierarchy
             previous_channel_transforms = current_channel_transforms
             previous_channels_for_subobjects_association = current_channels_for_subobjects_association
             previous_channels_set = current_channels_set   
 
-        animation_frames_trees_monotonny_analyzer.raise_exception_if_monotonous()         
-
+        channel_transforms_monotony_analyzer.raise_exception_if_monotonous()
+        animation_frames_trees_monotony_analyzer.raise_exception_if_monotonous()         
+        
 
 class UnifiedAnimationClipArmatureTreeHierarchiesWithDeformSetsFetcher:
     def iterate_armature_hierarchies_with_deform_sets_for_animation_clip(
