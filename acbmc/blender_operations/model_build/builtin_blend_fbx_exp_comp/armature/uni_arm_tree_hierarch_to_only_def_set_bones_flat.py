@@ -1,4 +1,5 @@
 from typing import List, Optional
+from acbmc.util.model.transform_node import TransformNode
 from acbmc.blender_operations.model_build.builtin_blend_fbx_exp_comp.armature \
     .uni_arm_with_deform_sets_bones_nam_help import UnifiedArmatureWithDeformSetsBonesNamingHelper
 from acbmc.util.model.matrix4x4 import Matrix4x4
@@ -33,9 +34,9 @@ class BoneMatrixHelper:
         if parent_key is None:
             return local_bone_matrix
         else:
-            parent_local_matrix = armature_tree_hierarchy.get_node(key=parent_key).node.bone_transform.get_matrix()  # type: Matrix4x4
+            # parent_local_matrix = armature_tree_hierarchy.get_node(key=parent_key).node.bone_transform.get_matrix()  # type: Matrix4x4
             # return cls.get_world_matrix_for_bone(parent_key, armature_tree_hierarchy) * local_bone_matrix
-            return cls.get_world_matrix_for_bone(parent_key, armature_tree_hierarchy) @ (parent_local_matrix.inverted() @ local_bone_matrix)
+            return cls.get_world_matrix_for_bone(parent_key, armature_tree_hierarchy) @ local_bone_matrix
 
 
 class DeformSetBonesWorldMatricesFromUnifiedArmatureFetcher:
