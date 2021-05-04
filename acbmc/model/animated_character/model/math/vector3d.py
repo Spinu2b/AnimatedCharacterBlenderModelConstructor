@@ -1,3 +1,4 @@
+import math
 import mathutils
 
 class Vector3d:
@@ -13,6 +14,9 @@ class Vector3d:
     def copy(self) -> 'Vector3d':
         return Vector3d(x=self.x, y=self.y, z=self.z)
 
+    def magnitude(self) -> float:
+        return math.sqrt(self.x*self.x + self.y*self.y + self.z*self.z) 
+
     def lerp(vector3d_a: 'Vector3d', vector3d_b: 'Vector3d', interpolation: float) -> 'Vector3d':
         mathutils_vector_a = mathutils.Vector((vector3d_a.x, vector3d_a.y, vector3d_a.z))  
         mathutils_vector_b = mathutils.Vector((vector3d_b.x, vector3d_b.y, vector3d_b.z))
@@ -25,4 +29,11 @@ class Vector3d:
         result.x = self.x + other.x
         result.y = self.y + other.y
         result.z = self.z + other.z
+        return result
+
+    def __sub__(self, other: 'Vector3d') -> 'Vector3d':
+        result = Vector3d()
+        result.x = self.x - other.x
+        result.y = self.y - other.y
+        result.z = self.z - other.z
         return result

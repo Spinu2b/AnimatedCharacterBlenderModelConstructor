@@ -28,6 +28,16 @@ class TreeHierarchy:
     def __init__(self):
         self.roots = []  # type: List[TreeNodeContainer]
 
+    def copy_with_nodes_copies(self) -> 'TreeHierarchy':
+        result = TreeHierarchy()
+        for node_iter in self.iterate_nodes():
+            result.add_node(
+                parent_key=node_iter.parent_key,
+                node_key=node_iter.key,
+                node=node_iter.node.copy()
+            )
+        return result
+
     def _traverse_children_recursively_and_put(
             self, parent_key: Any, node_to_put: TreeNodeContainer):
         for node_iter in self.iterate_nodes():

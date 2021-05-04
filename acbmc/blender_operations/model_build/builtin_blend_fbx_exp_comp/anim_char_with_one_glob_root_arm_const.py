@@ -1,4 +1,4 @@
-from typing import Dict
+from typing import Dict, List, Tuple
 from bpy.types import Action, Object
 from acbmc.blender_operations.model_build.builtin_blend_fbx_exp_comp \
     .animations.blender_armature_pose_applier import BlenderArmaturePoseApplier
@@ -85,7 +85,6 @@ class AnimatedCharacterWithOneGlobalRootedArmatureConstructor:
 
             #for animation_frame_number in animation_frames:
 
- 
         # raise NotImplementedError
 
     def construct_using(
@@ -125,7 +124,6 @@ class AnimatedCharacterWithOneGlobalRootedArmatureConstructor:
         for blender_mesh_obj in blender_mesh_objects.values():
             MeshNormalizer.normalize_mesh(blender_mesh_obj)
 
-        
         self._animate_armature_with_animation_clips_creating_actions_in_action_editor(
             animation_clips=animated_character_description.animation_clips,
             armature_bind_pose_model=armature_bind_pose_model,

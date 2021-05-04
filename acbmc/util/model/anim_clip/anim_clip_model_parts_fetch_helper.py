@@ -14,7 +14,6 @@ class ChannelTransformInterpolationHelper:
     ) -> int:
         return [keyframe_key for keyframe_key in sorted(channel_timeline_keyframes) if keyframe_key <= frame_number][-1]
 
-
     @classmethod
     def _is_end_keyframe(cls, keyframe_key: int, channel_timeline_keyframes: Dict[int, TransformNode]) -> bool:
         return keyframe_key >= max(channel_timeline_keyframes)
