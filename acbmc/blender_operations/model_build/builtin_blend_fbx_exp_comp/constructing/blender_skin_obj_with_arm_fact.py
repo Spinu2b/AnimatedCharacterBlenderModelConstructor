@@ -69,9 +69,7 @@ class BlenderSkinnedObjectsWithArmatureFactory:
         blender_armature_constructor = BlenderArmatureConstructor()
 
         blender_edit_mode_armature_model = \
-            blender_edit_mode_armature_model_factory.get_blender_armature_model(
-                subobjects=subobjects
-            )  # type: TreeHierarchy
+            blender_edit_mode_armature_model_factory.get_blender_armature_model(subobjects)  # type: TreeHierarchy
 
         blender_armature_data_block, blender_armature_obj = blender_armature_constructor.build_armature(
             blender_edit_mode_armature_model=blender_edit_mode_armature_model,

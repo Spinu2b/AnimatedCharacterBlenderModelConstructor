@@ -31,43 +31,16 @@ class SpaceTransformations:
     @staticmethod
     def position3d_transformation(vector3d: Vector3d):
         pass
-        altered_vector3d = Vector3d(-vector3d.x, -vector3d.z, vector3d.y)
-        vector3d.x = altered_vector3d.x
-        vector3d.y = altered_vector3d.y
-        vector3d.z = altered_vector3d.z
+        # altered_vector3d = Vector3d(-vector3d.x, -vector3d.z, vector3d.y)
+        # vector3d.x = altered_vector3d.x
+        # vector3d.y = altered_vector3d.y
+        # vector3d.z = altered_vector3d.z
 
         # vector3d.y, vector3d.z = vector3d.z, vector3d.y
 
     @staticmethod
     def rotation_transformation(quaternion: Quaternion):
         pass
-
-        # quaternion = Quaternion(1.0, 0.0, 0.0, 0.0)
-
-        # quaternion.w = 1.0
-        #quaternion.x = 0.0
-        #quaternion.y = 0.0
-        #quaternion.z = 0.0
-        altered_quaternion = Quaternion(-quaternion.w, -quaternion.x, -quaternion.z, quaternion.y)
-        #rotation_axis = Vector3d(x=0.0, y=0.0, z=-1.0).normalized()
-        #rotation_angle = -(math.pi / 2)
-
-        #altered_quaternion = \
-        #(quaternion 
-        #*   QuaternionRotationFactory.get_quaternion_rotate_angle_axis(
-        #        angle_radians=rotation_angle,
-        #        rotation_axis_arg=rotation_axis
-        #    )
-        #*   QuaternionRotationFactory.get_quaternion_rotate_angle_axis(
-        #    angle_radians=rotation_angle,
-        #    rotation_axis_arg=Vector3d(x=1.0, y=0.0, z=0.0).normalized()
-        #    )
-        #).normalized()
-
-        quaternion.w = altered_quaternion.w
-        quaternion.x = altered_quaternion.x
-        quaternion.y = altered_quaternion.y
-        quaternion.z = altered_quaternion.z
         
         # quaternion.y, quaternion.z = quaternion.z, quaternion.y
 
