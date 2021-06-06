@@ -9,6 +9,10 @@ class Quaternion:
         self.y = y  # type: float
         self.z = z  # type: float
 
+    def normalized(self) -> 'Quaternion':
+        magnitude = self.abs()  # type: float
+        return Quaternion(w=self.w / magnitude, x=self.x / magnitude, y=self.y / magnitude, z=self.z / magnitude)
+
     def copy(self) -> 'Quaternion':
         return Quaternion(w=self.w, x=self.x, y=self.y, z=self.z)
 
@@ -37,3 +41,7 @@ class Quaternion:
 
         return Quaternion(w=interpolated_mathutils_quaternion.w, x=interpolated_mathutils_quaternion.x, 
             y=interpolated_mathutils_quaternion.y, z=interpolated_mathutils_quaternion.z)
+
+    def __mul__(self, other) -> 'Quaternion':
+        return Quaternion.from_blender_quaternion(
+            mathutils.Quaternion((self.w, self.x, self.y, self.z)) * mathutils.Quaternion((other.w, other.x, other.y, other.z)))

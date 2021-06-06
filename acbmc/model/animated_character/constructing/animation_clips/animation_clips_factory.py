@@ -14,11 +14,11 @@ class AnimationClipsJsonDictHelper:
 class AnimationClipsJsonDictHelperForTesting(AnimationClipsJsonDictHelper):
     def iterate_animation_clip_objs(self, animation_clips_json_dict) -> Iterator[AnimationClip]:
         animation_clip_factory = AnimationClipFactory()
-        current_animation_clip_id = 0
+        current_animation_clip_id = 1
         for animation_clip_id in animation_clips_json_dict["animationClips"]:
             yield animation_clip_factory.construct_from_json_dict(animation_clips_json_dict["animationClips"][animation_clip_id])
             current_animation_clip_id += 1
-            if current_animation_clip_id > 0:
+            if current_animation_clip_id > 1:
                 break
 
 

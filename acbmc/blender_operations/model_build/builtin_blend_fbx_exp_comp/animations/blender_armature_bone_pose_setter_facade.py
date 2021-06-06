@@ -29,6 +29,7 @@ class BlenderArmatureBonePoseSetterFacade:
         ))).to_matrix().to_4x4()
 
         scale = mathutils.Matrix()
+        # scale.zero()
 
         scale[0][0] = bone_transform_node.bone_transform.scale.x
         scale[1][1] = bone_transform_node.bone_transform.scale.y
@@ -36,11 +37,13 @@ class BlenderArmatureBonePoseSetterFacade:
 
         world_mat = loc @ rot @ scale
 
+        # complementary_pose_bone.matrix = world_mat
+
         complementary_pose_bone.matrix = blender_armature_obj.convert_space(
             pose_bone=complementary_pose_bone,
             matrix=world_mat,
-            from_space='WORLD',
-            to_space='POSE'
+            from_space='LOCAL',
+            to_space='LOCAL'
         )
 
     @classmethod

@@ -11,6 +11,10 @@ class Vector3d:
     def from_blender_vector(vector: mathutils.Vector) -> 'Vector3d':
         return Vector3d(vector.x, vector.y, vector.z)
 
+    def normalized(self) -> 'Vector3d':
+        vector_length = self.magnitude()  # type: float
+        return Vector3d(x=self.x / vector_length, y=self.y / vector_length, z=self.z / vector_length)
+
     def copy(self) -> 'Vector3d':
         return Vector3d(x=self.x, y=self.y, z=self.z)
 

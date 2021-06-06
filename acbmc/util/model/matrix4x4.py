@@ -34,6 +34,7 @@ class Matrix4x4:
 
     def to_blender_matrix(self) -> mathutils.Matrix:
         result = mathutils.Matrix()
+        # result.zero()
         for i in range(4):
             for j in range(4):
                 result[i][j] = self.elements[i][j]

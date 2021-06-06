@@ -131,8 +131,8 @@ class ArmatureTreeHierarchiesIteratingHelper:
             previous_channels_for_subobjects_association = current_channels_for_subobjects_association
             previous_channels_set = current_channels_set   
 
-        channel_transforms_monotony_analyzer.raise_exception_if_monotonous()
-        animation_frames_trees_monotony_analyzer.raise_exception_if_monotonous()         
+        # channel_transforms_monotony_analyzer.raise_exception_if_monotonous()
+        # animation_frames_trees_monotony_analyzer.raise_exception_if_monotonous()         
         
 
 class UnifiedAnimationClipArmatureTreeHierarchiesWithDeformSetsFetcher:

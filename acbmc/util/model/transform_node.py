@@ -49,6 +49,7 @@ class TransformNode:
         rotation = mathutils.Quaternion(
             mathutils.Vector((self.rotation.w, self.rotation.x, self.rotation.y, self.rotation.z))).to_matrix().to_4x4()
         scale = mathutils.Matrix()
+        # scale.zero()
         scale[0][0] = self.scale.x
         scale[1][1] = self.scale.y
         scale[2][2] = self.scale.z
