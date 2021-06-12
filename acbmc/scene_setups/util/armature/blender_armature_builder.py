@@ -1,10 +1,9 @@
 from typing import Dict, List, Tuple
 from bpy.types import Object
+from acbmc.blender_operations.model_build.builtin_blend_fbx_exp_comp \
+    .armature.building.bone_nodes.edit_mode_bone_nodes_factory import EditModeBoneNodeDataFactory
 from acbmc.blender_operations.blender_editor_manipulator import BlenderEditorManipulator
 from acbmc.model.blender.model.armature.bone_transform_node import BoneTransformNode
-from acbmc.blender_operations.model_build \
-    .builtin_blend_fbx_exp_comp.armature \
-        .building.blender_edit_mode_arm_model_fact import EditModeBoneNodeDataFactory
 from acbmc.model.blender.model.armature.edit_mode_bone_node import EditModeBoneNode
 from acbmc.util.tree_iteration_helper import TreeIterationHelper
 from acbmc.blender_operations.model_build \

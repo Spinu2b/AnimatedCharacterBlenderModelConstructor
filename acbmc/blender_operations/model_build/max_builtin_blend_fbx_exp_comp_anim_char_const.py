@@ -1,3 +1,4 @@
+from acbmc.blender_operations.model_build.builtin_blend_fbx_exp_comp.armature.building.bone_nodes.normal_bone_nodes_factory import NormalBoneNodesFactory
 from typing import Dict
 from acbmc.blender_operations.model_build.builtin_blend_fbx_exp_comp \
     .armature.building \
@@ -5,19 +6,15 @@ from acbmc.blender_operations.model_build.builtin_blend_fbx_exp_comp \
 from acbmc.model.animated_character.model.subobjects_library_desc.subobject import Subobject
 from acbmc.blender_operations.model_build.builtin_blend_fbx_exp_comp \
     .subobjects.subobjects_morph_usage_helper import SubobjectsMorphUsageHelper
-from acbmc.blender_operations.model_build.builtin_blend_fbx_exp_comp \
-    .armature.building.blender_bind_pose_arm_model_fact import BlenderBindPoseArmatureModelFactory
 from acbmc.blender_operations.model_build.builtin_blend_fbx_exp_comp.anim_char_with_one_glob_root_arm_const import \
  AnimatedCharacterWithOneGlobalRootedArmatureConstructor
-from acbmc.blender_operations.model_build.builtin_blend_fbx_exp_comp.uni_glob_root_arm_bind_pose_model_fetch import \
- UnifiedGlobalRootedArmatureBindPoseModelFetcher
 from acbmc.model.animated_character.model.animated_character_description import AnimatedCharacterDescription
 from acbmc.blender_operations.model_build.animated_character_constructor import AnimatedCharacterConstructor
 
 
 class MaxBuiltinBlenderFbxExportComplianceAnimatedCharacterConstructor(AnimatedCharacterConstructor):
     def construct_animated_character(self, animated_character_description: AnimatedCharacterDescription):
-        blender_bind_pose_armature_model_factory = BlenderBindPoseArmatureModelWithChannelsFactory()
+        blender_bind_pose_armature_model_factory = BlenderBindPoseArmatureModelWithChannelsFactory(NormalBoneNodesFactory())
 
         core_subobjects = SubobjectsMorphUsageHelper \
             .get_core_actual_subobjects_considering_morph_data(
@@ -29,7 +26,7 @@ class MaxBuiltinBlenderFbxExportComplianceAnimatedCharacterConstructor(AnimatedC
 
         bind_pose_armature_model_with_channel_bones = \
             blender_bind_pose_armature_model_factory.get_blender_armature_model(
-                [core_subobjects, ]
+                [core_subobjects, animated_character_description.channel_hierarchies.channel_hierarchies]
             )
 
         AnimatedCharacterWithOneGlobalRootedArmatureConstructor().construct_using(
