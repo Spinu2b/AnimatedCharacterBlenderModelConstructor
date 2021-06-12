@@ -5,11 +5,11 @@ from acbmc.blender_operations.model_build.builtin_blend_fbx_exp_comp \
 
 
 class NormalBoneNodesFactory(BoneNodesFactory):
-    def get_appropriate_subobject_actual_bone_node(
+    def get_bone_node(
         self, bone_bind_pose: TransformNode, bone_name: str) -> BoneTransformNode:
         return BoneTransformNode.from_transform_node(bone_name=bone_name, transform_node=bone_bind_pose)
 
-    def get_appropriate_subobject_parent_bone_node(self, bone_name: str) -> BoneTransformNode:
+    def get_home_transformed_bone_node(self, bone_name: str) -> BoneTransformNode:
         result = BoneTransformNode()
         result.bone_name = bone_name
         return result

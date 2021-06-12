@@ -1,5 +1,10 @@
 from typing import Dict, Tuple
 from bpy.types import Armature, Object
+from acbmc.model.animated_character.model.channel_hierarchies_desc.channel_hierarchy import ChannelHierarchy
+from acbmc.blender_operations.model_build.builtin_blend_fbx_exp_comp \
+    .armature.building.bone_nodes.edit_mode_bone_nodes_factory import EditModeBoneNodesFactory
+from acbmc.blender_operations.model_build.builtin_blend_fbx_exp_comp \
+    .armature.building.blender_bind_pos_arm_model_with_chan_fact import BlenderBindPoseArmatureModelWithChannelsFactory
 from acbmc.blender_operations.model_build \
     .builtin_blend_fbx_exp_comp.armature.uni_arm_with_deform_sets_bones_nam_help import UnifiedArmatureWithDeformSetsBonesNamingHelper
 from acbmc.model.animated_character.model.math.vector3d import Vector3d
@@ -63,13 +68,14 @@ class BlenderSkinnedObjectsWithArmatureFactory:
         subobjects: Dict[int, Subobject],
         subobjects_mesh_objects: Dict[int, Object],
         armature_bind_pose_model: TreeHierarchy,
+        channel_hierarchies: Dict[str, ChannelHierarchy],
         armature_name: str) -> Tuple[Armature, Object]:
 
-        blender_edit_mode_armature_model_factory = BlenderEditModeArmatureModelFactory()
+        blender_edit_mode_armature_model_factory = BlenderBindPoseArmatureModelWithChannelsFactory(EditModeBoneNodesFactory())
         blender_armature_constructor = BlenderArmatureConstructor()
 
         blender_edit_mode_armature_model = \
-            blender_edit_mode_armature_model_factory.get_blender_armature_model(subobjects)  # type: TreeHierarchy
+            blender_edit_mode_armature_model_factory.get_blender_armature_model([subobjects, channel_hierarchies])  # type: TreeHierarchy
 
         blender_armature_data_block, blender_armature_obj = blender_armature_constructor.build_armature(
             blender_edit_mode_armature_model=blender_edit_mode_armature_model,

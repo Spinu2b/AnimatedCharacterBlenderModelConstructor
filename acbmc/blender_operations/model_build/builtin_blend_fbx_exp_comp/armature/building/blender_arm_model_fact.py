@@ -25,17 +25,18 @@ class BlenderArmatureModelFactory(ABC):
                     bone_in_subobject_index=bone_index, subobject_number=subobject_number
                 )
 
-                bone_node = self.bone_nodes_factory.get_appropriate_subobject_actual_bone_node(bone_bind_pose, bone_name)
+                bone_node = self.bone_nodes_factory.get_bone_node(bone_bind_pose, bone_name)
                 #bone_node = EditModeBoneNode()
                 #bone_node.bone_name = bone_name
                 #head_position, tail_position = EditModeBoneNodeDataFactory.get_head_and_tail_position_from(bone_bind_pose)
                 #bone_node.head_position = head_position
                 #bone_node.tail_position = tail_position
 
+                # do not parent subobjects deform set bones to one root bone yet
                 result_armature_edit_mode_model.add_node(
-                    parent_key=UnifiedArmatureWithDeformSetsBonesNamingHelper.get_bone_name_for_root_channel(),
-                    node_key=bone_name,
-                    node=bone_node
+                   parent_key=None,
+                   node_key=bone_name,
+                   node=bone_node
                 )
         else:
             bone_name = \
@@ -43,14 +44,16 @@ class BlenderArmatureModelFactory(ABC):
                     subobject_number=subobject_number
                 )
 
-            bone_node = self.bone_nodes_factory.get_appropriate_subobject_parent_bone_node(bone_name)
+            bone_node = self.bone_nodes_factory.get_home_transformed_bone_node(bone_name)
             # bone_node = EditModeBoneNode()
             # bone_node.bone_name = bone_name
 
+
+            # do not parent subobjects deform set bones to one root bone yet
             result_armature_edit_mode_model.add_node(
-                parent_key=UnifiedArmatureWithDeformSetsBonesNamingHelper.get_bone_name_for_root_channel(),
-                node_key=bone_name,
-                node=bone_node
+               parent_key=None,
+               node_key=bone_name,
+               node=bone_node
             )
     
     def get_blender_armature_model(self, data: any) -> TreeHierarchy:
@@ -60,7 +63,7 @@ class BlenderArmatureModelFactory(ABC):
 
         root_bone_name = UnifiedArmatureWithDeformSetsBonesNamingHelper.get_bone_name_for_root_channel()
 
-        root_bone_node = self.bone_nodes_factory.get_appropriate_subobject_parent_bone_node(root_bone_name)
+        root_bone_node = self.bone_nodes_factory.get_home_transformed_bone_node(root_bone_name)
         # root_bone_node = EditModeBoneNode()
         # root_bone_node.bone_name = root_bone_name
 

@@ -18,7 +18,7 @@ class EditModeBoneNodeDataFactory:
 
 
 class EditModeBoneNodesFactory(BoneNodesFactory):
-    def get_appropriate_subobject_actual_bone_node(
+    def get_bone_node(
         self, bone_bind_pose: TransformNode, bone_name: str) -> EditModeBoneNode:
         bone_node = EditModeBoneNode()
         bone_node.bone_name = bone_name
@@ -27,7 +27,7 @@ class EditModeBoneNodesFactory(BoneNodesFactory):
         bone_node.tail_position = tail_position
         return bone_node
 
-    def get_appropriate_subobject_parent_bone_node(self, bone_name: str) -> EditModeBoneNode:
+    def get_home_transformed_bone_node(self, bone_name: str) -> EditModeBoneNode:
         bone_node = EditModeBoneNode()
         bone_node.bone_name = bone_name
 
