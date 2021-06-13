@@ -1,6 +1,6 @@
-from acbmc.blender_operations.model_build.builtin_blend_fbx_exp_comp.armature.building.bone_nodes.bone_nodes_factory import BoneNodesFactory
-from typing import Any, Dict
-from abc import ABC, abstractmethod
+from typing import Dict
+from acbmc.blender_operations.model_build.builtin_blend_fbx_exp_comp \
+    .armature.building.bone_nodes.bone_nodes_factory import BoneNodesFactory
 from acbmc.blender_operations.model_build \
     .builtin_blend_fbx_exp_comp.armature \
     .uni_arm_with_deform_sets_bones_nam_help import UnifiedArmatureWithDeformSetsBonesNamingHelper
@@ -9,7 +9,7 @@ from acbmc.model.animated_character.model.subobjects_library_desc.subobject impo
 from acbmc.util.model.transform_node import TransformNode
 
 
-class BlenderArmatureModelFactory(ABC):
+class BlenderArmatureModelFactory:
     def __init__(self, bone_nodes_factory: BoneNodesFactory):
         self.bone_nodes_factory = bone_nodes_factory
 
@@ -61,16 +61,16 @@ class BlenderArmatureModelFactory(ABC):
 
         subobjects = data  # type: Dict[int, Subobject]
 
-        root_bone_name = UnifiedArmatureWithDeformSetsBonesNamingHelper.get_bone_name_for_root_channel()
+        # root_bone_name = UnifiedArmatureWithDeformSetsBonesNamingHelper.get_bone_name_for_root_channel()
 
-        root_bone_node = self.bone_nodes_factory.get_home_transformed_bone_node(root_bone_name)
+        # root_bone_node = self.bone_nodes_factory.get_home_transformed_bone_node(root_bone_name)
         # root_bone_node = EditModeBoneNode()
         # root_bone_node.bone_name = root_bone_name
 
-        result.add_node(
-            parent_key=None,
-            node_key=root_bone_name,
-            node=root_bone_node)
+        # result.add_node(
+        #    parent_key=None,
+        #    node_key=root_bone_name,
+        #    node=root_bone_node)
 
         for subobject_number in subobjects:
             subobj = subobjects[subobject_number]  # type: Subobject

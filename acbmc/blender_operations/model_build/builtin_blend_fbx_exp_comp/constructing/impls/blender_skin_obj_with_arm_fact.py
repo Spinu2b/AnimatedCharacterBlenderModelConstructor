@@ -1,12 +1,15 @@
-from typing import Dict, Tuple
+from typing import Any, Dict, Tuple
 from bpy.types import Armature, Object
+from acbmc.blender_operations.model_build \
+    .builtin_blend_fbx_exp_comp.armature.building.blender_arm_model_fact import BlenderArmatureModelFactory
 from acbmc.model.animated_character.model.channel_hierarchies_desc.channel_hierarchy import ChannelHierarchy
 from acbmc.blender_operations.model_build.builtin_blend_fbx_exp_comp \
     .armature.building.bone_nodes.edit_mode_bone_nodes_factory import EditModeBoneNodesFactory
 from acbmc.blender_operations.model_build.builtin_blend_fbx_exp_comp \
     .armature.building.blender_bind_pos_arm_model_with_chan_fact import BlenderBindPoseArmatureModelWithChannelsFactory
 from acbmc.blender_operations.model_build \
-    .builtin_blend_fbx_exp_comp.armature.uni_arm_with_deform_sets_bones_nam_help import UnifiedArmatureWithDeformSetsBonesNamingHelper
+    .builtin_blend_fbx_exp_comp.armature.uni_arm_with_deform_sets_bones_nam_help import \
+     UnifiedArmatureWithDeformSetsBonesNamingHelper
 from acbmc.model.animated_character.model.math.vector3d import Vector3d
 from acbmc.blender_operations.model_build.builtin_blend_fbx_exp_comp \
     .constructing.armature.blender_armature_constructor import BlenderArmatureConstructor
@@ -39,9 +42,11 @@ class ObjectBoneParentingBoneWeightsHelper:
 
 
 class BlenderSkinnedObjectsWithArmatureFactory:
-    @classmethod
+    def __init__(self, blender_edit_mode_armature_model_factory: BlenderArmatureModelFactory):
+        self.blender_edit_mode_armature_model_factory = blender_edit_mode_armature_model_factory
+
     def _parent_blender_object_to_armature_with_bones_vertex_groups(
-        cls,
+        self,
         armature_obj: Object,
         subobject: Subobject,
         blender_mesh_obj: Object
@@ -62,20 +67,19 @@ class BlenderSkinnedObjectsWithArmatureFactory:
                 blender_mesh_obj=blender_mesh_obj
             )
 
-    @classmethod
     def build_armature_considering_skinned_subobjects_and_target_bind_pose_model(
-        cls,
+        self,
         subobjects: Dict[int, Subobject],
         subobjects_mesh_objects: Dict[int, Object],
         armature_bind_pose_model: TreeHierarchy,
         channel_hierarchies: Dict[str, ChannelHierarchy],
-        armature_name: str) -> Tuple[Armature, Object]:
+        armature_name: str,
+        armature_constructing_data: Any) -> Tuple[Armature, Object]:
 
-        blender_edit_mode_armature_model_factory = BlenderBindPoseArmatureModelWithChannelsFactory(EditModeBoneNodesFactory())
         blender_armature_constructor = BlenderArmatureConstructor()
 
         blender_edit_mode_armature_model = \
-            blender_edit_mode_armature_model_factory.get_blender_armature_model([subobjects, channel_hierarchies])  # type: TreeHierarchy
+            self.blender_edit_mode_armature_model_factory.get_blender_armature_model(armature_constructing_data)  # type: TreeHierarchy
 
         blender_armature_data_block, blender_armature_obj = blender_armature_constructor.build_armature(
             blender_edit_mode_armature_model=blender_edit_mode_armature_model,
@@ -83,7 +87,7 @@ class BlenderSkinnedObjectsWithArmatureFactory:
         )
 
         for subobject in subobjects.values():
-            cls._parent_blender_object_to_armature_with_bones_vertex_groups(
+            self._parent_blender_object_to_armature_with_bones_vertex_groups(
                 armature_obj=blender_armature_obj,
                 subobject=subobject,
                 blender_mesh_obj=subobjects_mesh_objects[subobject.object_number]
