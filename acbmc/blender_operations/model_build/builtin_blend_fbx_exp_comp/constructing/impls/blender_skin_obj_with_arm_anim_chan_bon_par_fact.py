@@ -23,12 +23,14 @@ class ChildOfConstraintSettingHelper:
     def _set_child_of_constraint_between_bones(
         cls,
         child_pose_bone: PoseBone,
-        parent_pose_bone: PoseBone
+        parent_pose_bone: PoseBone,
+        blender_armature_obj: Object
     ):
         child_of_constraint = child_pose_bone.constraints.new(type="CHILD_OF")  # type: ChildOfConstraint
         context_py = bpy.context
-        bpy.ops.constraint.childof_set_inverse(constraint="Child Of", owner="BONE")
-        child_of_constraint.target = parent_pose_bone
+        # bpy.ops.constraint.childof_set_inverse(constraint="Child Of", owner="BONE")
+        child_of_constraint.target = blender_armature_obj
+        child_of_constraint.subtarget = parent_pose_bone.name
         child_of_constraint.active = True
         child_of_constraint.influence = 0.0
 
@@ -36,7 +38,8 @@ class ChildOfConstraintSettingHelper:
     def set_appropriate_child_of_constraint_to_bone(
         cls,
         pose_bone: PoseBone,
-        armature_pose_bones: List[PoseBone]
+        armature_pose_bones: List[PoseBone],
+        blender_armature_obj: Object
     ):
         respective_bones_to_parent_to = \
                 list(
@@ -48,7 +51,8 @@ class ChildOfConstraintSettingHelper:
         for parent_bone in respective_bones_to_parent_to:
             cls._set_child_of_constraint_between_bones(
                 pose_bone,
-                parent_bone
+                parent_bone,
+                blender_armature_obj
             )
 
 
@@ -72,7 +76,8 @@ class BlenderSkinnedObjectsWithArmatureAnimatedChannelBonesParentingFactory(
                 .iterate_collection_and_return_copied_list(pose_data.bones)  # type: List[PoseBone]
         for pose_bone_el in pose_bones_list:
             pose_bone = pose_bone_el  # type: PoseBone
-            ChildOfConstraintSettingHelper.set_appropriate_child_of_constraint_to_bone(pose_bone, pose_bones_list)       
+            ChildOfConstraintSettingHelper.set_appropriate_child_of_constraint_to_bone(
+                pose_bone, pose_bones_list, blender_armature_obj)       
         
         blender_editor_manipulator.enter_object_mode()
 

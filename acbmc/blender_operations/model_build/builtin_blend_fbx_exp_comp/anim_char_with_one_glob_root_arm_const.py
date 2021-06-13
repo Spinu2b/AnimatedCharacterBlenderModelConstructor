@@ -120,6 +120,8 @@ class AnimatedCharacterWithOneGlobalRootedArmatureConstructor:
                     subobject=subobject)  # type: Object
             blender_mesh_objects[subobject_number] = blender_mesh_obj
 
+        armature_constructing_data = [core_subobjects, animated_character_description.channel_hierarchies.channel_hierarchies]
+
         blender_armature_data_block, blender_armature_obj = \
                     BlenderSkinnedObjectsWithArmatureAnimatedChannelBonesParentingFactory() \
                         .build_armature_considering_skinned_subobjects_and_target_bind_pose_model(
@@ -128,7 +130,7 @@ class AnimatedCharacterWithOneGlobalRootedArmatureConstructor:
                             subobjects_mesh_objects=blender_mesh_objects,
                             armature_name=self.ARMATURE_NAME,
                             channel_hierarchies=animated_character_description.channel_hierarchies.channel_hierarchies,
-                            armature_constructing_data=[core_subobjects, animated_character_description.channel_hierarchies.channel_hierarchies]
+                            armature_constructing_data=armature_constructing_data
                         )
 
         for blender_mesh_obj in blender_mesh_objects.values():
