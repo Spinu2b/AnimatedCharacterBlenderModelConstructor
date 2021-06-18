@@ -1,6 +1,8 @@
 from typing import Dict, List, Tuple
 from bpy.types import Action, Object
 from acbmc.blender_operations.model_build.builtin_blend_fbx_exp_comp \
+    .constructing.impls.blender_skin_obj_with_arm_fact import BlenderSkinnedObjectsWithArmatureFactory
+from acbmc.blender_operations.model_build.builtin_blend_fbx_exp_comp \
     .armature.building.blender_edit_mode_arm_model_fact import BlenderEditModeArmatureModelFactory
 from acbmc.blender_operations.model_build.builtin_blend_fbx_exp_comp \
     .constructing.impls.blender_skin_obj_with_arm_anim_chan_bon_par_fact import \
@@ -116,16 +118,14 @@ class AnimatedCharacterWithOneGlobalRootedArmatureConstructor:
                     subobject=subobject)  # type: Object
             blender_mesh_objects[subobject_number] = blender_mesh_obj
 
-        armature_constructing_data = [core_subobjects, animated_character_description.channel_hierarchies.channel_hierarchies]
+        armature_constructing_data = core_subobjects
 
         _, blender_armature_obj = \
                     BlenderSkinnedObjectsWithArmatureAnimatedChannelBonesParentingFactory() \
                         .build_armature_considering_skinned_subobjects_and_target_bind_pose_model(
                             base_armature_factory= \
-                                BlenderEditModeArmatureModelFactory(),
+                                BlenderSkinnedObjectsWithArmatureFactory(BlenderEditModeArmatureModelFactory()),
 
-                            armature_bind_pose_model=armature_bind_pose_model,
-                            
                             subobjects=core_subobjects,
 
                             subobjects_mesh_objects=blender_mesh_objects,
