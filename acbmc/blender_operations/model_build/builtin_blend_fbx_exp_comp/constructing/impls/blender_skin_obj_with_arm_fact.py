@@ -51,7 +51,6 @@ class BlenderSkinnedObjectsWithArmatureFactory:
         subobject: Subobject,
         blender_mesh_obj: Object
     ):
-
         if subobject.contains_actual_bones():
             BlenderRiggingHelper.parent_blender_object_to_armature_with_bones_vertex_groups(
                 armature_obj=armature_obj,
@@ -71,8 +70,6 @@ class BlenderSkinnedObjectsWithArmatureFactory:
         self,
         subobjects: Dict[int, Subobject],
         subobjects_mesh_objects: Dict[int, Object],
-        armature_bind_pose_model: TreeHierarchy,
-        channel_hierarchies: Dict[str, ChannelHierarchy],
         armature_name: str,
         armature_constructing_data: Any) -> Tuple[Armature, Object]:
 

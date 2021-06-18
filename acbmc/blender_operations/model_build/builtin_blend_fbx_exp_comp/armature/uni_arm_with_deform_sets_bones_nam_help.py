@@ -23,6 +23,10 @@ class UnifiedArmatureWithDeformSetsBonesNamingHelper:
         return bone_name.startswith('BONE_Channel_')
 
     @staticmethod
+    def get_channel_id_from_channel_bone_name(bone_name: str) -> int:
+        raise NotImplementedError
+
+    @staticmethod
     def is_deform_set_bone(bone_name: str) -> bool:
         return bone_name.startswith('BONE_Subobject_')
 

@@ -1,14 +1,10 @@
 from typing import Dict, List, Tuple
 from bpy.types import Action, Object
 from acbmc.blender_operations.model_build.builtin_blend_fbx_exp_comp \
+    .armature.building.blender_edit_mode_arm_model_fact import BlenderEditModeArmatureModelFactory
+from acbmc.blender_operations.model_build.builtin_blend_fbx_exp_comp \
     .constructing.impls.blender_skin_obj_with_arm_anim_chan_bon_par_fact import \
          BlenderSkinnedObjectsWithArmatureAnimatedChannelBonesParentingFactory
-from acbmc.blender_operations.model_build.builtin_blend_fbx_exp_comp \
-    .armature.building.bone_nodes.edit_mode_bone_nodes_factory import EditModeBoneNodesFactory
-from acbmc.blender_operations.model_build.builtin_blend_fbx_exp_comp \
-    .armature.building.blender_bind_pos_arm_model_with_chan_fact import BlenderBindPoseArmatureModelWithChannelsFactory
-from acbmc.blender_operations.model_build.builtin_blend_fbx_exp_comp \
-    .constructing.impls.blender_skin_obj_with_arm_fact import BlenderSkinnedObjectsWithArmatureFactory
 from acbmc.blender_operations.model_build.builtin_blend_fbx_exp_comp \
     .animations.blender_armature_pose_applier import BlenderArmaturePoseApplier
 from acbmc.model.animated_character.model.subobjects_channels_associations import SubobjectsChannelsAssociations
@@ -122,14 +118,28 @@ class AnimatedCharacterWithOneGlobalRootedArmatureConstructor:
 
         armature_constructing_data = [core_subobjects, animated_character_description.channel_hierarchies.channel_hierarchies]
 
-        blender_armature_data_block, blender_armature_obj = \
+        _, blender_armature_obj = \
                     BlenderSkinnedObjectsWithArmatureAnimatedChannelBonesParentingFactory() \
                         .build_armature_considering_skinned_subobjects_and_target_bind_pose_model(
+                            base_armature_factory= \
+                                BlenderEditModeArmatureModelFactory(),
+
                             armature_bind_pose_model=armature_bind_pose_model,
+                            
                             subobjects=core_subobjects,
+
                             subobjects_mesh_objects=blender_mesh_objects,
+
                             armature_name=self.ARMATURE_NAME,
-                            channel_hierarchies=animated_character_description.channel_hierarchies.channel_hierarchies,
+
+                            channel_hierarchies=animated_character_description
+                                .channel_hierarchies.channel_hierarchies,
+
+                            subobjects_channels_associations=
+                                animated_character_description
+                                    .subobjects_channels_associations
+                                        .subobjects_channels_associations,
+
                             armature_constructing_data=armature_constructing_data
                         )
 
