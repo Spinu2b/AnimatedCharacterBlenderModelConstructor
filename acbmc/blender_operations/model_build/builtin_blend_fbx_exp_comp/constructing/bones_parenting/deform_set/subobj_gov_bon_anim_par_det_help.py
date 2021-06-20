@@ -15,7 +15,6 @@ class SubobjectGoverningBoneAnimatedParentingDeterminerHelper:
         pose_bone: PoseBone,
         considered_subobject_governing_bone: PoseBone,
         channels_for_subobjects_parenting: Dict[int, List[int]]) -> bool:
-
         if (not UnifiedArmatureWithDeformSetsBonesNamingHelper.is_channel_bone_name(pose_bone.name)):
             return False
 
@@ -24,7 +23,7 @@ class SubobjectGoverningBoneAnimatedParentingDeterminerHelper:
                 .get_channel_id_from_channel_bone_name(pose_bone.name)
 
         subobject_index = UnifiedArmatureWithDeformSetsBonesNamingHelper \
-                .get_subobject_index_for_subobject_governing_bone(considered_subobject_governing_bone.name)
+            .get_subobject_index_for_subobject_governing_bone(considered_subobject_governing_bone.name)
 
         return channel_id in channels_for_subobjects_parenting and \
             subobject_index in channels_for_subobjects_parenting[channel_id]
@@ -51,6 +50,7 @@ class SubobjectGoverningBoneAnimatedParentingDeterminerHelper:
                 )), None)
 
             if governing_channel_bone_candidate is not None:
-                result.append(governing_channel_bone_candidate)
+                if governing_channel_bone_candidate.name not in [x.name for x in result]:
+                    result.append(governing_channel_bone_candidate)
 
         return result

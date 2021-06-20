@@ -53,6 +53,7 @@ class DeformSetActualBoneAnimatedParentingDeterminerHelper:
                             channels_for_subobjects_bones_parenting)),
                         None)  # type: PoseBone
             if governing_channel_bone_candidate is not None:
-                result.append(governing_channel_bone_candidate)
+                if governing_channel_bone_candidate.name not in [x.name for x in result]:
+                    result.append(governing_channel_bone_candidate)
 
         return result

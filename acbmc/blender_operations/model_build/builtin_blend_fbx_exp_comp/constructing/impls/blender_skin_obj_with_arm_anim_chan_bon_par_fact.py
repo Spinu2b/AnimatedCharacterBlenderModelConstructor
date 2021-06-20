@@ -50,7 +50,7 @@ class BlenderSkinnedObjectsWithArmatureAnimatedChannelBonesParentingFactory:
         armature_name: str,
         armature_constructing_data: Any) -> Tuple[Armature, Object]:
 
-        _, blender_armature_obj = \
+        blender_armature_data_block, blender_armature_obj = \
             base_armature_factory \
                 .build_armature_considering_skinned_subobjects_and_target_bind_pose_model(
                     subobjects,
@@ -64,3 +64,5 @@ class BlenderSkinnedObjectsWithArmatureAnimatedChannelBonesParentingFactory:
             channel_hierarchies,
             subobjects_channels_associations,
         )
+
+        return blender_armature_data_block, blender_armature_obj

@@ -23,16 +23,18 @@ class DeformSetBoneAnimatedParentingDeterminerHelper:
         subobjects_channels_associations: Dict[str, SubobjectsChannelsAssociation]
     ) -> List[PoseBone]:
         if UnifiedArmatureWithDeformSetsBonesNamingHelper.is_deform_set_subobject_governing_bone(pose_bone.name):
-            return SubobjectGoverningBoneAnimatedParentingDeterminerHelper.get_possible_pose_bone_parents(
+            result = SubobjectGoverningBoneAnimatedParentingDeterminerHelper.get_possible_pose_bone_parents(
                 pose_bone,
                 armature_pose_bones,
                 subobjects_channels_associations
             )
         elif UnifiedArmatureWithDeformSetsBonesNamingHelper.is_deform_set_actual_bone(pose_bone.name):
-            return DeformSetActualBoneAnimatedParentingDeterminerHelper.get_possible_pose_bone_parents(
+            result =  DeformSetActualBoneAnimatedParentingDeterminerHelper.get_possible_pose_bone_parents(
                 pose_bone,
                 armature_pose_bones,
                 subobjects_channels_associations
             )
         else:
             raise ValueError("Unrecognized bone type {}".format(pose_bone.name))
+
+        return result
