@@ -1,0 +1,1 @@
+NUMBER_PATTERN = "[0-9]+"

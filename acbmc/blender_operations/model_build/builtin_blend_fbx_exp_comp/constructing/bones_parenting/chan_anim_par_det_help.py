@@ -23,15 +23,16 @@ class ChannelsAnimatedParentingDeterminerHelper:
         armature_pose_bones: List[PoseBone],
         channel_hierarchies: Dict[str, ChannelHierarchy],
         subobjects_channels_associations: Dict[str, SubobjectsChannelsAssociation]) -> List[PoseBone]:
+        result = []  # type: List[PoseBone]
 
         if UnifiedArmatureWithDeformSetsBonesNamingHelper.is_channel_bone_name(pose_bone.name):
-            return ChannelBoneAnimatedParentingDeterminerHelper.get_possible_pose_bone_parents(
+            result = ChannelBoneAnimatedParentingDeterminerHelper.get_possible_pose_bone_parents(
                 pose_bone,
                 armature_pose_bones,
                 channel_hierarchies
             )
         elif UnifiedArmatureWithDeformSetsBonesNamingHelper.is_deform_set_bone(pose_bone.name):
-            return DeformSetBoneAnimatedParentingDeterminerHelper.get_possible_pose_bone_parents(
+            result = DeformSetBoneAnimatedParentingDeterminerHelper.get_possible_pose_bone_parents(
                 pose_bone,
                 armature_pose_bones,
                 subobjects_channels_associations
@@ -39,18 +40,4 @@ class ChannelsAnimatedParentingDeterminerHelper:
         else:
             raise ValueError("Unrecognized bone type {}".format(pose_bone.name))
 
-        #result = []  # type: List[PoseBone]
-
-        #for chan_hierarchy in channel_hierarchies.values():
-        #    channel_
-        #
-        #    if UnifiedArmatureWithDeformSetsBonesNamingHelper \
-        #        .get_channel_id_from_channel_bone_name(pose_bone.name) \
-        #             in chan_hierarchy.channel_hierarchy.parenting:
-        #             
-        #        channel_parent_id = UnifiedArmatureWithDeformSetsBonesNamingHelper \
-        #            .get_channel_id_from_channel_bone_name(chan_hierarchy.channel_hierarchy.parenting)
-        #             if 
-
-        #raise NotImplementedError
-        #return result
+        return result
