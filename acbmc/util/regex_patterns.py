@@ -1,1 +1,1 @@
-NUMBER_PATTERN = "[0-9]+"
+NUMBER_PATTERN = "\d+"

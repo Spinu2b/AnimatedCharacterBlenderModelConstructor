@@ -29,7 +29,7 @@ class UnifiedArmatureWithDeformSetsBonesNamingHelper:
 
     @staticmethod
     def get_channel_id_from_channel_bone_name(bone_name: str) -> int:
-        raise NotImplementedError
+        return int(re.findall(NUMBER_PATTERN, bone_name)[0])
 
     @staticmethod
     def is_deform_set_bone(bone_name: str) -> bool:
@@ -45,11 +45,12 @@ class UnifiedArmatureWithDeformSetsBonesNamingHelper:
 
     @staticmethod
     def get_subobject_index_and_bone_index_for_subobject_deform_set_bone(bone_name: str) -> Tuple[int, int]:
-        raise NotImplementedError
+        found_numbers = [int(x) for x in re.findall(NUMBER_PATTERN, bone_name)]
+        return found_numbers[0], found_numbers[1]
 
     @staticmethod
     def get_subobject_index_for_subobject_governing_bone(bone_name: str) -> int:
-        raise NotImplementedError
+        return int(re.findall(NUMBER_PATTERN, bone_name)[0])
 
     @staticmethod
     def get_animation_clip_name_for(animation_clip_id: int) -> str:
